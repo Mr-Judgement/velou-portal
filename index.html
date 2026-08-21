@@ -306,7 +306,7 @@ body {
   display: grid;
   grid-template-columns: auto 1fr 320px;
   column-gap: 0;
-  min-height: 220px;
+  min-height: 320px;
 }
 
 .hero-left {
@@ -417,7 +417,10 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 22% at 50% 100%, rgba(225,6,0,0.18) 0%, transparent 70%),
+    linear-gradient(to bottom, #080808 0%, #0e0e0e 60%, #120505 100%);
 }
 
 .hero-photo-placeholder svg {
@@ -1055,6 +1058,19 @@ body {
 }
 .hero-photo-placeholder img {
   width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
+}
+.hero-silhouette {
+  width: auto !important;
+  height: 94% !important;
+  max-width: none !important;
+  object-fit: unset !important;
+  object-position: unset !important;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: invert(1) opacity(0.52);
+  display: block;
 }
 .user-avatar img {
   width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;
@@ -2448,7 +2464,7 @@ body {
           <!-- Left: athlete photo -->
           <div class="hero-photo-col">
             <div class="hero-photo-placeholder">
-              <img src="assets/athlete-hero.png" alt="Athlete photo">
+              <img src="assets/athlete-silhouette.svg" class="hero-silhouette" alt="Athlete silhouette">
             </div>
             <div class="hero-photo-grad"></div>
           </div>
