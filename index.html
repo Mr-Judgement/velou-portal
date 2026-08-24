@@ -1090,6 +1090,37 @@ body {
   box-shadow: 0 6px 20px rgba(0,0,0,0.5);
 }
 
+/* History data tables */
+.hist-table-wrap {
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.hist-table-lbl {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-3); margin-bottom: 10px;
+}
+.hist-table-scroll { overflow-x: auto; }
+.hist-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 11px; font-variant-numeric: tabular-nums;
+}
+.hist-table th {
+  text-align: left; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-3); padding: 5px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.hist-table td {
+  padding: 6px 10px; color: var(--text-2);
+  border-bottom: 1px solid var(--border); font-weight: 500;
+}
+.hist-table tr:last-child td { border-bottom: none; }
+.hist-table tr.hist-latest td { color: var(--text-1); font-weight: 700; background: rgba(255,255,255,0.03); }
+.hist-du { color: #4caf7d; }
+.hist-dd { color: #E10600; }
+.hist-df { color: var(--text-3); }
+
 .recap-title {
   font-size: 14px;
   font-weight: 600;
@@ -3727,6 +3758,26 @@ body {
       <div class="ptm-sparkline-wrap">
         <div class="ptm-sparkline-label">Energy Score — 12-Session History</div>
         <div id="gchart-kpi-energy" style="width:100%;height:120px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Session Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Score</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul '26</td><td>88</td><td class="hist-df">—</td></tr>
+      <tr><td>Jun '26</td><td>88</td><td class="hist-df">0</td></tr>
+      <tr><td>May '26</td><td>88</td><td class="hist-du">↑ +3</td></tr>
+      <tr><td>Apr '26</td><td>85</td><td class="hist-dd">↓ −2</td></tr>
+      <tr><td>Mar '26</td><td>87</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Feb '26</td><td>86</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Jan '26</td><td>85</td><td class="hist-df">0</td></tr>
+      <tr><td>Dec '25</td><td>85</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Nov '25</td><td>83</td><td class="hist-dd">↓ −1</td></tr>
+      <tr><td>Oct '25</td><td>84</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Sep '25</td><td>82</td><td class="hist-dd">↓ −1</td></tr>
+      <tr><td>Aug '25</td><td>83</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
         <div class="ptm-sparkline-dates"><span>Aug '25 (83)</span><span>Nov '25 (85)</span><span>Mar '26 (87)</span><span>Jul '26 (88)</span></div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:16px">The Energy Score is the composite PTM kinetic chain efficiency index. Scores above 85 indicate a high-functioning system; above 90 is elite-level. Current 88 reflects consistent improvement across all four subsystems over the past year.</p>
@@ -3774,6 +3825,24 @@ body {
       <div class="ptm-sparkline-wrap">
         <div class="ptm-sparkline-label">Velocity — 10-Session History</div>
         <div id="gchart-kpi-velo" style="width:100%;height:120px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Session Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Velocity</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul 8 '26</td><td>92 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Jul 1 '26</td><td>91 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Late Jun '26</td><td>91 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Jun '26</td><td>90 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Late May '26</td><td>90 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>May '26</td><td>89 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Apr '26 B</td><td>88 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Apr '26</td><td>88 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Mar '26</td><td>87 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Feb '26</td><td>87 mph</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
         <div class="ptm-sparkline-dates"><span>Feb '26 (87 mph)</span><span>Apr '26 (89 mph)</span><span>Jun '26 (91 mph)</span><span>Jul '26 (92 mph)</span></div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:16px">Fastball velocity is recorded via calibrated radar during standardized assessment protocol. A +5 mph gain over 6 sessions reflects direct mechanical development. Target velocity of 94–96 mph is projected for end of season based on current trajectory.</p>
@@ -3820,6 +3889,28 @@ body {
       <div class="ptm-sparkline-wrap">
         <div class="ptm-sparkline-label">HRV — 30-Day Daily Log</div>
         <div id="gchart-kpi-hrv" style="width:100%;height:120px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Daily Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Date</th><th>HRV</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Aug 18</td><td>58 ms</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Aug 17</td><td>57 ms</td><td class="hist-dd">↓ −2</td></tr>
+      <tr><td>Aug 16</td><td>59 ms ★</td><td class="hist-du">↑ +3</td></tr>
+      <tr><td>Aug 15</td><td>56 ms</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Aug 14</td><td>58 ms</td><td class="hist-du">↑ +3</td></tr>
+      <tr><td>Aug 12</td><td>55 ms</td><td class="hist-dd">↓ −2</td></tr>
+      <tr><td>Aug 10</td><td>57 ms</td><td class="hist-du">↑ +6</td></tr>
+      <tr><td>Aug 7</td><td>51 ms</td><td class="hist-dd">↓ −3</td></tr>
+      <tr><td>Aug 4</td><td>54 ms</td><td class="hist-dd">↓ −1</td></tr>
+      <tr><td>Aug 1</td><td>55 ms</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Jul 29</td><td>53 ms</td><td class="hist-du">↑ +4</td></tr>
+      <tr><td>Jul 26</td><td>49 ms</td><td class="hist-dd">↓ −3</td></tr>
+      <tr><td>Jul 23</td><td>52 ms</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Jul 20</td><td>50 ms</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
         <div class="ptm-sparkline-dates"><span>Jul 20 (50ms)</span><span>Aug 4 (55ms)</span><span>Aug 14 (59ms)</span><span>Aug 18 (58ms)</span></div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:16px">Heart rate variability measures autonomic nervous system readiness. Higher HRV indicates better recovery capacity and training adaptability. Today's 58 ms is 16% above personal baseline, suggesting the body is well-recovered and ready for high-intensity training.</p>
@@ -3866,6 +3957,28 @@ body {
       <div class="ptm-sparkline-wrap">
         <div class="ptm-sparkline-label">Recovery Score — 14-Day Daily Log</div>
         <div id="gchart-kpi-recovery" style="width:100%;height:120px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Daily Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Date</th><th>Recovery</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Aug 18</td><td>78%</td><td class="hist-df">0</td></tr>
+      <tr><td>Aug 17</td><td>78%</td><td class="hist-du">↑ +8</td></tr>
+      <tr><td>Aug 16</td><td>70%</td><td class="hist-dd">↓ −3</td></tr>
+      <tr><td>Aug 15</td><td>73%</td><td class="hist-dd">↓ −4</td></tr>
+      <tr><td>Aug 14</td><td>77%</td><td class="hist-du">↑ +8</td></tr>
+      <tr><td>Aug 13</td><td>69%</td><td class="hist-dd">↓ −2</td></tr>
+      <tr><td>Aug 12</td><td>71%</td><td class="hist-dd">↓ −4</td></tr>
+      <tr><td>Aug 11</td><td>75%</td><td class="hist-du">↑ +9</td></tr>
+      <tr><td>Aug 10</td><td>66%</td><td class="hist-dd">↓ −4</td></tr>
+      <tr><td>Aug 9</td><td>70%</td><td class="hist-dd">↓ −4</td></tr>
+      <tr><td>Aug 8</td><td>74%</td><td class="hist-du">↑ +9</td></tr>
+      <tr><td>Aug 7</td><td>65%</td><td class="hist-dd">↓ −7</td></tr>
+      <tr><td>Aug 6</td><td>72%</td><td class="hist-du">↑ +4</td></tr>
+      <tr><td>Aug 5</td><td>68%</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
         <div class="ptm-sparkline-dates"><span>Aug 5 (68%)</span><span>Aug 9 (74%)</span><span>Aug 16 (77%)</span><span>Aug 18 (78%)</span></div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:16px">WHOOP Recovery Score reflects overall physiological readiness based on HRV, resting heart rate, and sleep quality. Scores above 67% (green zone) indicate the body is primed for high-intensity training. Today's 78% supports a full training day.</p>
@@ -3913,6 +4026,22 @@ body {
       <div class="ptm-sparkline-wrap">
         <div class="ptm-sparkline-label">Arm Score — 8-Session History</div>
         <div id="gchart-kpi-arm" style="width:100%;height:120px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Session Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Arm Score</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul '26</td><td>86</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Jun '26 B</td><td>84</td><td class="hist-df">0</td></tr>
+      <tr><td>Jun '26</td><td>84</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>May '26</td><td>83</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Apr '26</td><td>82</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Mar '26 B</td><td>81</td><td class="hist-df">0</td></tr>
+      <tr><td>Mar '26</td><td>81</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Feb '26</td><td>80</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
         <div class="ptm-sparkline-dates"><span>Feb '26 (80)</span><span>Apr '26 (82)</span><span>Jun '26 (84)</span><span>Jul '26 (86)</span></div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:16px">ArmCare Arm Score is a composite index measuring shoulder range of motion, strength ratios, and injury risk indicators. An 86 reflects strong arm health with a low-risk profile. The +3 gain since the last assessment indicates healthy adaptation to increased throwing volume.</p>
@@ -3956,6 +4085,26 @@ body {
         <div class="ptm-sparkline-wrap">
           <div class="ptm-sparkline-label">Energy Score — 12-Session Trend</div>
           <div id="gchart-ptm-energy" style="width:100%;height:110px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Session Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Score</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul '26</td><td>88</td><td class="hist-df">—</td></tr>
+      <tr><td>Jun '26</td><td>88</td><td class="hist-df">0</td></tr>
+      <tr><td>May '26</td><td>88</td><td class="hist-du">↑ +3</td></tr>
+      <tr><td>Apr '26</td><td>85</td><td class="hist-dd">↓ −2</td></tr>
+      <tr><td>Mar '26</td><td>87</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Feb '26</td><td>86</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Jan '26</td><td>85</td><td class="hist-df">0</td></tr>
+      <tr><td>Dec '25</td><td>85</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Nov '25</td><td>83</td><td class="hist-dd">↓ −1</td></tr>
+      <tr><td>Oct '25</td><td>84</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Sep '25</td><td>82</td><td class="hist-dd">↓ −1</td></tr>
+      <tr><td>Aug '25</td><td>83</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
           <div class="ptm-sparkline-dates"><span>Aug '25 (83)</span><span>Jul '26 (88)</span></div>
         </div>
       </div>
@@ -3997,6 +4146,24 @@ body {
         <div class="ptm-sparkline-wrap">
           <div class="ptm-sparkline-label">Velocity — 10-Session Trend</div>
           <div id="gchart-ptm-velo" style="width:100%;height:110px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Session Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Velocity</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul 8 '26</td><td>92 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Jul 1 '26</td><td>91 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Late Jun '26</td><td>91 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Jun '26</td><td>90 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Late May '26</td><td>90 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>May '26</td><td>89 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Apr '26 B</td><td>88 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Apr '26</td><td>88 mph</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Mar '26</td><td>87 mph</td><td class="hist-df">0</td></tr>
+      <tr><td>Feb '26</td><td>87 mph</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
           <div class="ptm-sparkline-dates"><span>Feb '26 (87 mph)</span><span>Jul '26 (92 mph)</span></div>
         </div>
       </div>
@@ -4035,6 +4202,20 @@ body {
       <div class="ptm-full-chart">
         <div class="ptm-full-chart-label">Weight Progression — 6-Session Trend</div>
         <div id="gchart-weight" style="width:100%;height:110px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Weight Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Body Weight</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul '26</td><td>195 lbs</td><td class="hist-df">0</td></tr>
+      <tr><td>Jun '26</td><td>195 lbs</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>May '26</td><td>194 lbs</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Apr '26</td><td>193 lbs</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Mar '26</td><td>192 lbs</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Feb '26</td><td>190 lbs</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
       </div>
       <p class="ptm-modal-desc">Energy Potential measures the athlete's capacity to store and load kinetic energy. At HT:WT 22.5 and a score of 91, this athlete ranks in the top 15% of the program for energy storage capacity. Weight has steadily risen from 190 to 195 lbs — positive for power generation without compromising mobility scores.</p>
     </div>
@@ -4098,6 +4279,20 @@ body {
             <div id="gchart-cmj" style="width:100%;height:70px"></div>
           </div>
         </div>
+      </div>
+      <div class="hist-table-wrap">
+        <div class="hist-table-lbl">Force &amp; Power Session Log</div>
+        <div class="hist-table-scroll"><table class="hist-table">
+          <thead><tr><th>Session</th><th>IMTP (N)</th><th>Δ</th><th>CMJ (W)</th><th>Δ</th></tr></thead>
+          <tbody>
+            <tr class="hist-latest"><td>Jul '26</td><td>2,970</td><td class="hist-du">↑ +50</td><td>3,200</td><td class="hist-du">↑ +40</td></tr>
+            <tr><td>Jun '26</td><td>2,920</td><td class="hist-du">↑ +70</td><td>3,160</td><td class="hist-du">↑ +60</td></tr>
+            <tr><td>May '26</td><td>2,850</td><td class="hist-du">↑ +60</td><td>3,100</td><td class="hist-du">↑ +80</td></tr>
+            <tr><td>Apr '26</td><td>2,790</td><td class="hist-du">↑ +70</td><td>3,020</td><td class="hist-du">↑ +100</td></tr>
+            <tr><td>Mar '26</td><td>2,720</td><td class="hist-du">↑ +80</td><td>2,920</td><td class="hist-du">↑ +120</td></tr>
+            <tr><td>Feb '26</td><td>2,640</td><td class="hist-df">—</td><td>2,800</td><td class="hist-df">—</td></tr>
+          </tbody>
+        </table></div>
       </div>
       <p class="ptm-modal-desc">Energy Production quantifies force generation from ground contact through ball release. IMTP at 2970 N and CMJ at 3200 W both rank in the upper quartile of the program. Rotational Force at 87 is the primary development target — improvements here directly elevate the composite energy score.</p>
     </div>
@@ -4180,6 +4375,20 @@ body {
           </div>
         </div>
       </div>
+      <div class="hist-table-wrap">
+        <div class="hist-table-lbl">Medball &amp; Kneeling Session Log</div>
+        <div class="hist-table-scroll"><table class="hist-table">
+          <thead><tr><th>Session</th><th>1 LB (mph)</th><th>2 LB (mph)</th><th>Kneeling (mph)</th></tr></thead>
+          <tbody>
+            <tr class="hist-latest"><td>Jul '26</td><td>49</td><td>42</td><td>74</td></tr>
+            <tr><td>Jun '26</td><td>48</td><td>41</td><td>73</td></tr>
+            <tr><td>May '26</td><td>47</td><td>40</td><td>71</td></tr>
+            <tr><td>Apr '26</td><td>46</td><td>39</td><td>70</td></tr>
+            <tr><td>Mar '26</td><td>45</td><td>38</td><td>69</td></tr>
+            <tr><td>Feb '26</td><td>43</td><td>36</td><td>67</td></tr>
+          </tbody>
+        </table></div>
+      </div>
       <p class="ptm-modal-desc">Energy Transference is measured through weighted implement throws isolating each segment's contribution to the kinetic chain. The 1LB to 2LB medball split (49 vs 42 mph) shows effective load management. The kneeling throw at 74 mph confirms strong trunk-to-arm transfer independent of lower body contribution.</p>
     </div>
   </div>
@@ -4254,6 +4463,20 @@ body {
       <div class="ptm-full-chart" style="margin-bottom:0">
         <div class="ptm-full-chart-label">Shoulder Breakdown — 6-Session Trend</div>
         <div id="gchart-shoulder-trend" style="width:100%;height:150px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Shoulder Strength Session Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Total (lbs)</th><th>IR</th><th>ER</th><th>Scaption</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul '26</td><td>300</td><td>45</td><td>38</td><td>42</td></tr>
+      <tr><td>Jun '26</td><td>298</td><td>44</td><td>37</td><td>41</td></tr>
+      <tr><td>May '26</td><td>295</td><td>43</td><td>36</td><td>40</td></tr>
+      <tr><td>Apr '26</td><td>292</td><td>42</td><td>35</td><td>39</td></tr>
+      <tr><td>Mar '26</td><td>289</td><td>41</td><td>34</td><td>38</td></tr>
+      <tr><td>Feb '26</td><td>285</td><td>40</td><td>33</td><td>37</td></tr>
+    </tbody>
+  </table></div>
+</div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:14px">Energy Interference identifies mechanical disruptions that reduce throwing efficiency. An Arm Score of 90 and 10% mechanical leakage are both within elite range. The shoulder breakdown shows all metrics trending upward — IR at 45 lbs leads the group, with ER at 38 lbs offering the clearest opportunity for targeted strength gains. Target: &lt;8% leakage by end of season.</p>
     </div>
@@ -4295,6 +4518,26 @@ body {
         <div class="ptm-sparkline-wrap">
           <div class="ptm-sparkline-label">Energy Score — 12-Session History</div>
           <div id="gchart-ptm-delta" style="width:100%;height:110px"></div>
+<div class="hist-table-wrap">
+  <div class="hist-table-lbl">Session Log</div>
+  <div class="hist-table-scroll"><table class="hist-table">
+    <thead><tr><th>Session</th><th>Score</th><th>vs. Prev.</th></tr></thead>
+    <tbody>
+      <tr class="hist-latest"><td>Jul '26</td><td>88</td><td class="hist-df">0</td></tr>
+      <tr><td>Jun '26</td><td>88</td><td class="hist-df">0</td></tr>
+      <tr><td>May '26</td><td>88</td><td class="hist-du">↑ +3</td></tr>
+      <tr><td>Apr '26</td><td>85</td><td class="hist-dd">↓ −2</td></tr>
+      <tr><td>Mar '26</td><td>87</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Feb '26</td><td>86</td><td class="hist-du">↑ +1</td></tr>
+      <tr><td>Jan '26</td><td>85</td><td class="hist-df">0</td></tr>
+      <tr><td>Dec '25</td><td>85</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Nov '25</td><td>83</td><td class="hist-dd">↓ −1</td></tr>
+      <tr><td>Oct '25</td><td>84</td><td class="hist-du">↑ +2</td></tr>
+      <tr><td>Sep '25</td><td>82</td><td class="hist-dd">↓ −1</td></tr>
+      <tr><td>Aug '25</td><td>83</td><td class="hist-df">—</td></tr>
+    </tbody>
+  </table></div>
+</div>
           <div class="ptm-sparkline-dates"><span>Aug '25 (83)</span><span>Jul '26 (88)</span></div>
         </div>
       </div>
