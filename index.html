@@ -2384,9 +2384,69 @@ body {
   .recap-row-main     { flex-wrap: wrap; }
   .report-dl-btn      { display: none; }
 }
+
+/* ── Memberstack Auth Gates ─────────────────────────────────────────── */
+@keyframes ms-spin { to { transform: rotate(360deg); } }
+#ms-auth-gate {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #080808;
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px;
+}
+#ms-signin-gate {
+  position: fixed; inset: 0; z-index: 99998;
+  background: #080808;
+  display: none; align-items: center; justify-content: center;
+}
+#ms-signin-card {
+  text-align: center; max-width: 360px; width: calc(100% - 48px);
+  padding: 48px 32px;
+  background: #0f0f0f;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+}
+.ms-signin-title { font-size: 22px; font-weight: 900; letter-spacing: -0.03em; color: #fff; margin-bottom: 6px; }
+.ms-signin-sub   { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 32px; }
+.ms-signin-btn {
+  width: 100%; background: #E10600; color: #fff; border: none;
+  border-radius: 8px; padding: 14px; font-size: 14px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.03em; transition: background 0.15s;
+}
+.ms-signin-btn:hover { background: #c40000; }
+#ms-signin-error { display: none; margin-top: 12px; font-size: 12px; color: #E10600; }
+#ms-signout-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 10px; height: 36px; min-width: auto;
+  background: transparent; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; cursor: pointer; transition: background 0.15s, border-color 0.15s;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-3);
+}
+#ms-signout-btn:hover { background: var(--surface-4); border-color: rgba(255,255,255,0.2); color: var(--text-2); }
 </style>
+<!-- Memberstack DOM SDK — replace pk_... with your Public Key from Memberstack > Settings > API Keys -->
+<script>window.MS_APP_ID = 'pk_YOUR_PUBLIC_KEY_HERE';</script>
+<script src="https://api.memberstack.com/static/memberstack.js?custom" data-memberstack-id="pk_YOUR_PUBLIC_KEY_HERE"></script>
 </head>
 <body>
+
+<!-- ── Memberstack: Checking auth (full-screen spinner) ───────────── -->
+<div id="ms-auth-gate">
+  <div style="width:36px;height:36px;border:3px solid rgba(255,255,255,0.08);border-top-color:#E10600;border-radius:50%;animation:ms-spin 0.75s linear infinite"></div>
+  <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3)">Verifying access</div>
+</div>
+
+<!-- ── Memberstack: Not signed in ────────────────────────────────── -->
+<div id="ms-signin-gate">
+  <div id="ms-signin-card">
+    <div style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:#E10600;border-radius:10px;margin-bottom:24px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="ms-signin-title">Black Label Portal</div>
+    <div class="ms-signin-sub">Sign in to access your athlete dashboard</div>
+    <button class="ms-signin-btn" onclick="msSignIn()">Sign In</button>
+    <div id="ms-signin-error"></div>
+  </div>
+</div>
 
 <div class="bl-portal-root">
 <!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
@@ -2492,6 +2552,10 @@ body {
       <div class="topbar-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       </div>
+      <button id="ms-signout-btn" onclick="msSignOut()" title="Sign out">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign out
+      </button>
     </div>
   </header>
 
@@ -5165,6 +5229,122 @@ function gcDrawPtmInterference() {
   };
   new google.visualization.LineChart(document.getElementById('gchart-shoulder-trend')).draw(trendData, trendOpts);
 }
+
+// ══════════════════════════════════════════════════════════════════════
+// Memberstack Authentication
+// ══════════════════════════════════════════════════════════════════════
+
+function populateMember(member) {
+  var cf = member.customFields || {};
+  var name      = cf['athlete-name'] || cf['name'] || (member.auth && member.auth.email) || 'Athlete';
+  var firstName = name.split(' ')[0];
+  var classYear = cf['class-year'] || cf['class_year'] || '2027';
+  var position  = cf['position'] || 'RHP';
+  var school    = cf['school'] || '—';
+  var arm       = cf['arm'] || cf['throwing-arm'] || 'Right-Hand';
+
+  // Sidebar
+  var sbName = document.getElementById('sb-name');
+  if (sbName) sbName.textContent = name;
+  var sbClass = document.getElementById('sb-class');
+  if (sbClass) sbClass.textContent = 'Class of ' + classYear;
+
+  // Topbar
+  var tName = document.getElementById('topbar-athlete-name');
+  if (tName) tName.textContent = 'Welcome back, ' + firstName;
+
+  // Hero card
+  var vdName = document.getElementById('vd-name');
+  if (vdName) vdName.textContent = name;
+  var vdSchool = document.getElementById('vd-school');
+  if (vdSchool) vdSchool.textContent = school;
+  var vdClass = document.getElementById('vd-class');
+  if (vdClass) vdClass.textContent = 'Class of ' + classYear;
+  var vdPos = document.getElementById('vd-position');
+  if (vdPos) vdPos.textContent = position;
+  var vdArm = document.getElementById('vd-arm');
+  if (vdArm) vdArm.textContent = arm;
+
+  window._msCurrentMember = member;
+}
+
+function msSignIn() {
+  var errEl = document.getElementById('ms-signin-error');
+  if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+  if (!window.$memberstackDom) {
+    if (errEl) { errEl.textContent = 'Authentication service unavailable. Please refresh and try again.'; errEl.style.display = 'block'; }
+    return;
+  }
+
+  window.$memberstackDom.openModal('LOGIN').then(function(result) {
+    var member = result && result.data;
+    if (member) {
+      document.getElementById('ms-signin-gate').style.display = 'none';
+      populateMember(member);
+    }
+  }).catch(function(err) {
+    if (errEl) { errEl.textContent = (err && err.message) || 'Sign in failed. Please try again.'; errEl.style.display = 'block'; }
+  });
+}
+
+function msSignOut() {
+  if (!window.$memberstackDom) { window.location.reload(); return; }
+  window.$memberstackDom.logout().then(function() {
+    window.location.reload();
+  }).catch(function() {
+    window.location.reload();
+  });
+}
+
+// postMessage listener — for Webflow iframe embed
+// The Webflow parent page posts { type: 'ms-member', member: { customFields, auth } }
+// Replace the origin below with your live Webflow domain
+window.addEventListener('message', function(e) {
+  var trustedOrigins = [
+    'https://velou-athletics.webflow.io',
+    'https://www.blacklabelbaseball.com',
+    'https://blacklabelbaseball.com'
+  ];
+  var trusted = trustedOrigins.some(function(o) { return e.origin === o; });
+  if (!trusted) return;
+  if (!e.data || e.data.type !== 'ms-member' || !e.data.member) return;
+  document.getElementById('ms-auth-gate').style.display = 'none';
+  document.getElementById('ms-signin-gate').style.display = 'none';
+  populateMember(e.data.member);
+});
+
+// Check auth on page load
+document.addEventListener('DOMContentLoaded', function() {
+  var authGate   = document.getElementById('ms-auth-gate');
+  var signinGate = document.getElementById('ms-signin-gate');
+
+  var fallbackTimer = setTimeout(function() {
+    if (authGate.style.display !== 'none') {
+      authGate.style.display = 'none';
+      signinGate.style.display = 'flex';
+    }
+  }, 6000);
+
+  var checkMs = setInterval(function() {
+    if (!window.$memberstackDom) return;
+    clearInterval(checkMs);
+    clearTimeout(fallbackTimer);
+
+    window.$memberstackDom.getCurrentMember().then(function(result) {
+      var member = result && result.data;
+      authGate.style.display = 'none';
+      if (member) {
+        populateMember(member);
+      } else {
+        signinGate.style.display = 'flex';
+      }
+    }).catch(function() {
+      authGate.style.display = 'none';
+      signinGate.style.display = 'flex';
+    });
+  }, 100);
+});
 </script>
 </body>
 </html>
