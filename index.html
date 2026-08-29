@@ -5269,13 +5269,6 @@ function populateMember(member) {
 }
 
 function msSignIn() {
-  // If running inside an iframe (Webflow embed), redirect the top window to login
-  if (window.self !== window.top) {
-    window.top.location.href = 'https://www.velouniversity.com/login';
-    return;
-  }
-
-  // Standalone access — use Memberstack modal directly
   var errEl = document.getElementById('ms-signin-error');
   if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
 
@@ -5309,9 +5302,9 @@ function msSignOut() {
 // Replace the origin below with your live Webflow domain
 window.addEventListener('message', function(e) {
   var trustedOrigins = [
-    'https://www.velouniversity.com',
-    'https://velouniversity.com',
-    'https://velou-athletics.webflow.io'
+    'https://velou-athletics.webflow.io',
+    'https://www.blacklabelbaseball.com',
+    'https://blacklabelbaseball.com'
   ];
   var trusted = trustedOrigins.some(function(o) { return e.origin === o; });
   if (!trusted) return;
