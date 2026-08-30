@@ -5327,52 +5327,49 @@ document.addEventListener('DOMContentLoaded', function() {
   var authGate   = document.getElementById('ms-auth-gate');
   var signinGate = document.getElementById('ms-signin-gate');
 
-  // If inside a Webflow iframe, signal readiness repeatedly until parent responds.
-  if (window.self !== window.top) {
-    var msRetries = 0;
-    var msRetryInterval = setInterval(function() {
-      if (window._msMemberReceived || msRetries >= 10) {
-        clearInterval(msRetryInterval);
-        // If still no member data after all retries, show sign-in
-        if (!window._msMemberReceived) {
-          authGate.style.display = 'none';
-          signinGate.style.display = 'flex';
-        }
-        return;
+  // ── 1. URL param auth (Webflow iframe passes member data via ?ms=base64) ──
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var msParam = params.get('ms');
+    if (msParam) {
+      var member = JSON.parse(atob(msParam));
+      authGate.style.display = 'none';
+      populateMember(member);
+      return;
+    }
+  } catch (e) {}
+
+  // ── 2. Standalone access — use Memberstack SDK directly ──────────────────
+  if (window.self === window.top) {
+    var fallbackTimer = setTimeout(function() {
+      if (authGate.style.display !== 'none') {
+        authGate.style.display = 'none';
+        signinGate.style.display = 'flex';
       }
-      window.parent.postMessage({ type: 'ms-ready' }, '*');
-      msRetries++;
-    }, 1500);
-    // Fire immediately too, don't wait 1.5s for first attempt
-    window.parent.postMessage({ type: 'ms-ready' }, '*');
+    }, 6000);
+
+    var checkMs = setInterval(function() {
+      if (!window.$memberstackDom) return;
+      clearInterval(checkMs);
+      clearTimeout(fallbackTimer);
+      window.$memberstackDom.getCurrentMember().then(function(result) {
+        var member = result && result.data;
+        authGate.style.display = 'none';
+        if (member) { populateMember(member); }
+        else { signinGate.style.display = 'flex'; }
+      }).catch(function() {
+        authGate.style.display = 'none';
+        signinGate.style.display = 'flex';
+      });
+    }, 100);
     return;
   }
 
-  var fallbackTimer = setTimeout(function() {
-    if (authGate.style.display !== 'none') {
-      authGate.style.display = 'none';
-      signinGate.style.display = 'flex';
-    }
-  }, 6000);
-
-  var checkMs = setInterval(function() {
-    if (!window.$memberstackDom) return;
-    clearInterval(checkMs);
-    clearTimeout(fallbackTimer);
-
-    window.$memberstackDom.getCurrentMember().then(function(result) {
-      var member = result && result.data;
-      authGate.style.display = 'none';
-      if (member) {
-        populateMember(member);
-      } else {
-        signinGate.style.display = 'flex';
-      }
-    }).catch(function() {
-      authGate.style.display = 'none';
-      signinGate.style.display = 'flex';
-    });
-  }, 100);
+  // ── 3. Inside iframe but no URL param — show sign-in after short wait ────
+  setTimeout(function() {
+    authGate.style.display = 'none';
+    signinGate.style.display = 'flex';
+  }, 2000);
 });
 </script>
 </body>
