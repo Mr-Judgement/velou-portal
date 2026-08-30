@@ -5296,6 +5296,12 @@ function msSignIn() {
 }
 
 function msSignOut() {
+  // If inside Webflow iframe, ask the parent to handle logout
+  if (window.self !== window.top) {
+    window.parent.postMessage({ type: 'ms-logout' }, 'https://www.velouniversity.com');
+    return;
+  }
+  // Standalone access
   if (!window.$memberstackDom) { window.location.reload(); return; }
   window.$memberstackDom.logout().then(function() {
     window.location.reload();
