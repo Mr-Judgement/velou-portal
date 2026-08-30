@@ -5326,6 +5326,19 @@ document.addEventListener('DOMContentLoaded', function() {
   var authGate   = document.getElementById('ms-auth-gate');
   var signinGate = document.getElementById('ms-signin-gate');
 
+  // If inside a Webflow iframe, signal readiness and wait for parent to send member data.
+  // The fallback timer shows the sign-in screen if no response arrives within 6 seconds.
+  if (window.self !== window.top) {
+    window.parent.postMessage({ type: 'ms-ready' }, '*');
+    setTimeout(function() {
+      if (authGate.style.display !== 'none') {
+        authGate.style.display = 'none';
+        signinGate.style.display = 'flex';
+      }
+    }, 6000);
+    return;
+  }
+
   var fallbackTimer = setTimeout(function() {
     if (authGate.style.display !== 'none') {
       authGate.style.display = 'none';
