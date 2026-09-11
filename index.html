@@ -4857,6 +4857,37 @@ window.populateDashboard = function(data) {
   if (arm.armScore) set('vd-kpi-arm', arm.armScore);
 };
 
+/* ── Airtable integration ───────────────────────────────────── */
+var _AT_BASE  = 'https://api.airtable.com/v0/appKmQjcWUG6Ldgii';
+var _AT_TOKEN = 'pat4ObYhfUA7PVuVb.91eca45e0492623ee4683ee52ff8b15c1620d57c4fa4c84d1651fdd0c45646b8';
+
+function loadAthleteData(member) {
+  var cf = (member && member.customFields) || {};
+  var athleteId = cf['athlete-id'] || cf['athlete_id'];
+  if (!athleteId) { console.warn('loadAthleteData: no athlete-id in member customFields'); return; }
+
+  var headers = { 'Authorization': 'Bearer ' + _AT_TOKEN };
+  var filter  = encodeURIComponent("{athlete_id}='" + athleteId + "'");
+
+  fetch(_AT_BASE + '/airtable_athletes?filterByFormula=' + filter + '&maxRecords=1', { headers: headers })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var a = d.records && d.records[0] && d.records[0].fields;
+      if (!a) { console.warn('loadAthleteData: no record found for athlete_id=' + athleteId); return; }
+
+      populateDashboard({
+        energy:    { score: a.total_energy_score },
+        velocity:  { careerHigh: a.top_fastball_velo },
+        armHealth: { armScore: a.arm_score },
+        recovery:  {
+          hrv:   a.hrv_rmssd_milli ? Math.round(a.hrv_rmssd_milli) : null,
+          score: a.recovery_score
+        }
+      });
+    })
+    .catch(function(err) { console.warn('loadAthleteData: fetch error', err); });
+}
+
 /* ── Google Charts ──────────────────────────────────────────── */
 google.charts.load('current', { packages: ['corechart'] });
 
@@ -5326,6 +5357,7 @@ window.addEventListener('message', function(e) {
   document.getElementById('ms-auth-gate').style.display = 'none';
   document.getElementById('ms-signin-gate').style.display = 'none';
   populateMember(e.data.member);
+  loadAthleteData(e.data.member);
 });
 
 // Check auth on page load
@@ -5341,6 +5373,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var member = JSON.parse(atob(msParam));
       authGate.style.display = 'none';
       populateMember(member);
+      loadAthleteData(member);
       return;
     }
   } catch (e) {}
@@ -5361,7 +5394,7 @@ document.addEventListener('DOMContentLoaded', function() {
       window.$memberstackDom.getCurrentMember().then(function(result) {
         var member = result && result.data;
         authGate.style.display = 'none';
-        if (member) { populateMember(member); }
+        if (member) { populateMember(member); loadAthleteData(member); }
         else { signinGate.style.display = 'flex'; }
       }).catch(function() {
         authGate.style.display = 'none';
