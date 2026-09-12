@@ -4825,22 +4825,20 @@ window.populateDashboard = function(data) {
     if (el && val !== undefined && val !== null) el.textContent = val;
   }
 
-  // Hero — only set if value actually provided (avoid overwriting populateMember() data)
-  if (a.name)        set('vd-name', a.name);
-  if (a.team)        set('vd-school', a.team);
-  if (a.position)    set('vd-position', a.position);
-  if (a.throwingArm) set('vd-arm', a.throwingArm + ' Hand');
-  if (a.gradYear)    set('vd-class', 'Class of ' + a.gradYear);
+  // Hero — Airtable is the source of truth for all profile data
+  set('vd-name',     a.name     || '—');
+  set('vd-school',   a.team     || '—');
+  set('vd-position', a.position || '—');
+  set('vd-arm',      a.throwingArm ? a.throwingArm + ' Hand' : '—');
+  set('vd-class',    a.gradYear ? 'Class of ' + a.gradYear : '—');
 
   // Sidebar
-  if (a.name) {
-    var parts = (a.name || '').split(' ');
-    var initials = parts.map(function(p) { return p[0] || ''; }).join('').slice(0, 2).toUpperCase();
-    set('sb-avatar', initials);
-    set('sb-name', parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : ''));
-    if (a.gradYear) set('sb-class', 'Class of ' + a.gradYear);
-  }
-  if (a.name) set('topbar-athlete-name', 'Welcome back, ' + a.name);
+  var parts    = (a.name || '').split(' ');
+  var initials = parts.map(function(p) { return p[0] || ''; }).join('').slice(0, 2).toUpperCase();
+  set('sb-avatar', initials || '—');
+  set('sb-name',   parts[0] ? parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : '') : '—');
+  set('sb-class',  a.gradYear ? 'Class of ' + a.gradYear : '—');
+  set('topbar-athlete-name', a.name ? 'Welcome back, ' + a.name : 'Welcome back');
 
   // KPI
   var score = parseFloat(eng.score) || 0;
@@ -5579,37 +5577,8 @@ function gcDrawPtmInterference() {
 // ══════════════════════════════════════════════════════════════════════
 
 function populateMember(member) {
-  var cf = member.customFields || {};
-  var _rawName  = cf['athlete-name'] || cf['name'] || '';
-  var name      = (_rawName && _rawName.indexOf('@') === -1) ? _rawName : 'Athlete';
-  var firstName = name.split(' ')[0];
-  var classYear = cf['class-year'] || cf['class_year'] || '2027';
-  var position  = cf['position'] || 'RHP';
-  var school    = cf['school'] || '—';
-  var arm       = cf['arm'] || cf['throwing-arm'] || 'Right-Hand';
-
-  // Sidebar
-  var sbName = document.getElementById('sb-name');
-  if (sbName) sbName.textContent = name;
-  var sbClass = document.getElementById('sb-class');
-  if (sbClass) sbClass.textContent = 'Class of ' + classYear;
-
-  // Topbar
-  var tName = document.getElementById('topbar-athlete-name');
-  if (tName) tName.textContent = 'Welcome back, ' + firstName;
-
-  // Hero card
-  var vdName = document.getElementById('vd-name');
-  if (vdName) vdName.textContent = name;
-  var vdSchool = document.getElementById('vd-school');
-  if (vdSchool) vdSchool.textContent = school;
-  var vdClass = document.getElementById('vd-class');
-  if (vdClass) vdClass.textContent = 'Class of ' + classYear;
-  var vdPos = document.getElementById('vd-position');
-  if (vdPos) vdPos.textContent = position;
-  var vdArm = document.getElementById('vd-arm');
-  if (vdArm) vdArm.textContent = arm;
-
+  // Memberstack is auth only — all profile data comes from Airtable.
+  // We just store the member so loadAthleteData() can read athlete-id.
   window._msCurrentMember = member;
 }
 
