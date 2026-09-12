@@ -2597,7 +2597,7 @@ body {
               </div>
               <div class="hero-stat-item">
                 <div class="hero-stat-label">Body Weight</div>
-                <div class="hero-stat-val" id="vd-weight"><span id="vd-weight-val">205</span><span>lbs</span></div>
+                <div class="hero-stat-val" id="vd-weight">205<span>lbs</span></div>
               </div>
               <div class="hero-stat-item">
                 <div class="hero-stat-label">Energy Score</div>
@@ -4855,7 +4855,10 @@ window.populateDashboard = function(data) {
   if (rec.hrv) set('vd-kpi-hrv', rec.hrv);
   if (rec.score) set('vd-kpi-rec', rec.score);
   if (arm.armScore) set('vd-kpi-arm', arm.armScore);
-  if (a.weightLbs) set('vd-weight-val', Math.round(a.weightLbs));
+  if (a.weightLbs) {
+    var wEl = document.getElementById('vd-weight');
+    if (wEl) wEl.innerHTML = Math.round(a.weightLbs) + '<span>lbs</span>';
+  }
 
   // PTM side panel sub-scores
   if (vel.careerHigh) set('ptm-velo', parseFloat(vel.careerHigh).toFixed(1) + ' mph');
