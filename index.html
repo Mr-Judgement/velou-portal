@@ -4858,32 +4858,28 @@ window.populateDashboard = function(data) {
   if (a.weightLbs) set('vd-weight', Math.round(a.weightLbs));
 };
 
-/* ── Airtable integration ───────────────────────────────────── */
-var _AT_BASE  = 'https://api.airtable.com/v0/appKmQjcWUG6Ldgii';
-var _AT_TOKEN = 'pat4ObYhfUA7PVuVb.91eca45e0492623ee4683ee52ff8b15c1620d57c4fa4c84d1651fdd0c45646b8';
+/* ── API layer (Vercel → Airtable) ──────────────────────────── */
+var _API_BASE = 'https://velou-api.vercel.app';
 
 function loadAthleteData(member) {
   var cf = (member && member.customFields) || {};
   var athleteId = cf['athlete-id'] || cf['athlete_id'];
   if (!athleteId) { console.warn('loadAthleteData: no athlete-id in member customFields'); return; }
 
-  var headers = { 'Authorization': 'Bearer ' + _AT_TOKEN };
-  var filter  = encodeURIComponent("{athlete_id}='" + athleteId + "'");
-
-  fetch(_AT_BASE + '/airtable_athletes?filterByFormula=' + filter + '&maxRecords=1', { headers: headers })
-    .then(function(r) { return r.json(); })
+  fetch(_API_BASE + '/api/athlete?id=' + encodeURIComponent(athleteId))
+    .then(function(r) {
+      if (!r.ok) throw new Error('API ' + r.status);
+      return r.json();
+    })
     .then(function(d) {
-      var a = d.records && d.records[0] && d.records[0].fields;
-      if (!a) { console.warn('loadAthleteData: no record found for athlete_id=' + athleteId); return; }
-
       populateDashboard({
-        athlete:   { weightLbs: a.weight_lbs },
-        energy:    { score: a.total_energy_score },
-        velocity:  { careerHigh: a.top_fastball_velo },
-        armHealth: { armScore: a.arm_score },
-        recovery:  {
-          hrv:   a.hrv_rmssd_milli ? Math.round(a.hrv_rmssd_milli) : null,
-          score: a.recovery_score
+        athlete:      { weightLbs: d.athlete && d.athlete.weightLbs },
+        energy:       { score: d.energy && d.energy.score },
+        velocity:     { careerHigh: d.velocity && d.velocity.careerHigh },
+        armHealth:    { armScore: d.armHealth && d.armHealth.armScore },
+        recovery:     {
+          hrv:   d.recovery && d.recovery.hrv ? Math.round(d.recovery.hrv) : null,
+          score: d.recovery && d.recovery.score
         }
       });
     })
