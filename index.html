@@ -3790,7 +3790,7 @@ body {
         <div class="ptm-modal-title">Energy Score</div>
         <div class="ptm-modal-subtitle">PTM kinetic chain composite · Jul 8, 2026</div>
       </div>
-      <div class="ptm-modal-score" style="color:var(--red)">88</div>
+      <div class="ptm-modal-score" style="color:var(--red)"><span id="msc-kpi-energy">88</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('kpi-modal-energy'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closeKpiModal(event,document.getElementById('kpi-modal-energy'))">✕</button>
@@ -3800,24 +3800,24 @@ body {
       <div class="kpi-compare-row">
         <div class="kpi-compare-block">
           <div class="kpi-compare-lbl">Previous</div>
-          <div class="kpi-compare-val">85</div>
+          <div class="kpi-compare-val" id="cmp-e-prev">85</div>
         </div>
         <div class="kpi-compare-divider"></div>
         <div class="kpi-compare-block">
           <div class="kpi-compare-lbl">Current</div>
-          <div class="kpi-compare-val" style="color:var(--red)">88</div>
+          <div class="kpi-compare-val" style="color:var(--red)" id="cmp-e-curr">88</div>
         </div>
         <div class="kpi-compare-divider"></div>
-        <div class="kpi-compare-delta up">
+        <div class="kpi-compare-delta up" id="cmp-e-delta">
           <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,1 9,9 1,9"/></svg>
-          +3 pts
+          <span id="cmp-e-delta-val">+3 pts</span>
         </div>
       </div>
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Potential</span><span class="ptm-chip-val">91</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Production</span><span class="ptm-chip-val">88</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Transference</span><span class="ptm-chip-val">90</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Interference</span><span class="ptm-chip-val">90</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Potential</span><span class="ptm-chip-val" id="chip-kpi-e-potential">91</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Production</span><span class="ptm-chip-val" id="chip-kpi-e-production">88</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Transference</span><span class="ptm-chip-val" id="chip-kpi-e-transference">90</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Interference</span><span class="ptm-chip-val" id="chip-kpi-e-interference">90</span></div>
       </div>
       <div class="ptm-sparkline-wrap">
         <div class="ptm-sparkline-label">Energy Score — 12-Session History</div>
@@ -3826,7 +3826,7 @@ body {
   <div class="hist-table-lbl">Session Log</div>
   <div class="hist-table-scroll"><table class="hist-table">
     <thead><tr><th>Session</th><th>Score</th><th>vs. Prev.</th></tr></thead>
-    <tbody>
+    <tbody id="hist-kpi-energy-tbody">
       <tr class="hist-latest"><td>Jul '26</td><td>88</td><td class="hist-df">—</td></tr>
       <tr><td>Jun '26</td><td>88</td><td class="hist-df">0</td></tr>
       <tr><td>May '26</td><td>88</td><td class="hist-du">↑ +3</td></tr>
@@ -3842,7 +3842,7 @@ body {
     </tbody>
   </table></div>
 </div>
-        <div class="ptm-sparkline-dates"><span>Aug '25 (83)</span><span>Nov '25 (85)</span><span>Mar '26 (87)</span><span>Jul '26 (88)</span></div>
+        <div class="ptm-sparkline-dates" id="hist-kpi-energy-dates"><span>Aug '25 (83)</span><span>Nov '25 (85)</span><span>Mar '26 (87)</span><span>Jul '26 (88)</span></div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:16px">The Energy Score is the composite PTM kinetic chain efficiency index. Scores above 85 indicate a high-functioning system; above 90 is elite-level. Current 88 reflects consistent improvement across all four subsystems over the past year.</p>
     </div>
@@ -3857,7 +3857,7 @@ body {
         <div class="ptm-modal-title">Fastball Velocity</div>
         <div class="ptm-modal-subtitle">Peak radar reading · Jul 8, 2026</div>
       </div>
-      <div class="ptm-modal-score">92<span style="font-size:16px;font-weight:500;color:var(--text-3);margin-left:4px">mph</span></div>
+      <div class="ptm-modal-score"><span id="msc-kpi-velo">92</span><span style="font-size:16px;font-weight:500;color:var(--text-3);margin-left:4px">mph</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('kpi-modal-velo'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closeKpiModal(event,document.getElementById('kpi-modal-velo'))">✕</button>
@@ -3881,9 +3881,9 @@ body {
         </div>
       </div>
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Session High</span><span class="ptm-chip-val">93 mph</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Career High</span><span class="ptm-chip-val">93 mph</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">5-Session Avg</span><span class="ptm-chip-val">91.4 mph</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Session High</span><span class="ptm-chip-val" id="chip-kpi-v-session">93 mph</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Career High</span><span class="ptm-chip-val" id="chip-kpi-v-career">93 mph</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">5-Session Avg</span><span class="ptm-chip-val" id="chip-kpi-v-avg">91.4 mph</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Program %ile</span><span class="ptm-chip-val">85th</span></div>
       </div>
       <div class="ptm-sparkline-wrap">
@@ -3893,7 +3893,7 @@ body {
   <div class="hist-table-lbl">Session Log</div>
   <div class="hist-table-scroll"><table class="hist-table">
     <thead><tr><th>Session</th><th>Velocity</th><th>vs. Prev.</th></tr></thead>
-    <tbody>
+    <tbody id="hist-kpi-velo-tbody">
       <tr class="hist-latest"><td>Jul 8 '26</td><td>92 mph</td><td class="hist-du">↑ +1</td></tr>
       <tr><td>Jul 1 '26</td><td>91 mph</td><td class="hist-df">0</td></tr>
       <tr><td>Late Jun '26</td><td>91 mph</td><td class="hist-du">↑ +1</td></tr>
@@ -3907,7 +3907,7 @@ body {
     </tbody>
   </table></div>
 </div>
-        <div class="ptm-sparkline-dates"><span>Feb '26 (87 mph)</span><span>Apr '26 (89 mph)</span><span>Jun '26 (91 mph)</span><span>Jul '26 (92 mph)</span></div>
+        <div class="ptm-sparkline-dates" id="hist-kpi-velo-dates"><span>Feb '26 (87 mph)</span><span>Apr '26 (89 mph)</span><span>Jun '26 (91 mph)</span><span>Jul '26 (92 mph)</span></div>
       </div>
       <p class="ptm-modal-desc" style="margin-top:16px">Fastball velocity is recorded via calibrated radar during standardized assessment protocol. A +5 mph gain over 6 sessions reflects direct mechanical development. Target velocity of 94–96 mph is projected for end of season based on current trajectory.</p>
     </div>
@@ -3922,7 +3922,7 @@ body {
         <div class="ptm-modal-title">Heart Rate Variability</div>
         <div class="ptm-modal-subtitle">WHOOP · Today at 6:42 AM</div>
       </div>
-      <div class="ptm-modal-score">58<span style="font-size:16px;font-weight:500;color:var(--text-3);margin-left:4px">ms</span></div>
+      <div class="ptm-modal-score"><span id="msc-kpi-hrv">58</span><span style="font-size:16px;font-weight:500;color:var(--text-3);margin-left:4px">ms</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('kpi-modal-hrv'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closeKpiModal(event,document.getElementById('kpi-modal-hrv'))">✕</button>
@@ -3990,7 +3990,7 @@ body {
         <div class="ptm-modal-title">Recovery Score</div>
         <div class="ptm-modal-subtitle">WHOOP · Today at 6:42 AM</div>
       </div>
-      <div class="ptm-modal-score">78<span style="font-size:16px;font-weight:500;color:var(--text-3);margin-left:4px">%</span></div>
+      <div class="ptm-modal-score"><span id="msc-kpi-rec">78</span><span style="font-size:16px;font-weight:500;color:var(--text-3);margin-left:4px">%</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('kpi-modal-recovery'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closeKpiModal(event,document.getElementById('kpi-modal-recovery'))">✕</button>
@@ -4014,9 +4014,9 @@ body {
         </div>
       </div>
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Sleep Quality</span><span class="ptm-chip-val">82%</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Sleep Quality</span><span class="ptm-chip-val" id="chip-rec-sleep">82%</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Strain Score</span><span class="ptm-chip-val">14.2</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Resting HR</span><span class="ptm-chip-val">58 bpm</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Resting HR</span><span class="ptm-chip-val" id="chip-rec-rhr">58 bpm</span></div>
       </div>
       <div class="ptm-sparkline-wrap">
         <div class="ptm-sparkline-label">Recovery Score — 14-Day Daily Log</div>
@@ -4058,7 +4058,7 @@ body {
         <div class="ptm-modal-title">Arm Score</div>
         <div class="ptm-modal-subtitle">ArmCare composite · Jul 6, 2026</div>
       </div>
-      <div class="ptm-modal-score">86</div>
+      <div class="ptm-modal-score"><span id="msc-kpi-arm">86</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('kpi-modal-arm'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closeKpiModal(event,document.getElementById('kpi-modal-arm'))">✕</button>
@@ -4082,9 +4082,9 @@ body {
         </div>
       </div>
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">External Rotation</span><span class="ptm-chip-val">88</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Internal Rotation</span><span class="ptm-chip-val">85</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Total Arc</span><span class="ptm-chip-val">173°</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">External Rotation</span><span class="ptm-chip-val" id="chip-arm-ert">88</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Internal Rotation</span><span class="ptm-chip-val" id="chip-arm-irt">85</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Total Arc</span><span class="ptm-chip-val" id="chip-arm-arc">173°</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Injury Risk</span><span class="ptm-chip-val" style="color:var(--good)">Low</span></div>
       </div>
       <div class="ptm-sparkline-wrap">
@@ -4123,7 +4123,7 @@ body {
         <div class="ptm-modal-title">Total Energy Score</div>
         <div class="ptm-modal-subtitle">Composite kinetic chain index</div>
       </div>
-      <div class="ptm-modal-score" style="color:var(--red)">88</div>
+      <div class="ptm-modal-score" style="color:var(--red)"><span id="msc-ptm-energy">88</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('ptm-modal-energy-score'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closePtmModal(event,document.getElementById('ptm-modal-energy-score'))">✕</button>
@@ -4131,18 +4131,18 @@ body {
     </div>
     <div class="ptm-modal-body">
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Potential</span><span class="ptm-chip-val">91</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Production</span><span class="ptm-chip-val">88</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Transference</span><span class="ptm-chip-val">90</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Interference</span><span class="ptm-chip-val">90</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Potential</span><span class="ptm-chip-val" id="chip-ptm-e-potential">91</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Production</span><span class="ptm-chip-val" id="chip-ptm-e-production">88</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Transference</span><span class="ptm-chip-val" id="chip-ptm-e-transference">90</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Interference</span><span class="ptm-chip-val" id="chip-ptm-e-interference">90</span></div>
       </div>
       <div class="ptm-gauge-sparkline-row">
         <div class="ptm-gauge-wrap">
           <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
             <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
             <circle cx="70" cy="70" r="54" fill="none" stroke="var(--red)" stroke-width="10"
-              stroke-dasharray="298.6 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
-            <text x="70" y="66" text-anchor="middle" fill="var(--text-1)" font-size="22" font-weight="700">88</text>
+              id="gauge-ring-ptm-energy" stroke-dasharray="298.6 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+            <text x="70" y="66" text-anchor="middle" fill="var(--text-1)" font-size="22" font-weight="700" id="gauge-text-ptm-energy">88</text>
             <text x="70" y="84" text-anchor="middle" fill="var(--text-3)" font-size="9">/100</text>
           </svg>
         </div>
@@ -4153,7 +4153,7 @@ body {
   <div class="hist-table-lbl">Session Log</div>
   <div class="hist-table-scroll"><table class="hist-table">
     <thead><tr><th>Session</th><th>Score</th><th>vs. Prev.</th></tr></thead>
-    <tbody>
+    <tbody id="hist-ptm-energy-tbody">
       <tr class="hist-latest"><td>Jul '26</td><td>88</td><td class="hist-df">—</td></tr>
       <tr><td>Jun '26</td><td>88</td><td class="hist-df">0</td></tr>
       <tr><td>May '26</td><td>88</td><td class="hist-du">↑ +3</td></tr>
@@ -4169,7 +4169,7 @@ body {
     </tbody>
   </table></div>
 </div>
-          <div class="ptm-sparkline-dates"><span>Aug '25 (83)</span><span>Jul '26 (88)</span></div>
+          <div class="ptm-sparkline-dates" id="hist-ptm-energy-dates"><span>Aug '25 (83)</span><span>Jul '26 (88)</span></div>
         </div>
       </div>
       <p class="ptm-modal-desc">Total Energy Score is the composite index of all four energy subsystems. An 88 indicates a high-functioning kinetic chain with specific opportunities in Energy Production.</p>
@@ -4185,7 +4185,7 @@ body {
         <div class="ptm-modal-title">Top Throwing Velocity</div>
         <div class="ptm-modal-subtitle">Maximum arm speed — assessment peak</div>
       </div>
-      <div class="ptm-modal-score">92</div>
+      <div class="ptm-modal-score"><span id="msc-ptm-velo">92</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('ptm-modal-throwing-velocity'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closePtmModal(event,document.getElementById('ptm-modal-throwing-velocity'))">✕</button>
@@ -4193,8 +4193,8 @@ body {
     </div>
     <div class="ptm-modal-body">
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Session High</span><span class="ptm-chip-val">93 mph</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">5-Session Avg</span><span class="ptm-chip-val">91.4 mph</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Session High</span><span class="ptm-chip-val" id="chip-ptm-v-session">93 mph</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">5-Session Avg</span><span class="ptm-chip-val" id="chip-ptm-v-avg">91.4 mph</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Program %ile</span><span class="ptm-chip-val">85th</span></div>
       </div>
       <div class="ptm-gauge-sparkline-row">
@@ -4202,8 +4202,8 @@ body {
           <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
             <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
             <circle cx="70" cy="70" r="54" fill="none" stroke="#4e9ff5" stroke-width="10"
-              stroke-dasharray="312.2 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
-            <text x="70" y="60" text-anchor="middle" fill="var(--text-1)" font-size="20" font-weight="700">92</text>
+              id="gauge-ring-ptm-velo" stroke-dasharray="312.2 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+            <text x="70" y="60" text-anchor="middle" fill="var(--text-1)" font-size="20" font-weight="700" id="gauge-text-ptm-velo">92</text>
             <text x="70" y="78" text-anchor="middle" fill="var(--text-3)" font-size="9">mph</text>
           </svg>
         </div>
@@ -4214,7 +4214,7 @@ body {
   <div class="hist-table-lbl">Session Log</div>
   <div class="hist-table-scroll"><table class="hist-table">
     <thead><tr><th>Session</th><th>Velocity</th><th>vs. Prev.</th></tr></thead>
-    <tbody>
+    <tbody id="hist-ptm-velo-tbody">
       <tr class="hist-latest"><td>Jul 8 '26</td><td>92 mph</td><td class="hist-du">↑ +1</td></tr>
       <tr><td>Jul 1 '26</td><td>91 mph</td><td class="hist-df">0</td></tr>
       <tr><td>Late Jun '26</td><td>91 mph</td><td class="hist-du">↑ +1</td></tr>
@@ -4228,7 +4228,7 @@ body {
     </tbody>
   </table></div>
 </div>
-          <div class="ptm-sparkline-dates"><span>Feb '26 (87 mph)</span><span>Jul '26 (92 mph)</span></div>
+          <div class="ptm-sparkline-dates" id="hist-ptm-velo-dates"><span>Feb '26 (87 mph)</span><span>Jul '26 (92 mph)</span></div>
         </div>
       </div>
       <p class="ptm-modal-desc">Top throwing velocity reflects maximum arm speed achieved during standardized assessment. Consistent gains across 6 sessions show effective mechanical development. Target: 94–96 mph by end of season.</p>
@@ -4244,7 +4244,7 @@ body {
         <div class="ptm-modal-title">Energy Potential</div>
         <div class="ptm-modal-subtitle">Capacity for energy storage and preparation</div>
       </div>
-      <div class="ptm-modal-score">91</div>
+      <div class="ptm-modal-score"><span id="msc-ptm-potential">91</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('ptm-modal-energy-potential'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closePtmModal(event,document.getElementById('ptm-modal-energy-potential'))">✕</button>
@@ -4252,10 +4252,10 @@ body {
     </div>
     <div class="ptm-modal-body">
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">HT:WT Ratio</span><span class="ptm-chip-val">22.5</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Body Weight</span><span class="ptm-chip-val">195 lbs</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Shoulder ROM</span><span class="ptm-chip-val">88°</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Trunk Rotation</span><span class="ptm-chip-val">91°</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">HT:WT Ratio</span><span class="ptm-chip-val" id="chip-pot-htw">22.5</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Body Weight</span><span class="ptm-chip-val" id="chip-pot-weight">195 lbs</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Shoulder ROM</span><span class="ptm-chip-val" id="chip-pot-shoulder">88°</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Trunk Rotation</span><span class="ptm-chip-val" id="chip-pot-trunk">91°</span></div>
       </div>
       <!-- Scatter plot: athlete vs population -->
       <div class="ptm-scatter-wrap">
@@ -4294,7 +4294,7 @@ body {
         <div class="ptm-modal-title">Energy Production</div>
         <div class="ptm-modal-subtitle">Force generation through the kinetic chain</div>
       </div>
-      <div class="ptm-modal-score">88</div>
+      <div class="ptm-modal-score"><span id="msc-ptm-production">88</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('ptm-modal-energy-production'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closePtmModal(event,document.getElementById('ptm-modal-energy-production'))">✕</button>
@@ -4302,8 +4302,8 @@ body {
     </div>
     <div class="ptm-modal-body">
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">IMTP Peak Force</span><span class="ptm-chip-val">2970 N</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">CMJ Peak Power</span><span class="ptm-chip-val">3200 W</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">IMTP Peak Force</span><span class="ptm-chip-val" id="chip-p-imtp">2970 N</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">CMJ Peak Power</span><span class="ptm-chip-val" id="chip-p-cmj">3200 W</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Rotational Force</span><span class="ptm-chip-val">87</span></div>
       </div>
       <div class="ptm-dual-panel">
@@ -4313,10 +4313,10 @@ body {
           <div class="ptm-semigauge-wrap">
             <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" class="ptm-semigauge-svg">
               <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="15" stroke-linecap="round"/>
-              <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#f0a030" stroke-width="15" stroke-linecap="round" stroke-dasharray="293 345.6"/>
+              <path id="gauge-ring-imtp" d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#f0a030" stroke-width="15" stroke-linecap="round" stroke-dasharray="293 345.6"/>
               <text x="20" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">0</text>
               <text x="240" y="150" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10">3500 N</text>
-              <text x="130" y="100" text-anchor="middle" fill="white" font-size="30" font-weight="800">2970</text>
+              <text id="gauge-text-imtp" x="130" y="100" text-anchor="middle" fill="white" font-size="30" font-weight="800">2970</text>
               <text x="130" y="120" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="11">N</text>
             </svg>
             <div class="ptm-semigauge-sub">Peak Vertical Force</div>
@@ -4331,10 +4331,10 @@ body {
           <div class="ptm-semigauge-wrap">
             <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" class="ptm-semigauge-svg">
               <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="15" stroke-linecap="round"/>
-              <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#f0a030" stroke-width="15" stroke-linecap="round" stroke-dasharray="276 345.6"/>
+              <path id="gauge-ring-cmj" d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#f0a030" stroke-width="15" stroke-linecap="round" stroke-dasharray="276 345.6"/>
               <text x="20" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">0</text>
               <text x="240" y="150" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10">4000 W</text>
-              <text x="130" y="100" text-anchor="middle" fill="white" font-size="30" font-weight="800">3200</text>
+              <text id="gauge-text-cmj" x="130" y="100" text-anchor="middle" fill="white" font-size="30" font-weight="800">3200</text>
               <text x="130" y="120" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="11">W</text>
             </svg>
             <div class="ptm-semigauge-sub">Peak Power Output</div>
@@ -4371,7 +4371,7 @@ body {
         <div class="ptm-modal-title">Energy Transference</div>
         <div class="ptm-modal-subtitle">Efficiency of inter-segment force flow</div>
       </div>
-      <div class="ptm-modal-score">90</div>
+      <div class="ptm-modal-score"><span id="msc-ptm-transference">90</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('ptm-modal-energy-transference'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closePtmModal(event,document.getElementById('ptm-modal-energy-transference'))">✕</button>
@@ -4379,9 +4379,9 @@ body {
     </div>
     <div class="ptm-modal-body">
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Hip → Trunk</span><span class="ptm-chip-val">92</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Trunk → Arm</span><span class="ptm-chip-val">88</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Sequencing</span><span class="ptm-chip-val">90</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">1 LB Throw</span><span class="ptm-chip-val" id="chip-t-1lb">49 mph</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">2 LB Throw</span><span class="ptm-chip-val" id="chip-t-2lb">42 mph</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Kneeling Throw</span><span class="ptm-chip-val" id="chip-t-kt">74 mph</span></div>
       </div>
       <div class="ptm-triple-panel">
         <!-- 1LB Medball -->
@@ -4390,10 +4390,10 @@ body {
           <div class="ptm-semigauge-wrap">
             <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" class="ptm-semigauge-svg">
               <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="15" stroke-linecap="round"/>
-              <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#E10600" stroke-width="15" stroke-linecap="round" stroke-dasharray="282 345.6"/>
+              <path id="gauge-ring-mb1" d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#E10600" stroke-width="15" stroke-linecap="round" stroke-dasharray="282 345.6"/>
               <text x="20" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">0</text>
               <text x="240" y="150" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10">60</text>
-              <text x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">49</text>
+              <text id="gauge-text-mb1" x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">49</text>
               <text x="130" y="120" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="11">mph</text>
             </svg>
             <div class="ptm-semigauge-sub">Throw Velocity</div>
@@ -4408,10 +4408,10 @@ body {
           <div class="ptm-semigauge-wrap">
             <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" class="ptm-semigauge-svg">
               <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="15" stroke-linecap="round"/>
-              <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#f0a030" stroke-width="15" stroke-linecap="round" stroke-dasharray="264 345.6"/>
+              <path id="gauge-ring-mb2" d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#f0a030" stroke-width="15" stroke-linecap="round" stroke-dasharray="264 345.6"/>
               <text x="20" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">0</text>
               <text x="240" y="150" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10">55</text>
-              <text x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">42</text>
+              <text id="gauge-text-mb2" x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">42</text>
               <text x="130" y="120" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="11">mph</text>
             </svg>
             <div class="ptm-semigauge-sub">Throw Velocity</div>
@@ -4426,10 +4426,10 @@ body {
           <div class="ptm-semigauge-wrap">
             <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" class="ptm-semigauge-svg">
               <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="15" stroke-linecap="round"/>
-              <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#8b5cf6" stroke-width="15" stroke-linecap="round" stroke-dasharray="284 345.6"/>
+              <path id="gauge-ring-kt" d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#8b5cf6" stroke-width="15" stroke-linecap="round" stroke-dasharray="284 345.6"/>
               <text x="20" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">0</text>
               <text x="240" y="150" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10">90</text>
-              <text x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">74</text>
+              <text id="gauge-text-kt" x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">74</text>
               <text x="130" y="120" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="11">mph</text>
             </svg>
             <div class="ptm-semigauge-sub">Release Velocity</div>
@@ -4466,7 +4466,7 @@ body {
         <div class="ptm-modal-title">Energy Interference</div>
         <div class="ptm-modal-subtitle">Mechanical disruption to force continuity</div>
       </div>
-      <div class="ptm-modal-score">90</div>
+      <div class="ptm-modal-score"><span id="msc-ptm-interference">90</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('ptm-modal-energy-interference'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closePtmModal(event,document.getElementById('ptm-modal-energy-interference'))">✕</button>
@@ -4476,7 +4476,7 @@ body {
       <div class="ptm-chips">
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Timing Efficiency</span><span class="ptm-chip-val">89</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Mech. Leakage</span><span class="ptm-chip-val">10%</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Arm Score</span><span class="ptm-chip-val">90</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Arm Score</span><span class="ptm-chip-val" id="chip-i-arm">90</span></div>
       </div>
       <!-- Arm Score + Shoulder Strength -->
       <div class="ptm-arm-row">
@@ -4485,10 +4485,10 @@ body {
           <div class="ptm-semigauge-wrap">
             <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" class="ptm-semigauge-svg">
               <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="15" stroke-linecap="round"/>
-              <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#4caf7d" stroke-width="15" stroke-linecap="round" stroke-dasharray="311 345.6"/>
+              <path id="gauge-ring-interference-arm" d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#4caf7d" stroke-width="15" stroke-linecap="round" stroke-dasharray="311 345.6"/>
               <text x="20" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">0</text>
               <text x="240" y="150" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10">100</text>
-              <text x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">90</text>
+              <text id="gauge-text-interference-arm" x="130" y="100" text-anchor="middle" fill="white" font-size="34" font-weight="800">90</text>
               <text x="130" y="120" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="11">/100</text>
             </svg>
           </div>
@@ -4504,23 +4504,23 @@ body {
         <div class="ptm-panel-label" style="text-align:left;margin-bottom:8px">Shoulder Breakdown</div>
         <div class="ptm-breakdown-row">
           <span class="ptm-breakdown-name">IR</span>
-          <div class="ptm-breakdown-bar-wrap"><div class="ptm-breakdown-fill" style="width:75%;background:#4caf7d"></div></div>
-          <span class="ptm-breakdown-val">45 lbs</span>
+          <div class="ptm-breakdown-bar-wrap"><div id="bar-ir" class="ptm-breakdown-fill" style="width:75%;background:#4caf7d"></div></div>
+          <span class="ptm-breakdown-val" id="bd-ir">45 lbs</span>
         </div>
         <div class="ptm-breakdown-row">
           <span class="ptm-breakdown-name">ER</span>
-          <div class="ptm-breakdown-bar-wrap"><div class="ptm-breakdown-fill" style="width:76%;background:#f0a030"></div></div>
-          <span class="ptm-breakdown-val">38 lbs</span>
+          <div class="ptm-breakdown-bar-wrap"><div id="bar-ert" class="ptm-breakdown-fill" style="width:76%;background:#f0a030"></div></div>
+          <span class="ptm-breakdown-val" id="bd-ert">38 lbs</span>
         </div>
         <div class="ptm-breakdown-row">
           <span class="ptm-breakdown-name">Scaption</span>
-          <div class="ptm-breakdown-bar-wrap"><div class="ptm-breakdown-fill" style="width:76%;background:#4e9ff5"></div></div>
-          <span class="ptm-breakdown-val">42 lbs</span>
+          <div class="ptm-breakdown-bar-wrap"><div id="bar-scaption" class="ptm-breakdown-fill" style="width:76%;background:#4e9ff5"></div></div>
+          <span class="ptm-breakdown-val" id="bd-scaption">42 lbs</span>
         </div>
         <div class="ptm-breakdown-row">
           <span class="ptm-breakdown-name">Grip</span>
-          <div class="ptm-breakdown-bar-wrap"><div class="ptm-breakdown-fill" style="width:80%;background:#8b5cf6"></div></div>
-          <span class="ptm-breakdown-val">175 lbs</span>
+          <div class="ptm-breakdown-bar-wrap"><div id="bar-grip" class="ptm-breakdown-fill" style="width:80%;background:#8b5cf6"></div></div>
+          <span class="ptm-breakdown-val" id="bd-grip">175 lbs</span>
         </div>
       </div>
       <!-- Multi-line shoulder breakdown over time -->
@@ -4555,7 +4555,7 @@ body {
         <div class="ptm-modal-title">Total Energy Delta</div>
         <div class="ptm-modal-subtitle">Net change across assessment periods</div>
       </div>
-      <div class="ptm-modal-score" style="color:var(--good)">+3</div>
+      <div class="ptm-modal-score" style="color:var(--good)"><span id="msc-ptm-delta">+3</span></div>
       <div style="display:flex;align-items:center;gap:6px">
         <button class="ptm-expand-btn" onclick="togglePtmFs(document.getElementById('ptm-modal-energy-delta'))" title="Expand">⛶</button>
         <button class="ptm-close-btn" onclick="closePtmModal(event,document.getElementById('ptm-modal-energy-delta'))">✕</button>
@@ -4563,9 +4563,9 @@ body {
     </div>
     <div class="ptm-modal-body">
       <div class="ptm-chips">
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Previous Score</span><span class="ptm-chip-val">85</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Current Score</span><span class="ptm-chip-val">88</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Net Change</span><span class="ptm-chip-val" style="color:var(--good)">+3</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Previous Score</span><span class="ptm-chip-val" id="chip-d-prev">85</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Current Score</span><span class="ptm-chip-val" id="chip-d-curr">88</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Net Change</span><span class="ptm-chip-val" id="chip-d-net" style="color:var(--good)">+3</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Period</span><span class="ptm-chip-val">3 months</span></div>
       </div>
       <div class="ptm-gauge-sparkline-row">
@@ -4573,10 +4573,10 @@ body {
           <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
             <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
             <circle cx="70" cy="70" r="54" fill="none" stroke="var(--good)" stroke-width="10"
-              stroke-dasharray="10.2 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
-            <text x="70" y="58" text-anchor="middle" fill="var(--good)" font-size="24" font-weight="700">+3</text>
+              id="gauge-ring-ptm-delta" stroke-dasharray="10.2 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+            <text x="70" y="58" text-anchor="middle" fill="var(--good)" font-size="24" font-weight="700" id="gauge-text-ptm-delta">+3</text>
             <text x="70" y="76" text-anchor="middle" fill="var(--text-3)" font-size="9">pts gained</text>
-            <text x="70" y="92" text-anchor="middle" fill="var(--text-3)" font-size="9">85 → 88</text>
+            <text x="70" y="92" text-anchor="middle" fill="var(--text-3)" font-size="9" id="gauge-text-ptm-delta-range">85 → 88</text>
           </svg>
         </div>
         <div class="ptm-sparkline-wrap">
@@ -4586,7 +4586,7 @@ body {
   <div class="hist-table-lbl">Session Log</div>
   <div class="hist-table-scroll"><table class="hist-table">
     <thead><tr><th>Session</th><th>Score</th><th>vs. Prev.</th></tr></thead>
-    <tbody>
+    <tbody id="hist-ptm-delta-tbody">
       <tr class="hist-latest"><td>Jul '26</td><td>88</td><td class="hist-df">0</td></tr>
       <tr><td>Jun '26</td><td>88</td><td class="hist-df">0</td></tr>
       <tr><td>May '26</td><td>88</td><td class="hist-du">↑ +3</td></tr>
@@ -4602,7 +4602,7 @@ body {
     </tbody>
   </table></div>
 </div>
-          <div class="ptm-sparkline-dates"><span>Aug '25 (83)</span><span>Jul '26 (88)</span></div>
+          <div class="ptm-sparkline-dates" id="hist-ptm-delta-dates"><span>Aug '25 (83)</span><span>Jul '26 (88)</span></div>
         </div>
       </div>
       <p class="ptm-modal-desc">Total Energy Delta tracks the net change in overall energy system performance across assessment periods. A +3 gain over the last three months reflects consistent mechanical improvement, placing the athlete on pace for an 90+ composite by end of season.</p>
@@ -4813,6 +4813,7 @@ function switchMediaTab(el, tab) {
 
 // populateDashboard — wire live Airtable data here
 window.populateDashboard = function(data) {
+  window._athleteData = data;
   var a = data.athlete || {};
   var eng = data.energy || {};
   var vel = data.velocity || {};
@@ -4885,7 +4886,271 @@ window.populateDashboard = function(data) {
       if (el) { el.textContent = deltaStr; el.style.fill = deltaColour; el.style.color = deltaColour; }
     });
   }
+
+  populateModals(data);
 };
+
+/* ── Modal data population ───────────────────────────────────── */
+function _fmtDate(d) {
+  if (!d) return '—';
+  var p = d.split('-');
+  if (p.length < 2) return d;
+  var mn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return mn[parseInt(p[1], 10) - 1] + ' \'' + p[0].slice(2);
+}
+
+function _mset(id, val) {
+  var el = document.getElementById(id);
+  if (!el || val === undefined || val === null) return;
+  var first = el.firstChild;
+  if (first && first.nodeType === 3) { first.nodeValue = val; } else { el.textContent = val; }
+}
+
+function _updateBar(id, val, maxVal) {
+  var el = document.getElementById(id);
+  if (el) el.style.width = Math.min(100, (parseFloat(val) / maxVal * 100)).toFixed(0) + '%';
+}
+
+function _buildEnergyRows(hist) {
+  var rows = hist.slice().sort(function(a,b){ return a.date > b.date ? -1 : 1; });
+  var html = '';
+  rows.forEach(function(r, i) {
+    var sc = parseFloat(r.score);
+    var prev = i < rows.length - 1 ? parseFloat(rows[i+1].score) : null;
+    var diff = prev !== null ? sc - prev : null;
+    var dCell = diff === null ? '<td class="hist-df">—</td>'
+      : diff > 0 ? '<td class="hist-du">↑ +' + diff.toFixed(0) + '</td>'
+      : diff < 0 ? '<td class="hist-dd">↓ ' + diff.toFixed(0) + '</td>'
+      : '<td class="hist-df">0</td>';
+    html += '<tr' + (i === 0 ? ' class="hist-latest"' : '') + '><td>' + _fmtDate(r.date) + '</td><td>' + sc.toFixed(0) + '</td>' + dCell + '</tr>';
+  });
+  return { html: html, first: rows[rows.length-1], last: rows[0] };
+}
+
+function _buildVeloRows(sessions) {
+  var rows = sessions.slice().sort(function(a,b){ return a.date > b.date ? -1 : 1; });
+  var html = '';
+  rows.forEach(function(r, i) {
+    var v = parseFloat(r.maxVelo);
+    var prev = i < rows.length - 1 ? parseFloat(rows[i+1].maxVelo) : null;
+    var diff = prev !== null ? v - prev : null;
+    var dCell = diff === null ? '<td class="hist-df">—</td>'
+      : diff > 0 ? '<td class="hist-du">↑ +' + diff.toFixed(1) + '</td>'
+      : diff < 0 ? '<td class="hist-dd">↓ ' + diff.toFixed(1) + '</td>'
+      : '<td class="hist-df">0</td>';
+    html += '<tr' + (i === 0 ? ' class="hist-latest"' : '') + '><td>' + _fmtDate(r.date) + '</td><td>' + v.toFixed(1) + ' mph</td>' + dCell + '</tr>';
+  });
+  return { html: html, first: rows[rows.length-1], last: rows[0] };
+}
+
+function populateModals(data) {
+  var a   = data.athlete   || {};
+  var eng = data.energy    || {};
+  var vel = data.velocity  || {};
+  var arm = data.armHealth || {};
+  var rec = data.recovery  || {};
+  var fp  = data.forceAndPower || {};
+  var mov = data.movement  || {};
+
+  var score = parseFloat(eng.score) || 0;
+  var velo  = parseFloat(vel.careerHigh) || 0;
+  var delta = (eng.delta !== undefined && eng.delta !== null) ? parseFloat(eng.delta) : null;
+
+  // ── Modal header scores ──
+  if (score) {
+    _mset('msc-kpi-energy', score.toFixed(1));
+    _mset('msc-ptm-energy', score.toFixed(1));
+    var eDash = (score / 100 * 339.3).toFixed(1) + ' 339.3';
+    var eRing = document.getElementById('gauge-ring-ptm-energy');
+    if (eRing) eRing.setAttribute('stroke-dasharray', eDash);
+    _mset('gauge-text-ptm-energy', score.toFixed(1));
+  }
+  if (velo) {
+    _mset('msc-kpi-velo',  velo.toFixed(1));
+    _mset('msc-ptm-velo',  velo.toFixed(1));
+    var vRing = document.getElementById('gauge-ring-ptm-velo');
+    if (vRing) vRing.setAttribute('stroke-dasharray', (Math.min(velo, 110) / 110 * 339.3).toFixed(1) + ' 339.3');
+    _mset('gauge-text-ptm-velo', velo.toFixed(1));
+  }
+  if (rec.hrv)      _mset('msc-kpi-hrv', Math.round(rec.hrv));
+  if (rec.score)    _mset('msc-kpi-rec', rec.score);
+  if (arm.armScore) _mset('msc-kpi-arm', parseFloat(arm.armScore).toFixed(0));
+
+  if (eng.potential)    { _mset('msc-ptm-potential',    parseFloat(eng.potential).toFixed(1)); }
+  if (eng.production)   { _mset('msc-ptm-production',   parseFloat(eng.production).toFixed(1)); }
+  if (eng.transference) { _mset('msc-ptm-transference', parseFloat(eng.transference).toFixed(1)); }
+  if (eng.interference) { _mset('msc-ptm-interference', parseFloat(eng.interference).toFixed(1)); }
+
+  if (delta !== null) {
+    var dStr   = (delta >= 0 ? '+' : '') + delta.toFixed(1);
+    var dColor = delta >= 0 ? 'var(--good)' : 'var(--red)';
+    var dEl = document.getElementById('msc-ptm-delta');
+    if (dEl) { dEl.textContent = dStr; dEl.parentElement.style.color = dColor; }
+    var gTxt = document.getElementById('gauge-text-ptm-delta');
+    if (gTxt) { gTxt.textContent = dStr; gTxt.setAttribute('fill', dColor); }
+    var gRng = document.getElementById('gauge-ring-ptm-delta');
+    if (gRng) { gRng.setAttribute('stroke', dColor); gRng.setAttribute('stroke-dasharray', (Math.min(Math.abs(delta), 20) / 20 * 339.3).toFixed(1) + ' 339.3'); }
+  }
+
+  // ── Energy sub-score chips (both modals) ──
+  var subs = [['potential','potential'],['production','production'],['transference','transference'],['interference','interference']];
+  subs.forEach(function(s) {
+    var v = parseFloat(eng[s[0]]);
+    if (v) {
+      _mset('chip-kpi-e-' + s[1], v.toFixed(1));
+      _mset('chip-ptm-e-' + s[1], v.toFixed(1));
+    }
+  });
+
+  // ── KPI Energy compare row ──
+  if (eng.history && eng.history.length >= 2) {
+    var sortedH = eng.history.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+    var prevScore = parseFloat(sortedH[sortedH.length - 2].score);
+    var diff2 = score - prevScore;
+    _mset('cmp-e-prev', prevScore.toFixed(1));
+    _mset('cmp-e-curr', score.toFixed(1));
+    var dv = document.getElementById('cmp-e-delta-val');
+    if (dv) dv.textContent = (diff2 >= 0 ? '+' : '') + diff2.toFixed(1) + ' pts';
+    var dc = document.getElementById('cmp-e-delta');
+    if (dc) {
+      dc.className = 'kpi-compare-delta ' + (diff2 >= 0 ? 'up' : 'dn');
+      var arrow = dc.querySelector('svg');
+      if (arrow) arrow.style.transform = diff2 >= 0 ? '' : 'scaleY(-1)';
+    }
+  }
+
+  // ── Delta modal chips + gauge range text ──
+  if (delta !== null) {
+    var prevS = score - delta;
+    _mset('chip-d-prev', prevS.toFixed(1));
+    _mset('chip-d-curr', score.toFixed(1));
+    var netEl = document.getElementById('chip-d-net');
+    if (netEl) { netEl.textContent = (delta >= 0 ? '+' : '') + delta.toFixed(1); netEl.style.color = delta >= 0 ? 'var(--good)' : 'var(--red)'; }
+    _mset('gauge-text-ptm-delta-range', prevS.toFixed(0) + ' → ' + score.toFixed(0));
+  }
+
+  // ── Energy history tables + sparkline dates ──
+  if (eng.history && eng.history.length) {
+    var eRes = _buildEnergyRows(eng.history);
+    ['hist-kpi-energy-tbody','hist-ptm-energy-tbody','hist-ptm-delta-tbody'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = eRes.html;
+    });
+    var eDateStr = _fmtDate(eRes.first.date) + ' (' + parseFloat(eRes.first.score).toFixed(0) + ')';
+    var eEndStr  = _fmtDate(eRes.last.date)  + ' (' + parseFloat(eRes.last.score).toFixed(0)  + ')';
+    ['hist-kpi-energy-dates','hist-ptm-energy-dates','hist-ptm-delta-dates'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = '<span>' + eDateStr + '</span><span>' + eEndStr + '</span>';
+    });
+  }
+
+  // ── Velocity history tables + sparkline dates ──
+  if (vel.sessions && vel.sessions.length) {
+    var vRes = _buildVeloRows(vel.sessions);
+    ['hist-kpi-velo-tbody','hist-ptm-velo-tbody'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = vRes.html;
+    });
+    var vStartStr = _fmtDate(vRes.first.date) + ' (' + parseFloat(vRes.first.maxVelo).toFixed(1) + ' mph)';
+    var vEndStr   = _fmtDate(vRes.last.date)  + ' (' + parseFloat(vRes.last.maxVelo).toFixed(1)  + ' mph)';
+    ['hist-kpi-velo-dates','hist-ptm-velo-dates'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = '<span>' + vStartStr + '</span><span>' + vEndStr + '</span>';
+    });
+    // Velocity chips
+    var latestSess = vel.sessions.slice().sort(function(a,b){ return a.date > b.date ? -1 : 1; })[0];
+    if (latestSess) {
+      _mset('chip-kpi-v-session',  parseFloat(latestSess.maxVelo).toFixed(1) + ' mph');
+      _mset('chip-ptm-v-session',  parseFloat(latestSess.maxVelo).toFixed(1) + ' mph');
+    }
+    if (velo) {
+      _mset('chip-kpi-v-career', velo.toFixed(1) + ' mph');
+    }
+    // 5-session avg
+    var last5 = vel.sessions.slice().sort(function(a,b){ return a.date > b.date ? -1 : 1; }).slice(0, 5);
+    if (last5.length) {
+      var avg5 = last5.reduce(function(s,r){ return s + parseFloat(r.maxVelo); }, 0) / last5.length;
+      _mset('chip-kpi-v-avg',  avg5.toFixed(1) + ' mph');
+      _mset('chip-ptm-v-avg',  avg5.toFixed(1) + ' mph');
+    }
+  }
+
+  // ── Arm score modal chips ──
+  if (arm.armScore) {
+    _mset('chip-i-arm', parseFloat(arm.armScore).toFixed(0));
+    _mset('gauge-text-interference-arm', parseFloat(arm.armScore).toFixed(0));
+    var aRing = document.getElementById('gauge-ring-interference-arm');
+    if (aRing) aRing.setAttribute('stroke-dasharray', (parseFloat(arm.armScore) / 100 * 345.6).toFixed(1) + ' 345.6');
+  }
+  if (arm.irt) { _mset('chip-arm-irt', parseFloat(arm.irt).toFixed(0)); _mset('bd-ir', parseFloat(arm.irt).toFixed(0) + ' lbs'); _updateBar('bar-ir', arm.irt, 80); }
+  if (arm.ert) { _mset('chip-arm-ert', parseFloat(arm.ert).toFixed(0)); _mset('bd-ert', parseFloat(arm.ert).toFixed(0) + ' lbs'); _updateBar('bar-ert', arm.ert, 60); }
+  if (arm.scaption) { _mset('bd-scaption', parseFloat(arm.scaption).toFixed(0) + ' lbs'); _updateBar('bar-scaption', arm.scaption, 60); }
+  if (arm.grip)     { _mset('bd-grip',     parseFloat(arm.grip).toFixed(0)     + ' lbs'); _updateBar('bar-grip',     arm.grip,     250); }
+  if (arm.irt && arm.ert) {
+    _mset('chip-arm-arc', (parseFloat(arm.irt) + parseFloat(arm.ert)).toFixed(0) + '°');
+  }
+
+  // ── Transference — medball throws ──
+  if (mov.throw1lb) {
+    var t1 = parseFloat(mov.throw1lb);
+    _mset('chip-t-1lb',    t1.toFixed(0) + ' mph');
+    _mset('gauge-text-mb1', t1.toFixed(0));
+    var mb1R = document.getElementById('gauge-ring-mb1');
+    if (mb1R) mb1R.setAttribute('stroke-dasharray', (t1 / 60 * 345.6).toFixed(1) + ' 345.6');
+  }
+  if (mov.throw2lb) {
+    var t2 = parseFloat(mov.throw2lb);
+    _mset('chip-t-2lb',    t2.toFixed(0) + ' mph');
+    _mset('gauge-text-mb2', t2.toFixed(0));
+    var mb2R = document.getElementById('gauge-ring-mb2');
+    if (mb2R) mb2R.setAttribute('stroke-dasharray', (t2 / 55 * 345.6).toFixed(1) + ' 345.6');
+  }
+  if (mov.kneelingThrow) {
+    var kt = parseFloat(mov.kneelingThrow);
+    _mset('chip-t-kt',     kt.toFixed(0) + ' mph');
+    _mset('gauge-text-kt',  kt.toFixed(0));
+    var ktR = document.getElementById('gauge-ring-kt');
+    if (ktR) ktR.setAttribute('stroke-dasharray', (kt / 90 * 345.6).toFixed(1) + ' 345.6');
+  }
+
+  // ── Production — IMTP / CMJ (convert from BW units) ──
+  if (fp.imtpPeakForceBw && a.weightLbs) {
+    var wKg  = a.weightLbs / 2.2046;
+    var imtpN = Math.round(fp.imtpPeakForceBw * wKg * 9.81);
+    _mset('chip-p-imtp',   imtpN.toLocaleString() + ' N');
+    _mset('gauge-text-imtp', imtpN.toLocaleString());
+    var iR = document.getElementById('gauge-ring-imtp');
+    if (iR) iR.setAttribute('stroke-dasharray', (Math.min(imtpN, 3500) / 3500 * 345.6).toFixed(1) + ' 345.6');
+  }
+  if (fp.peakPowerWkg && a.weightLbs) {
+    var wKg2  = a.weightLbs / 2.2046;
+    var cmjW  = Math.round(fp.peakPowerWkg * wKg2);
+    _mset('chip-p-cmj',   cmjW.toLocaleString() + ' W');
+    _mset('gauge-text-cmj', cmjW.toLocaleString());
+    var cR = document.getElementById('gauge-ring-cmj');
+    if (cR) cR.setAttribute('stroke-dasharray', (Math.min(cmjW, 4000) / 4000 * 345.6).toFixed(1) + ' 345.6');
+  }
+
+  // ── Potential chips ──
+  if (a.weightLbs) {
+    _mset('chip-pot-weight', Math.round(a.weightLbs) + ' lbs');
+    if (a.heightInches) {
+      var bmi = (a.weightLbs * 703 / (a.heightInches * a.heightInches)).toFixed(1);
+      _mset('chip-pot-htw', bmi);
+    }
+  }
+  if (mov.shoulderFlexion) _mset('chip-pot-shoulder', parseFloat(mov.shoulderFlexion).toFixed(0) + '°');
+  if (mov.thoracicExtension) _mset('chip-pot-trunk', parseFloat(mov.thoracicExtension).toFixed(0) + '°');
+
+  // ── Recovery chips ──
+  if (rec.restingHr)        _mset('chip-rec-rhr',   Math.round(rec.restingHr) + ' bpm');
+  if (rec.sleepPerformance) _mset('chip-rec-sleep',  Math.round(rec.sleepPerformance) + '%');
+
+  // Allow live-data charts to redraw with real data
+  ['kpi-modal-energy','kpi-modal-velo','ptm-modal-energy-score','ptm-modal-throwing-velocity','ptm-modal-energy-delta','ptm-modal-energy-potential'].forEach(function(id) {
+    if (typeof gcDrawn !== 'undefined') delete gcDrawn[id];
+  });
+}
 
 /* ── API layer (Vercel → Airtable) ──────────────────────────── */
 var _API_BASE = 'https://velou-api.vercel.app';
@@ -5022,45 +5287,43 @@ function gcRedrawModal(overlay) {
    ════════════════════════════════════════════════════════════════ */
 
 function gcDrawKpiEnergy() {
-  var data = google.visualization.arrayToDataTable([
-    ['Session', 'Energy Score', { role: 'tooltip', type: 'string', p: { html: true } }],
-    ['Aug \'25', 83, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Aug \'25</b><br>Energy Score: <b>83</b></div>'],
-    ['Sep \'25', 82, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Sep \'25</b><br>Energy Score: <b>82</b></div>'],
-    ['Oct \'25', 84, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Oct \'25</b><br>Energy Score: <b>84</b></div>'],
-    ['Nov \'25', 83, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Nov \'25</b><br>Energy Score: <b>83</b></div>'],
-    ['Dec \'25', 85, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Dec \'25</b><br>Energy Score: <b>85</b></div>'],
-    ['Jan \'26', 85, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Jan \'26</b><br>Energy Score: <b>85</b></div>'],
-    ['Feb \'26', 86, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Feb \'26</b><br>Energy Score: <b>86</b></div>'],
-    ['Mar \'26', 87, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Mar \'26</b><br>Energy Score: <b>87</b></div>'],
-    ['Apr \'26', 85, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Apr \'26</b><br>Energy Score: <b>85</b></div>'],
-    ['May \'26', 88, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>May \'26</b><br>Energy Score: <b>88</b></div>'],
-    ['Jun \'26', 88, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Jun \'26</b><br>Energy Score: <b>88</b></div>'],
-    ['Jul \'26', 88, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Jul \'26</b><br>Energy Score: <b style="color:#E10600">88</b></div>']
-  ]);
+  var liveHist = window._athleteData && window._athleteData.energy && window._athleteData.energy.history;
+  var rows;
+  if (liveHist && liveHist.length) {
+    rows = liveHist.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; })
+      .map(function(r) {
+        var s = parseFloat(r.score); var lbl = _fmtDate(r.date);
+        return [lbl, s, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>' + lbl + '</b><br>Energy Score: <b style="color:#E10600">' + s.toFixed(1) + '</b></div>'];
+      });
+  } else {
+    rows = [['Aug \'25',83,''],['Sep \'25',82,''],['Oct \'25',84,''],['Nov \'25',83,''],['Dec \'25',85,''],['Jan \'26',85,''],['Feb \'26',86,''],['Mar \'26',87,''],['Apr \'26',85,''],['May \'26',88,''],['Jun \'26',88,''],['Jul \'26',88,'']];
+  }
+  var data = google.visualization.arrayToDataTable([['Session','Energy Score',{role:'tooltip',type:'string',p:{html:true}}]].concat(rows));
   var opts = gcBase('#E10600');
   opts.tooltip = { isHtml: true, trigger: 'both' };
-  opts.vAxis.viewWindow = { min: 79, max: 91 };
+  var scores = rows.map(function(r){return r[1];});
+  opts.vAxis.viewWindow = { min: Math.floor(Math.min.apply(null,scores)) - 2, max: Math.ceil(Math.max.apply(null,scores)) + 2 };
   opts.chartArea = { backgroundColor: 'transparent', top: 8, bottom: 22, left: 28, right: 8, width: '100%', height: '100%' };
   new google.visualization.AreaChart(document.getElementById('gchart-kpi-energy')).draw(data, opts);
 }
 
 function gcDrawKpiVelo() {
-  var data = google.visualization.arrayToDataTable([
-    ['Session', 'Velocity (mph)', { role: 'tooltip', type: 'string', p: { html: true } }],
-    ['Feb \'26', 87, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Feb \'26</b><br>Velocity: <b>87 mph</b></div>'],
-    ['Mar \'26', 87, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Mar \'26</b><br>Velocity: <b>87 mph</b></div>'],
-    ['Apr \'26', 88, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Apr \'26</b><br>Velocity: <b>88 mph</b></div>'],
-    ['Apr \'26 B', 88, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Apr \'26</b><br>Velocity: <b>88 mph</b></div>'],
-    ['May \'26', 89, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>May \'26</b><br>Velocity: <b>89 mph</b></div>'],
-    ['May \'26 B', 90, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Late May \'26</b><br>Velocity: <b>90 mph</b></div>'],
-    ['Jun \'26', 90, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Jun \'26</b><br>Velocity: <b>90 mph</b></div>'],
-    ['Jun \'26 B', 91, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Late Jun \'26</b><br>Velocity: <b>91 mph</b></div>'],
-    ['Jul \'26 A', 91, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Jul 1 \'26</b><br>Velocity: <b>91 mph</b></div>'],
-    ['Jul \'26', 92, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>Jul 8 \'26</b><br>Velocity: <b style="color:#4e9ff5">92 mph ★ Peak</b></div>']
-  ]);
+  var liveSess = window._athleteData && window._athleteData.velocity && window._athleteData.velocity.sessions;
+  var rows;
+  if (liveSess && liveSess.length) {
+    rows = liveSess.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; })
+      .map(function(r) {
+        var v = parseFloat(r.maxVelo); var lbl = _fmtDate(r.date);
+        return [lbl, v, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #333;border-radius:4px"><b>' + lbl + '</b><br>Velocity: <b style="color:#4e9ff5">' + v.toFixed(1) + ' mph</b></div>'];
+      });
+  } else {
+    rows = [['Feb \'26',87,''],['Mar \'26',87,''],['Apr \'26',88,''],['Apr \'26 B',88,''],['May \'26',89,''],['May \'26 B',90,''],['Jun \'26',90,''],['Jun \'26 B',91,''],['Jul \'26 A',91,''],['Jul \'26',92,'']];
+  }
+  var data = google.visualization.arrayToDataTable([['Session','Velocity (mph)',{role:'tooltip',type:'string',p:{html:true}}]].concat(rows));
   var opts = gcBase('#4e9ff5');
   opts.tooltip = { isHtml: true, trigger: 'both' };
-  opts.vAxis.viewWindow = { min: 85, max: 94 };
+  var vels = rows.map(function(r){return r[1];});
+  opts.vAxis.viewWindow = { min: Math.floor(Math.min.apply(null,vels)) - 2, max: Math.ceil(Math.max.apply(null,vels)) + 2 };
   opts.chartArea = { backgroundColor: 'transparent', top: 8, bottom: 22, left: 28, right: 8, width: '100%', height: '100%' };
   new google.visualization.AreaChart(document.getElementById('gchart-kpi-velo')).draw(data, opts);
 }
@@ -5139,38 +5402,50 @@ function gcDrawKpiArm() {
    ════════════════════════════════════════════════════════════════ */
 
 function gcDrawPtmEnergy() {
-  var data = google.visualization.arrayToDataTable([
-    ['Session', 'Energy Score'],
-    ['Aug \'25', 83], ['Sep \'25', 82], ['Oct \'25', 84], ['Nov \'25', 83],
-    ['Dec \'25', 85], ['Jan \'26', 85], ['Feb \'26', 86], ['Mar \'26', 87],
-    ['Apr \'26', 85], ['May \'26', 88], ['Jun \'26', 88], ['Jul \'26', 88]
-  ]);
+  var liveHist = window._athleteData && window._athleteData.energy && window._athleteData.energy.history;
+  var rows;
+  if (liveHist && liveHist.length) {
+    rows = liveHist.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; })
+      .map(function(r){ return [_fmtDate(r.date), parseFloat(r.score)]; });
+  } else {
+    rows = [['Aug \'25',83],['Sep \'25',82],['Oct \'25',84],['Nov \'25',83],['Dec \'25',85],['Jan \'26',85],['Feb \'26',86],['Mar \'26',87],['Apr \'26',85],['May \'26',88],['Jun \'26',88],['Jul \'26',88]];
+  }
+  var data = google.visualization.arrayToDataTable([['Session','Energy Score']].concat(rows));
   var opts = gcBase('#E10600');
-  opts.vAxis.viewWindow = { min: 79, max: 91 };
+  var scores = rows.map(function(r){return r[1];});
+  opts.vAxis.viewWindow = { min: Math.floor(Math.min.apply(null,scores)) - 2, max: Math.ceil(Math.max.apply(null,scores)) + 2 };
   new google.visualization.AreaChart(document.getElementById('gchart-ptm-energy')).draw(data, opts);
 }
 
 function gcDrawPtmVelo() {
-  var data = google.visualization.arrayToDataTable([
-    ['Session', 'Velocity (mph)'],
-    ['Feb \'26', 87], ['Mar \'26', 87], ['Apr \'26', 88], ['Apr B', 88],
-    ['May \'26', 89], ['May B', 90], ['Jun \'26', 90], ['Jun B', 91],
-    ['Jul A', 91], ['Jul \'26', 92]
-  ]);
+  var liveSess = window._athleteData && window._athleteData.velocity && window._athleteData.velocity.sessions;
+  var rows;
+  if (liveSess && liveSess.length) {
+    rows = liveSess.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; })
+      .map(function(r){ return [_fmtDate(r.date), parseFloat(r.maxVelo)]; });
+  } else {
+    rows = [['Feb \'26',87],['Mar \'26',87],['Apr \'26',88],['Apr B',88],['May \'26',89],['May B',90],['Jun \'26',90],['Jun B',91],['Jul A',91],['Jul \'26',92]];
+  }
+  var data = google.visualization.arrayToDataTable([['Session','Velocity (mph)']].concat(rows));
   var opts = gcBase('#4e9ff5');
-  opts.vAxis.viewWindow = { min: 85, max: 94 };
+  var vels = rows.map(function(r){return r[1];});
+  opts.vAxis.viewWindow = { min: Math.floor(Math.min.apply(null,vels)) - 2, max: Math.ceil(Math.max.apply(null,vels)) + 2 };
   new google.visualization.AreaChart(document.getElementById('gchart-ptm-velo')).draw(data, opts);
 }
 
 function gcDrawPtmDelta() {
-  var data = google.visualization.arrayToDataTable([
-    ['Session', 'Energy Score'],
-    ['Aug \'25', 83], ['Sep \'25', 82], ['Oct \'25', 84], ['Nov \'25', 83],
-    ['Dec \'25', 85], ['Jan \'26', 85], ['Feb \'26', 86], ['Mar \'26', 87],
-    ['Apr \'26', 85], ['May \'26', 88], ['Jun \'26', 88], ['Jul \'26', 88]
-  ]);
+  var liveHist = window._athleteData && window._athleteData.energy && window._athleteData.energy.history;
+  var rows;
+  if (liveHist && liveHist.length) {
+    rows = liveHist.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; })
+      .map(function(r){ return [_fmtDate(r.date), parseFloat(r.score)]; });
+  } else {
+    rows = [['Aug \'25',83],['Sep \'25',82],['Oct \'25',84],['Nov \'25',83],['Dec \'25',85],['Jan \'26',85],['Feb \'26',86],['Mar \'26',87],['Apr \'26',85],['May \'26',88],['Jun \'26',88],['Jul \'26',88]];
+  }
+  var data = google.visualization.arrayToDataTable([['Session','Energy Score']].concat(rows));
   var opts = gcBase('#4caf7d');
-  opts.vAxis.viewWindow = { min: 79, max: 91 };
+  var scores = rows.map(function(r){return r[1];});
+  opts.vAxis.viewWindow = { min: Math.floor(Math.min.apply(null,scores)) - 2, max: Math.ceil(Math.max.apply(null,scores)) + 2 };
   new google.visualization.AreaChart(document.getElementById('gchart-ptm-delta')).draw(data, opts);
 }
 
@@ -5191,7 +5466,10 @@ function gcDrawPtmPotential() {
   pop.forEach(function(p) {
     scatterData.addRow([p[0], p[1], '<div style="padding:6px;color:#aaa;background:#1a1a1a;border:1px solid #333;border-radius:4px;font-size:11px">HT:WT ' + p[0] + '<br>Score: ' + p[1] + '</div>', null, null]);
   });
-  scatterData.addRow([22.5, null, null, 91, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #4caf7d;border-radius:4px"><b>★ Athlete</b><br>HT:WT: <b>22.5</b><br>Score: <b style="color:#4caf7d">91</b></div>']);
+  var _ad = window._athleteData && window._athleteData.athlete;
+  var _htw = (_ad && _ad.weightLbs && _ad.heightInches) ? (_ad.weightLbs * 703 / (_ad.heightInches * _ad.heightInches)).toFixed(1) : '22.5';
+  var _pot = window._athleteData && window._athleteData.energy && window._athleteData.energy.potential ? parseFloat(window._athleteData.energy.potential) : 91;
+  scatterData.addRow([parseFloat(_htw), null, null, _pot, '<div style="padding:8px;color:#fff;background:#1a1a1a;border:1px solid #4caf7d;border-radius:4px"><b>★ Athlete</b><br>HT:WT: <b>' + _htw + '</b><br>Score: <b style="color:#4caf7d">' + _pot.toFixed(1) + '</b></div>']);
 
   var scatterOpts = {
     backgroundColor: 'transparent',
