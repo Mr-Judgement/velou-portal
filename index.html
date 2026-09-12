@@ -2726,7 +2726,7 @@ body {
               <!-- N: Top Throwing Velocity — cx=300, cy=114 -->
               <g class="hex-cell" onclick="openPtmModal('throwing-velocity')">
                 <polygon class="hex-bg" points="390,114 345,36 255,36 210,114 255,192 345,192" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" x="300" y="107">92</text>
+                <text class="hex-score-sm" id="hex-velo" x="300" y="107">92</text>
                 <text class="hex-label" x="300" y="128">Top Throwing</text>
                 <text class="hex-label" x="300" y="142">Velocity</text>
                 <text class="hex-hint" x="300" y="160">tap for details</text>
@@ -2735,7 +2735,7 @@ body {
               <!-- NW: Energy Potential — cx=165, cy=192 -->
               <g class="hex-cell" onclick="openPtmModal('energy-potential')">
                 <polygon class="hex-bg" points="255,192 210,114 120,114 75,192 120,270 210,270" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" x="165" y="185">91</text>
+                <text class="hex-score-sm" id="hex-energy-potential" x="165" y="185">91</text>
                 <text class="hex-label" x="165" y="206">Energy</text>
                 <text class="hex-label" x="165" y="220">Potential</text>
                 <text class="hex-hint" x="165" y="238">tap for details</text>
@@ -2744,7 +2744,7 @@ body {
               <!-- NE: Energy Production — cx=435, cy=192 -->
               <g class="hex-cell" onclick="openPtmModal('energy-production')">
                 <polygon class="hex-bg" points="525,192 480,114 390,114 345,192 390,270 480,270" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" x="435" y="185">88</text>
+                <text class="hex-score-sm" id="hex-energy-production" x="435" y="185">88</text>
                 <text class="hex-label" x="435" y="206">Energy</text>
                 <text class="hex-label" x="435" y="220">Production</text>
                 <text class="hex-hint" x="435" y="238">tap for details</text>
@@ -2753,7 +2753,7 @@ body {
               <!-- Center: Total Energy Score — cx=300, cy=270 -->
               <g class="hex-cell" onclick="openPtmModal('energy-score')">
                 <polygon class="hex-bg" points="390,270 345,192 255,192 210,270 255,348 345,348" fill="#1c1010" stroke="rgba(225,6,0,0.65)" stroke-width="2"/>
-                <text class="hex-score" x="300" y="261" style="fill:var(--red)">88</text>
+                <text class="hex-score" id="hex-energy-score" x="300" y="261" style="fill:var(--red)">88</text>
                 <text class="hex-label" x="300" y="283" style="fill:rgba(255,255,255,0.55)">Total Energy</text>
                 <text class="hex-label" x="300" y="297" style="fill:rgba(255,255,255,0.55)">Score</text>
               </g>
@@ -2761,7 +2761,7 @@ body {
               <!-- SW: Energy Transference — cx=165, cy=348 -->
               <g class="hex-cell" onclick="openPtmModal('energy-transference')">
                 <polygon class="hex-bg" points="255,348 210,270 120,270 75,348 120,426 210,426" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" x="165" y="341">90</text>
+                <text class="hex-score-sm" id="hex-energy-transference" x="165" y="341">90</text>
                 <text class="hex-label" x="165" y="362">Energy</text>
                 <text class="hex-label" x="165" y="376">Transference</text>
                 <text class="hex-hint" x="165" y="394">tap for details</text>
@@ -2770,7 +2770,7 @@ body {
               <!-- SE: Energy Interference — cx=435, cy=348 -->
               <g class="hex-cell" onclick="openPtmModal('energy-interference')">
                 <polygon class="hex-bg" points="525,348 480,270 390,270 345,348 390,426 480,426" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" x="435" y="341">90</text>
+                <text class="hex-score-sm" id="hex-energy-interference" x="435" y="341">90</text>
                 <text class="hex-label" x="435" y="362">Energy</text>
                 <text class="hex-label" x="435" y="376">Interference</text>
                 <text class="hex-hint" x="435" y="394">tap for details</text>
@@ -2779,7 +2779,7 @@ body {
               <!-- S: Total Energy Delta — cx=300, cy=426 -->
               <g class="hex-cell" onclick="openPtmModal('energy-delta')">
                 <polygon class="hex-bg" points="390,426 345,348 255,348 210,426 255,504 345,504" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" x="300" y="419" style="fill:var(--good)">+3</text>
+                <text class="hex-score-sm" id="hex-energy-delta" x="300" y="419" style="fill:var(--good)">+3</text>
                 <text class="hex-label" x="300" y="440">Total Energy</text>
                 <text class="hex-label" x="300" y="454">Delta</text>
                 <text class="hex-hint" x="300" y="472">tap for details</text>
@@ -4824,12 +4824,12 @@ window.populateDashboard = function(data) {
     if (el && val !== undefined && val !== null) el.textContent = val;
   }
 
-  // Hero
-  set('vd-name', a.name || '—');
-  set('vd-school', a.team || '—');
-  set('vd-position', a.position || '—');
-  set('vd-arm', (a.throwingArm || '') + ' Hand');
-  if (a.gradYear) set('vd-class', 'Class of ' + a.gradYear);
+  // Hero — only set if value actually provided (avoid overwriting populateMember() data)
+  if (a.name)        set('vd-name', a.name);
+  if (a.team)        set('vd-school', a.team);
+  if (a.position)    set('vd-position', a.position);
+  if (a.throwingArm) set('vd-arm', a.throwingArm + ' Hand');
+  if (a.gradYear)    set('vd-class', 'Class of ' + a.gradYear);
 
   // Sidebar
   if (a.name) {
@@ -4839,7 +4839,7 @@ window.populateDashboard = function(data) {
     set('sb-name', parts[0] + (parts[1] ? ' ' + parts[1][0] + '.' : ''));
     if (a.gradYear) set('sb-class', 'Class of ' + a.gradYear);
   }
-  set('topbar-athlete-name', 'Welcome back, ' + (a.name || ''));
+  if (a.name) set('topbar-athlete-name', 'Welcome back, ' + a.name);
 
   // KPI
   var score = parseFloat(eng.score) || 0;
@@ -4857,19 +4857,30 @@ window.populateDashboard = function(data) {
   if (arm.armScore) set('vd-kpi-arm', arm.armScore);
   if (a.weightLbs) set('vd-weight-val', Math.round(a.weightLbs));
 
-  // PTM Energy System Profile sub-scores
+  // PTM side panel sub-scores
   if (vel.careerHigh) set('ptm-velo', parseFloat(vel.careerHigh).toFixed(1) + ' mph');
-  if (eng.potential)     set('ptm-energy-potential',     parseFloat(eng.potential).toFixed(1));
-  if (eng.production)    set('ptm-energy-production',    parseFloat(eng.production).toFixed(1));
-  if (eng.transference)  set('ptm-energy-transference',  parseFloat(eng.transference).toFixed(1));
-  if (eng.interference)  set('ptm-energy-interference',  parseFloat(eng.interference).toFixed(1));
+  if (eng.potential)    set('ptm-energy-potential',    parseFloat(eng.potential).toFixed(1));
+  if (eng.production)   set('ptm-energy-production',   parseFloat(eng.production).toFixed(1));
+  if (eng.transference) set('ptm-energy-transference', parseFloat(eng.transference).toFixed(1));
+  if (eng.interference) set('ptm-energy-interference', parseFloat(eng.interference).toFixed(1));
+
+  // PTM hexagon values
+  if (vel.careerHigh) set('hex-velo', parseFloat(vel.careerHigh).toFixed(1));
+  if (score)          set('hex-energy-score', score.toFixed(1));
+  if (eng.potential)    set('hex-energy-potential',    parseFloat(eng.potential).toFixed(1));
+  if (eng.production)   set('hex-energy-production',   parseFloat(eng.production).toFixed(1));
+  if (eng.transference) set('hex-energy-transference', parseFloat(eng.transference).toFixed(1));
+  if (eng.interference) set('hex-energy-interference', parseFloat(eng.interference).toFixed(1));
+
+  // Delta — side panel + hexagon (colour-coded)
   if (eng.delta !== undefined && eng.delta !== null) {
     var delta = parseFloat(eng.delta);
-    var deltaEl = document.getElementById('ptm-energy-delta');
-    if (deltaEl) {
-      deltaEl.textContent = (delta >= 0 ? '+' : '') + delta.toFixed(1);
-      deltaEl.style.color = delta >= 0 ? 'var(--good)' : 'var(--red)';
-    }
+    var deltaStr = (delta >= 0 ? '+' : '') + delta.toFixed(1);
+    var deltaColour = delta >= 0 ? 'var(--good)' : 'var(--red)';
+    ['ptm-energy-delta', 'hex-energy-delta'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) { el.textContent = deltaStr; el.style.fill = deltaColour; el.style.color = deltaColour; }
+    });
   }
 };
 
