@@ -5580,7 +5580,8 @@ function gcDrawPtmInterference() {
 
 function populateMember(member) {
   var cf = member.customFields || {};
-  var name      = cf['athlete-name'] || cf['name'] || (member.auth && member.auth.email) || 'Athlete';
+  var _rawName  = cf['athlete-name'] || cf['name'] || '';
+  var name      = (_rawName && _rawName.indexOf('@') === -1) ? _rawName : 'Athlete';
   var firstName = name.split(' ')[0];
   var classYear = cf['class-year'] || cf['class_year'] || '2027';
   var position  = cf['position'] || 'RHP';
