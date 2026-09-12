@@ -4855,6 +4855,7 @@ window.populateDashboard = function(data) {
   if (rec.hrv) set('vd-kpi-hrv', rec.hrv);
   if (rec.score) set('vd-kpi-rec', rec.score);
   if (arm.armScore) set('vd-kpi-arm', arm.armScore);
+  if (a.weightLbs) set('vd-weight', Math.round(a.weightLbs));
 };
 
 /* ── Airtable integration ───────────────────────────────────── */
@@ -4876,6 +4877,7 @@ function loadAthleteData(member) {
       if (!a) { console.warn('loadAthleteData: no record found for athlete_id=' + athleteId); return; }
 
       populateDashboard({
+        athlete:   { weightLbs: a.weight_lbs },
         energy:    { score: a.total_energy_score },
         velocity:  { careerHigh: a.top_fastball_velo },
         armHealth: { armScore: a.arm_score },
