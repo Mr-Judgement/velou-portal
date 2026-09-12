@@ -5166,24 +5166,7 @@ function loadAthleteData(member) {
       return r.json();
     })
     .then(function(d) {
-      var e = d.energy || {};
-      populateDashboard({
-        athlete:   { weightLbs: d.athlete && d.athlete.weightLbs },
-        energy:    {
-          score:        e.score,
-          potential:    e.potential,
-          production:   e.production,
-          transference: e.transference,
-          interference: e.interference,
-          delta:        e.delta
-        },
-        velocity:  { careerHigh: d.velocity && d.velocity.careerHigh },
-        armHealth: { armScore: d.armHealth && d.armHealth.armScore },
-        recovery:  {
-          hrv:   d.recovery && d.recovery.hrv ? Math.round(d.recovery.hrv) : null,
-          score: d.recovery && d.recovery.score
-        }
-      });
+      populateDashboard(d);
     })
     .catch(function(err) { console.warn('loadAthleteData: fetch error', err); });
 }
