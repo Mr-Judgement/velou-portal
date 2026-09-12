@@ -2597,7 +2597,7 @@ body {
               </div>
               <div class="hero-stat-item">
                 <div class="hero-stat-label">Body Weight</div>
-                <div class="hero-stat-val" id="vd-weight">205<span>lbs</span></div>
+                <div class="hero-stat-val" id="vd-weight">—<span>lbs</span></div>
               </div>
               <div class="hero-stat-item">
                 <div class="hero-stat-label">Energy Score</div>
@@ -2665,7 +2665,7 @@ body {
       <div class="kpi-strip">
         <div class="kpi-tile clickable" onclick="openKpiModal('energy')">
           <div class="kpi-label">Energy Score</div>
-          <div class="kpi-val kpi-accent" id="vd-kpi-energy-hero">88</div>
+          <div class="kpi-val kpi-accent" id="vd-kpi-energy-hero">—</div>
           <div class="kpi-delta up" id="vd-kpi-energy-delta">
             <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,1 9,9 1,9"/></svg>
             +3 pts
@@ -2674,7 +2674,7 @@ body {
         </div>
         <div class="kpi-tile clickable" onclick="openKpiModal('velo')">
           <div class="kpi-label">Fastball Velocity</div>
-          <div class="kpi-val" id="vd-kpi-velo-strip">92<span class="unit">MPH</span></div>
+          <div class="kpi-val" id="vd-kpi-velo-strip">—<span class="unit">MPH</span></div>
           <div class="kpi-delta up" id="vd-kpi-velo-delta">
             <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,1 9,9 1,9"/></svg>
             +1 mph
@@ -2683,7 +2683,7 @@ body {
         </div>
         <div class="kpi-tile clickable" onclick="openKpiModal('hrv')">
           <div class="kpi-label">HRV</div>
-          <div class="kpi-val" id="vd-kpi-hrv">58<span class="unit">ms</span></div>
+          <div class="kpi-val" id="vd-kpi-hrv">—<span class="unit">ms</span></div>
           <div class="kpi-delta up" id="vd-kpi-hrv-delta">
             <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,1 9,9 1,9"/></svg>
             +6 ms
@@ -2692,7 +2692,7 @@ body {
         </div>
         <div class="kpi-tile clickable" onclick="openKpiModal('recovery')">
           <div class="kpi-label">Recovery Score</div>
-          <div class="kpi-val" id="vd-kpi-rec">78<span class="unit">%</span></div>
+          <div class="kpi-val" id="vd-kpi-rec">—<span class="unit">%</span></div>
           <div class="kpi-delta up" id="vd-kpi-rec-delta">
             <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,1 9,9 1,9"/></svg>
             +7%
@@ -2701,7 +2701,7 @@ body {
         </div>
         <div class="kpi-tile clickable" onclick="openKpiModal('arm')">
           <div class="kpi-label">Arm Score</div>
-          <div class="kpi-val" id="vd-kpi-arm">86</div>
+          <div class="kpi-val" id="vd-kpi-arm">—</div>
           <div class="kpi-delta up" id="vd-kpi-arm-delta">
             <svg viewBox="0 0 10 10" fill="currentColor"><polygon points="5,1 9,9 1,9"/></svg>
             +3 pts
@@ -2726,7 +2726,7 @@ body {
               <!-- N: Top Throwing Velocity — cx=300, cy=114 -->
               <g class="hex-cell" onclick="openPtmModal('throwing-velocity')">
                 <polygon class="hex-bg" points="390,114 345,36 255,36 210,114 255,192 345,192" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" id="hex-velo" x="300" y="107">92</text>
+                <text class="hex-score-sm" id="hex-velo" x="300" y="107">—</text>
                 <text class="hex-label" x="300" y="128">Top Throwing</text>
                 <text class="hex-label" x="300" y="142">Velocity</text>
                 <text class="hex-hint" x="300" y="160">tap for details</text>
@@ -2735,7 +2735,7 @@ body {
               <!-- NW: Energy Potential — cx=165, cy=192 -->
               <g class="hex-cell" onclick="openPtmModal('energy-potential')">
                 <polygon class="hex-bg" points="255,192 210,114 120,114 75,192 120,270 210,270" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" id="hex-energy-potential" x="165" y="185">91</text>
+                <text class="hex-score-sm" id="hex-energy-potential" x="165" y="185">—</text>
                 <text class="hex-label" x="165" y="206">Energy</text>
                 <text class="hex-label" x="165" y="220">Potential</text>
                 <text class="hex-hint" x="165" y="238">tap for details</text>
@@ -2744,7 +2744,7 @@ body {
               <!-- NE: Energy Production — cx=435, cy=192 -->
               <g class="hex-cell" onclick="openPtmModal('energy-production')">
                 <polygon class="hex-bg" points="525,192 480,114 390,114 345,192 390,270 480,270" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" id="hex-energy-production" x="435" y="185">88</text>
+                <text class="hex-score-sm" id="hex-energy-production" x="435" y="185">—</text>
                 <text class="hex-label" x="435" y="206">Energy</text>
                 <text class="hex-label" x="435" y="220">Production</text>
                 <text class="hex-hint" x="435" y="238">tap for details</text>
@@ -2753,7 +2753,7 @@ body {
               <!-- Center: Total Energy Score — cx=300, cy=270 -->
               <g class="hex-cell" onclick="openPtmModal('energy-score')">
                 <polygon class="hex-bg" points="390,270 345,192 255,192 210,270 255,348 345,348" fill="#1c1010" stroke="rgba(225,6,0,0.65)" stroke-width="2"/>
-                <text class="hex-score" id="hex-energy-score" x="300" y="261" style="fill:var(--red)">88</text>
+                <text class="hex-score" id="hex-energy-score" x="300" y="261" style="fill:var(--red)">—</text>
                 <text class="hex-label" x="300" y="283" style="fill:rgba(255,255,255,0.55)">Total Energy</text>
                 <text class="hex-label" x="300" y="297" style="fill:rgba(255,255,255,0.55)">Score</text>
               </g>
@@ -2761,7 +2761,7 @@ body {
               <!-- SW: Energy Transference — cx=165, cy=348 -->
               <g class="hex-cell" onclick="openPtmModal('energy-transference')">
                 <polygon class="hex-bg" points="255,348 210,270 120,270 75,348 120,426 210,426" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" id="hex-energy-transference" x="165" y="341">90</text>
+                <text class="hex-score-sm" id="hex-energy-transference" x="165" y="341">—</text>
                 <text class="hex-label" x="165" y="362">Energy</text>
                 <text class="hex-label" x="165" y="376">Transference</text>
                 <text class="hex-hint" x="165" y="394">tap for details</text>
@@ -2770,7 +2770,7 @@ body {
               <!-- SE: Energy Interference — cx=435, cy=348 -->
               <g class="hex-cell" onclick="openPtmModal('energy-interference')">
                 <polygon class="hex-bg" points="525,348 480,270 390,270 345,348 390,426 480,426" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" id="hex-energy-interference" x="435" y="341">90</text>
+                <text class="hex-score-sm" id="hex-energy-interference" x="435" y="341">—</text>
                 <text class="hex-label" x="435" y="362">Energy</text>
                 <text class="hex-label" x="435" y="376">Interference</text>
                 <text class="hex-hint" x="435" y="394">tap for details</text>
@@ -2779,7 +2779,7 @@ body {
               <!-- S: Total Energy Delta — cx=300, cy=426 -->
               <g class="hex-cell" onclick="openPtmModal('energy-delta')">
                 <polygon class="hex-bg" points="390,426 345,348 255,348 210,426 255,504 345,504" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <text class="hex-score-sm" id="hex-energy-delta" x="300" y="419" style="fill:var(--good)">+3</text>
+                <text class="hex-score-sm" id="hex-energy-delta" x="300" y="419" style="fill:var(--good)">—</text>
                 <text class="hex-label" x="300" y="440">Total Energy</text>
                 <text class="hex-label" x="300" y="454">Delta</text>
                 <text class="hex-hint" x="300" y="472">tap for details</text>
@@ -2795,27 +2795,27 @@ body {
               <div class="ptm-sub-list">
                 <div class="ptm-sub-row" onclick="openPtmModal('throwing-velocity')">
                   <span class="ptm-sub-name">Top Throwing Velocity</span>
-                  <span class="ptm-sub-val" id="ptm-velo">92 mph</span>
+                  <span class="ptm-sub-val" id="ptm-velo">—</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-potential')">
                   <span class="ptm-sub-name">Energy Potential</span>
-                  <span class="ptm-sub-val" id="ptm-energy-potential">91</span>
+                  <span class="ptm-sub-val" id="ptm-energy-potential">—</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-production')">
                   <span class="ptm-sub-name">Energy Production</span>
-                  <span class="ptm-sub-val" id="ptm-energy-production">88</span>
+                  <span class="ptm-sub-val" id="ptm-energy-production">—</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-transference')">
                   <span class="ptm-sub-name">Energy Transference</span>
-                  <span class="ptm-sub-val" id="ptm-energy-transference">90</span>
+                  <span class="ptm-sub-val" id="ptm-energy-transference">—</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-interference')">
                   <span class="ptm-sub-name">Energy Interference</span>
-                  <span class="ptm-sub-val" id="ptm-energy-interference">90</span>
+                  <span class="ptm-sub-val" id="ptm-energy-interference">—</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-delta')">
                   <span class="ptm-sub-name">Total Energy Delta</span>
-                  <span class="ptm-sub-val" id="ptm-energy-delta">+3</span>
+                  <span class="ptm-sub-val" id="ptm-energy-delta">—</span>
                 </div>
               </div>
             </div>
