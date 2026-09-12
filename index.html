@@ -2597,7 +2597,7 @@ body {
               </div>
               <div class="hero-stat-item">
                 <div class="hero-stat-label">Body Weight</div>
-                <div class="hero-stat-val" id="vd-weight">205<span>lbs</span></div>
+                <div class="hero-stat-val" id="vd-weight"><span id="vd-weight-val">205</span><span>lbs</span></div>
               </div>
               <div class="hero-stat-item">
                 <div class="hero-stat-label">Energy Score</div>
@@ -2795,27 +2795,27 @@ body {
               <div class="ptm-sub-list">
                 <div class="ptm-sub-row" onclick="openPtmModal('throwing-velocity')">
                   <span class="ptm-sub-name">Top Throwing Velocity</span>
-                  <span class="ptm-sub-val">92 mph</span>
+                  <span class="ptm-sub-val" id="ptm-velo">92 mph</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-potential')">
                   <span class="ptm-sub-name">Energy Potential</span>
-                  <span class="ptm-sub-val">91</span>
+                  <span class="ptm-sub-val" id="ptm-energy-potential">91</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-production')">
                   <span class="ptm-sub-name">Energy Production</span>
-                  <span class="ptm-sub-val">88</span>
+                  <span class="ptm-sub-val" id="ptm-energy-production">88</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-transference')">
                   <span class="ptm-sub-name">Energy Transference</span>
-                  <span class="ptm-sub-val">90</span>
+                  <span class="ptm-sub-val" id="ptm-energy-transference">90</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-interference')">
                   <span class="ptm-sub-name">Energy Interference</span>
-                  <span class="ptm-sub-val">90</span>
+                  <span class="ptm-sub-val" id="ptm-energy-interference">90</span>
                 </div>
                 <div class="ptm-sub-row" onclick="openPtmModal('energy-delta')">
                   <span class="ptm-sub-name">Total Energy Delta</span>
-                  <span class="ptm-sub-val" style="color:var(--good)">+3</span>
+                  <span class="ptm-sub-val" id="ptm-energy-delta">+3</span>
                 </div>
               </div>
             </div>
@@ -4855,7 +4855,22 @@ window.populateDashboard = function(data) {
   if (rec.hrv) set('vd-kpi-hrv', rec.hrv);
   if (rec.score) set('vd-kpi-rec', rec.score);
   if (arm.armScore) set('vd-kpi-arm', arm.armScore);
-  if (a.weightLbs) set('vd-weight', Math.round(a.weightLbs));
+  if (a.weightLbs) set('vd-weight-val', Math.round(a.weightLbs));
+
+  // PTM Energy System Profile sub-scores
+  if (vel.careerHigh) set('ptm-velo', parseFloat(vel.careerHigh).toFixed(1) + ' mph');
+  if (eng.potential)     set('ptm-energy-potential',     parseFloat(eng.potential).toFixed(1));
+  if (eng.production)    set('ptm-energy-production',    parseFloat(eng.production).toFixed(1));
+  if (eng.transference)  set('ptm-energy-transference',  parseFloat(eng.transference).toFixed(1));
+  if (eng.interference)  set('ptm-energy-interference',  parseFloat(eng.interference).toFixed(1));
+  if (eng.delta !== undefined && eng.delta !== null) {
+    var delta = parseFloat(eng.delta);
+    var deltaEl = document.getElementById('ptm-energy-delta');
+    if (deltaEl) {
+      deltaEl.textContent = (delta >= 0 ? '+' : '') + delta.toFixed(1);
+      deltaEl.style.color = delta >= 0 ? 'var(--good)' : 'var(--red)';
+    }
+  }
 };
 
 /* ── API layer (Vercel → Airtable) ──────────────────────────── */
@@ -4872,12 +4887,20 @@ function loadAthleteData(member) {
       return r.json();
     })
     .then(function(d) {
+      var e = d.energy || {};
       populateDashboard({
-        athlete:      { weightLbs: d.athlete && d.athlete.weightLbs },
-        energy:       { score: d.energy && d.energy.score },
-        velocity:     { careerHigh: d.velocity && d.velocity.careerHigh },
-        armHealth:    { armScore: d.armHealth && d.armHealth.armScore },
-        recovery:     {
+        athlete:   { weightLbs: d.athlete && d.athlete.weightLbs },
+        energy:    {
+          score:        e.score,
+          potential:    e.potential,
+          production:   e.production,
+          transference: e.transference,
+          interference: e.interference,
+          delta:        e.delta
+        },
+        velocity:  { careerHigh: d.velocity && d.velocity.careerHigh },
+        armHealth: { armScore: d.armHealth && d.armHealth.armScore },
+        recovery:  {
           hrv:   d.recovery && d.recovery.hrv ? Math.round(d.recovery.hrv) : null,
           score: d.recovery && d.recovery.score
         }
