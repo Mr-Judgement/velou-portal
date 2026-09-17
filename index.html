@@ -4084,7 +4084,8 @@ body {
       <div class="ptm-chips">
         <div class="ptm-stat-chip"><span class="ptm-chip-label">External Rotation</span><span class="ptm-chip-val" id="chip-arm-ert">88</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Internal Rotation</span><span class="ptm-chip-val" id="chip-arm-irt">85</span></div>
-        <div class="ptm-stat-chip"><span class="ptm-chip-label">Total Arc</span><span class="ptm-chip-val" id="chip-arm-arc">173°</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">IR + ER Strength</span><span class="ptm-chip-val" id="chip-arm-arc">173 lbs</span></div>
+        <div class="ptm-stat-chip" id="chip-arm-rom-wrap" style="display:none"><span class="ptm-chip-label">Total Rotational Arc</span><span class="ptm-chip-val" id="chip-arm-rom">—</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Injury Risk</span><span class="ptm-chip-val" style="color:var(--good)">Low</span></div>
       </div>
       <div class="ptm-sparkline-wrap">
@@ -4305,6 +4306,13 @@ body {
         <div class="ptm-stat-chip"><span class="ptm-chip-label">IMTP Peak Force</span><span class="ptm-chip-val" id="chip-p-imtp">2970 N</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">CMJ Peak Power</span><span class="ptm-chip-val" id="chip-p-cmj">3200 W</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Rotational Force</span><span class="ptm-chip-val">87</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Jump Height</span><span class="ptm-chip-val" id="chip-p-jump">—</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">RSI Modified</span><span class="ptm-chip-val" id="chip-p-rsi">—</span></div>
+        <div class="ptm-stat-chip"><span class="ptm-chip-label">Force Asymmetry</span><span class="ptm-chip-val" id="chip-p-asym">—</span></div>
+      </div>
+      <div class="ptm-sparkline-wrap">
+        <div class="ptm-sparkline-label">Production Score — Trend</div>
+        <div id="gchart-ptm-production-score" style="width:100%;height:90px"></div>
       </div>
       <div class="ptm-dual-panel">
         <!-- IMTP -->
@@ -4382,6 +4390,10 @@ body {
         <div class="ptm-stat-chip"><span class="ptm-chip-label">1 LB Throw</span><span class="ptm-chip-val" id="chip-t-1lb">49 mph</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">2 LB Throw</span><span class="ptm-chip-val" id="chip-t-2lb">42 mph</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Kneeling Throw</span><span class="ptm-chip-val" id="chip-t-kt">74 mph</span></div>
+      </div>
+      <div class="ptm-sparkline-wrap">
+        <div class="ptm-sparkline-label">Transference Score — Trend</div>
+        <div id="gchart-ptm-transference-score" style="width:100%;height:90px"></div>
       </div>
       <div class="ptm-triple-panel">
         <!-- 1LB Medball -->
@@ -4477,6 +4489,10 @@ body {
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Timing Efficiency</span><span class="ptm-chip-val">89</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Mech. Leakage</span><span class="ptm-chip-val">10%</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Arm Score</span><span class="ptm-chip-val" id="chip-i-arm">90</span></div>
+      </div>
+      <div class="ptm-sparkline-wrap">
+        <div class="ptm-sparkline-label">Interference Score — Trend</div>
+        <div id="gchart-ptm-interference-score" style="width:100%;height:90px"></div>
       </div>
       <!-- Arm Score + Shoulder Strength -->
       <div class="ptm-arm-row">
@@ -5087,7 +5103,17 @@ function populateModals(data) {
   if (arm.scaption) { _mset('bd-scaption', parseFloat(arm.scaption).toFixed(0) + ' lbs'); _updateBar('bar-scaption', arm.scaption, 60); }
   if (arm.grip)     { _mset('bd-grip',     parseFloat(arm.grip).toFixed(0)     + ' lbs'); _updateBar('bar-grip',     arm.grip,     250); }
   if (arm.irt && arm.ert) {
-    _mset('chip-arm-arc', (parseFloat(arm.irt) + parseFloat(arm.ert)).toFixed(0) + '°');
+    _mset('chip-arm-arc', (parseFloat(arm.irt) + parseFloat(arm.ert)).toFixed(0) + ' lbs');
+  }
+  // Real rotational ROM (irt_rom/ert_rom) is sparsely recorded in ArmCare exams —
+  // show it as a bonus stat only when both values are actually present, rather
+  // than gating the primary "IR + ER Strength" chip on data that's usually missing.
+  var romWrap = document.getElementById('chip-arm-rom-wrap');
+  if (arm.irtRom && arm.ertRom) {
+    if (romWrap) romWrap.style.display = 'flex';
+    _mset('chip-arm-rom', (parseFloat(arm.irtRom) + parseFloat(arm.ertRom)).toFixed(0) + '°');
+  } else if (romWrap) {
+    romWrap.style.display = 'none';
   }
 
   // ── Transference — medball throws ──
@@ -5113,22 +5139,47 @@ function populateModals(data) {
     if (ktR) ktR.setAttribute('stroke-dasharray', (kt / 90 * 345.6).toFixed(1) + ' 345.6');
   }
 
-  // ── Production — IMTP / CMJ (convert from BW units) ──
-  if (fp.imtpPeakForceBw && a.weightLbs) {
+  // ── Production — IMTP / CMJ ──
+  // Prefer the real absolute-unit value straight from VALD (imtpPeakForceN / cmjPeakPowerW)
+  // when the API sends it; only fall back to reconstructing it from the bodyweight-relative
+  // value + a.weightLbs (which may not match the athlete's weight at the time of that test)
+  // if the absolute figure isn't available yet.
+  var imtpN = null;
+  if (fp.imtpPeakForceN) {
+    imtpN = Math.round(parseFloat(fp.imtpPeakForceN));
+  } else if (fp.imtpPeakForceBw && a.weightLbs) {
+    // imtp_peak_force_bw is already Newtons-per-kg (confirmed against real sample
+    // data: peak_force_n / bodyweight_kg ≈ peak_force_bw), NOT a unitless
+    // bodyweight-multiple ratio — so recovering N only needs multiplying by mass
+    // in kg, not by mass *and* gravity (the previous formula double-counted
+    // gravity and overstated the result by a factor of ~9.8x).
     var wKg  = a.weightLbs / 2.2046;
-    var imtpN = Math.round(fp.imtpPeakForceBw * wKg * 9.81);
+    imtpN = Math.round(fp.imtpPeakForceBw * wKg);
+  }
+  if (imtpN !== null) {
     _mset('chip-p-imtp',   imtpN.toLocaleString() + ' N');
     _mset('gauge-text-imtp', imtpN.toLocaleString());
     var iR = document.getElementById('gauge-ring-imtp');
     if (iR) iR.setAttribute('stroke-dasharray', (Math.min(imtpN, 3500) / 3500 * 345.6).toFixed(1) + ' 345.6');
   }
-  if (fp.peakPowerWkg && a.weightLbs) {
+  var cmjW = null;
+  if (fp.cmjPeakPowerW) {
+    cmjW = Math.round(parseFloat(fp.cmjPeakPowerW));
+  } else if (fp.peakPowerWkg && a.weightLbs) {
     var wKg2  = a.weightLbs / 2.2046;
-    var cmjW  = Math.round(fp.peakPowerWkg * wKg2);
+    cmjW = Math.round(fp.peakPowerWkg * wKg2);
+  }
+  if (cmjW !== null) {
     _mset('chip-p-cmj',   cmjW.toLocaleString() + ' W');
     _mset('gauge-text-cmj', cmjW.toLocaleString());
     var cR = document.getElementById('gauge-ring-cmj');
     if (cR) cR.setAttribute('stroke-dasharray', (Math.min(cmjW, 4000) / 4000 * 345.6).toFixed(1) + ' 345.6');
+  }
+  // Already-flowing fields that previously had no display binding at all.
+  if (fp.jumpHeightCm) _mset('chip-p-jump', parseFloat(fp.jumpHeightCm).toFixed(1) + ' cm');
+  if (fp.rsiModified)  _mset('chip-p-rsi',  parseFloat(fp.rsiModified).toFixed(2));
+  if (fp.peakForceAsymPct != null && fp.peakForceAsymPct !== '') {
+    _mset('chip-p-asym', parseFloat(fp.peakForceAsymPct).toFixed(1) + '%');
   }
 
   // ── Potential chips ──
@@ -5482,8 +5533,34 @@ function gcDrawPtmPotential() {
   new google.visualization.AreaChart(document.getElementById('gchart-weight')).draw(wData, wOpts);
 }
 
+// Shared draw for the 3 PTM sub-score trend charts (Production/Transference/Interference
+// score over time). Unlike the per-component mini-charts below (IMTP/CMJ/medball/shoulder),
+// the sub-score itself IS already sent by the API in energy.history — no history endpoint
+// gap here, just no chart previously wired to it. Falls back to a mock trend if the field
+// is missing from every history row (e.g. older Airtable rows predating this field).
+function _gcDrawPtmSubScore(elId, field, color, mockRows) {
+  var liveHist = window._athleteData && window._athleteData.energy && window._athleteData.energy.history;
+  var rows;
+  if (liveHist && liveHist.some(function(r){ return r[field] != null && r[field] !== ''; })) {
+    rows = liveHist.slice()
+      .filter(function(r){ return r[field] != null && r[field] !== ''; })
+      .sort(function(a,b){ return a.date < b.date ? -1 : 1; })
+      .map(function(r){ return [_fmtDate(r.date), parseFloat(r[field])]; });
+  } else {
+    rows = mockRows;
+  }
+  var data = google.visualization.arrayToDataTable([['Session', field]].concat(rows));
+  var opts = gcBase(color);
+  var vals = rows.map(function(r){return r[1];});
+  opts.vAxis.viewWindow = { min: Math.floor(Math.min.apply(null,vals)) - 2, max: Math.ceil(Math.max.apply(null,vals)) + 2 };
+  new google.visualization.AreaChart(document.getElementById(elId)).draw(data, opts);
+}
+
 function gcDrawPtmProduction() {
   var sessions = ['Feb \'26', 'Mar \'26', 'Apr \'26', 'May \'26', 'Jun \'26', 'Jul \'26'];
+
+  _gcDrawPtmSubScore('gchart-ptm-production-score', 'production', '#f0a030',
+    [['Feb \'26',83],['Mar \'26',84],['Apr \'26',85],['May \'26',86],['Jun \'26',87],['Jul \'26',88]]);
 
   /* IMTP mini */
   var imtpData = google.visualization.arrayToDataTable([
@@ -5501,6 +5578,9 @@ function gcDrawPtmProduction() {
 }
 
 function gcDrawPtmTransference() {
+  _gcDrawPtmSubScore('gchart-ptm-transference-score', 'transference', '#E10600',
+    [['Feb \'26',85],['Mar \'26',86],['Apr \'26',87],['May \'26',88],['Jun \'26',89],['Jul \'26',90]]);
+
   var mb1 = google.visualization.arrayToDataTable([
     ['Session', '1LB (mph)'],
     ['Feb', 43], ['Mar', 45], ['Apr', 46], ['May', 47], ['Jun', 48], ['Jul', 49]
@@ -5521,6 +5601,9 @@ function gcDrawPtmTransference() {
 }
 
 function gcDrawPtmInterference() {
+  _gcDrawPtmSubScore('gchart-ptm-interference-score', 'interference', '#4caf7d',
+    [['Feb \'26',86],['Mar \'26',87],['Apr \'26',88],['May \'26',88],['Jun \'26',89],['Jul \'26',90]]);
+
   /* Shoulder strength total */
   var ssiData = google.visualization.arrayToDataTable([
     ['Session', 'Total Shoulder (lbs)'],
