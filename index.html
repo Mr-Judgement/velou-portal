@@ -4085,7 +4085,7 @@ body {
         <div class="ptm-stat-chip"><span class="ptm-chip-label">External Rotation</span><span class="ptm-chip-val" id="chip-arm-ert">88</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Internal Rotation</span><span class="ptm-chip-val" id="chip-arm-irt">85</span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">IR + ER Strength</span><span class="ptm-chip-val" id="chip-arm-arc">173 lbs</span></div>
-        <div class="ptm-stat-chip" id="chip-arm-rom-wrap" style="display:none"><span class="ptm-chip-label">Total Rotational Arc</span><span class="ptm-chip-val" id="chip-arm-rom">—</span></div>
+        <div class="ptm-stat-chip" id="chip-arm-rom-wrap" style="display:none"><span class="ptm-chip-label">Total Rotational Arc</span><span class="ptm-chip-val" id="chip-arm-rom">—</span><span id="chip-arm-rom-date" style="font-size:9px;color:var(--text-3);margin-left:4px"></span></div>
         <div class="ptm-stat-chip"><span class="ptm-chip-label">Injury Risk</span><span class="ptm-chip-val" style="color:var(--good)">Low</span></div>
       </div>
       <div class="ptm-sparkline-wrap">
@@ -5112,6 +5112,10 @@ function populateModals(data) {
   if (arm.irtRom && arm.ertRom) {
     if (romWrap) romWrap.style.display = 'flex';
     _mset('chip-arm-rom', (parseFloat(arm.irtRom) + parseFloat(arm.ertRom)).toFixed(0) + '°');
+    // ROM is measured far less often than strength, so the reading shown here
+    // can be considerably older than the rest of the modal — always label it
+    // with its own date rather than implying it's as current as everything else.
+    _mset('chip-arm-rom-date', arm.romAsOf ? '(' + _fmtDate(arm.romAsOf) + ')' : '');
   } else if (romWrap) {
     romWrap.style.display = 'none';
   }
