@@ -87,6 +87,22 @@ def round2(val):
 
 
 # ---------------------------------------------------------------------------
+# QA-only synthetic data. Nothing here is a real ArmCare measurement — it
+# exists purely to exercise the ROM UI path for the 3 sample athletes who
+# have zero irt_rom/ert_rom values anywhere in their real exam history
+# (confirmed by scanning "armcare_exams sample data.csv" directly), so all
+# 5 sample athletes can be used to test the feature. The real Sample Data
+# files are left untouched; this only ever affects locally-generated demo
+# CSVs, never a live Airtable base. Remove this block once real ROM data
+# exists for these athletes, or once it's no longer needed for testing.
+SYNTHETIC_ROM_FOR_TESTING = {
+    "003": {"irt_rom": "65", "ert_rom": "128", "exam_date": "2026-03-06"},   # fresh — matches this athlete's real armcare_date
+    "083": {"irt_rom": "60", "ert_rom": "115", "exam_date": "2025-11-15"},   # moderately stale
+    "141": {"irt_rom": "75", "ert_rom": "140", "exam_date": "2024-08-20"},   # very stale, same vintage as 038/212's real readings
+}
+
+
+# ---------------------------------------------------------------------------
 # 1. airtable_athletes.csv
 # ---------------------------------------------------------------------------
 
@@ -126,6 +142,14 @@ def build_athletes():
             energy_by_athlete[aid] = r
 
     armcare_latest = latest_by_date(armcare, "exam_date")
+    # ROM (irt_rom/ert_rom) is recorded far less often than strength — most
+    # recent overall exam usually has neither. Look back across all exams for
+    # the most recent one that actually has both values, rather than only
+    # ever checking the single latest exam.
+    armcare_rom_latest = latest_by_date(
+        [r for r in armcare if clean(r.get("irt_rom")) and clean(r.get("ert_rom"))],
+        "exam_date"
+    )
     recovery_latest = latest_by_date(
         [r for r in whoop_recovery if clean(r.get("score_state")) == "SCORED"],
         "date"
@@ -155,7 +179,7 @@ def build_athletes():
         "energy_score_date",
         # Physical testing
         "top_fastball_velo", "arm_score", "irt_strength", "ert_strength",
-        "irt_rom", "ert_rom",
+        "irt_rom", "ert_rom", "rom_date",
         "scaption_strength", "grip_strength",
         "armcare_date",
         # CMJ
@@ -179,6 +203,7 @@ def build_athletes():
 
         e = energy_by_athlete.get(aid, {})
         ac = armcare_latest.get(aid, {})
+        rom_ac = armcare_rom_latest.get(aid, {}) or SYNTHETIC_ROM_FOR_TESTING.get(aid, {})
         rec = recovery_latest.get(aid, {})
         slp = sleep_latest.get(aid, {})
         ev = eval_latest.get(aid, {})
@@ -216,8 +241,9 @@ def build_athletes():
             "arm_score": round2(ac.get("arm_score") or e.get("arm_score")),
             "irt_strength": round2(ac.get("irt_strength") or e.get("irt_strength")),
             "ert_strength": round2(ac.get("ert_strength") or e.get("ert_strength")),
-            "irt_rom": clean(ac.get("irt_rom")),
-            "ert_rom": clean(ac.get("ert_rom")),
+            "irt_rom": clean(rom_ac.get("irt_rom")),
+            "ert_rom": clean(rom_ac.get("ert_rom")),
+            "rom_date": clean(rom_ac.get("exam_date")),
             "scaption_strength": round2(e.get("scaption_strength")),
             "grip_strength": round2(e.get("grip_strength")),
             "armcare_date": clean(ac.get("exam_date") or e.get("armcare_date")),
