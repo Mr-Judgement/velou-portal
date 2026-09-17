@@ -5736,6 +5736,13 @@ window.addEventListener('message', function(e) {
   ];
   var trusted = trustedOrigins.some(function(o) { return e.origin === o; });
   if (!trusted) return;
+  if (e.data && e.data.type === 'ms-signed-out') {
+    // Parent confirms the real Memberstack session is gone (e.g. answering our
+    // ms-request-refresh below, or a proactive logout-elsewhere notice).
+    document.getElementById('ms-auth-gate').style.display = 'none';
+    document.getElementById('ms-signin-gate').style.display = 'flex';
+    return;
+  }
   if (!e.data || e.data.type !== 'ms-member' || !e.data.member) return;
   window._msMemberReceived = true;
   document.getElementById('ms-auth-gate').style.display = 'none';
@@ -5744,21 +5751,44 @@ window.addEventListener('message', function(e) {
   loadAthleteData(e.data.member);
 });
 
+// A bfcache restore (browser back/forward) re-shows the page exactly as it was
+// rendered, including an already-authenticated dashboard, without re-running
+// DOMContentLoaded. Force a fresh load so the auth check below always reruns.
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) window.location.reload();
+});
+
 // Check auth on page load
 document.addEventListener('DOMContentLoaded', function() {
   var authGate   = document.getElementById('ms-auth-gate');
   var signinGate = document.getElementById('ms-signin-gate');
 
   // ── 1. URL param auth (Webflow iframe passes member data via ?ms=base64) ──
+  // The param has no expiry on its own, so a stale copy of this URL (browser
+  // back/forward, history, a bookmark) would otherwise grant access forever,
+  // even after the real Memberstack session ended. Requires the Webflow
+  // parent to stamp `_msIssuedAt` when it mints this URL — see the parent
+  // postMessage snippet for the ms-request-refresh / ms-signed-out handshake.
+  var MS_PARAM_MAX_AGE_MS = 60000;
   try {
     var params = new URLSearchParams(window.location.search);
     var msParam = params.get('ms');
     if (msParam) {
       var member = JSON.parse(atob(msParam));
-      authGate.style.display = 'none';
-      populateMember(member);
-      loadAthleteData(member);
-      return;
+      var isFresh = typeof member._msIssuedAt === 'number' &&
+        (Date.now() - member._msIssuedAt) < MS_PARAM_MAX_AGE_MS;
+      if (isFresh) {
+        authGate.style.display = 'none';
+        populateMember(member);
+        loadAthleteData(member);
+        return;
+      }
+      // Stale token — don't trust it. Ask the parent for the real, current
+      // session instead of assuming this old snapshot is still valid.
+      if (window.self !== window.top) {
+        window.parent.postMessage({ type: 'ms-request-refresh' }, 'https://www.velouniversity.com');
+        return;
+      }
     }
   } catch (e) {}
 
