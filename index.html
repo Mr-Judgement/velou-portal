@@ -5777,18 +5777,19 @@ document.addEventListener('DOMContentLoaded', function() {
       var member = JSON.parse(atob(msParam));
       var isFresh = typeof member._msIssuedAt === 'number' &&
         (Date.now() - member._msIssuedAt) < MS_PARAM_MAX_AGE_MS;
-      if (isFresh) {
-        authGate.style.display = 'none';
-        populateMember(member);
-        loadAthleteData(member);
-        return;
-      }
-      // Stale token — don't trust it. Ask the parent for the real, current
-      // session instead of assuming this old snapshot is still valid.
-      if (window.self !== window.top) {
+      // Fail OPEN, not closed: render immediately with whatever payload we
+      // have so the dashboard never hangs waiting on a parent that may not
+      // yet answer ms-request-refresh (older Webflow custom code won't).
+      // If stale, still fire the refresh request in the background so a
+      // parent that DOES support it can correct a truly-logged-out session
+      // via the ms-signed-out message handled elsewhere.
+      authGate.style.display = 'none';
+      populateMember(member);
+      loadAthleteData(member);
+      if (!isFresh && window.self !== window.top) {
         window.parent.postMessage({ type: 'ms-request-refresh' }, 'https://www.velouniversity.com');
-        return;
       }
+      return;
     }
   } catch (e) {}
 
