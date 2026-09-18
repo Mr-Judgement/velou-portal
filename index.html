@@ -2422,6 +2422,19 @@ body {
   color: var(--text-3);
 }
 #ms-signout-btn:hover { background: var(--surface-4); border-color: rgba(255,255,255,0.2); color: var(--text-2); }
+
+/* Google Charts' native (non-HTML) tooltip box ignores our color theme and
+   renders as a plain white box, which combined with gcBase()'s white
+   tooltip text made it blank/invisible. Forcing isHtml on gcBase's tooltip
+   (see JS) and styling the resulting div here instead. */
+.google-visualization-tooltip {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+  border-radius: 4px !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+.google-visualization-tooltip * { color: #fff !important; }
 </style>
 <!-- Memberstack DOM SDK — replace pk_... with your Public Key from Memberstack > Settings > API Keys -->
 <script>window.MS_APP_ID = 'pk_sb_3c9c29d15879829e53f3';</script>
@@ -5268,6 +5281,7 @@ function gcBase(color) {
     pointShape: 'circle',
     areaOpacity: 0.18,
     tooltip: {
+      isHtml: true,
       textStyle: { color: '#fff', fontSize: 12 },
       showColorCode: true,
       trigger: 'both'
