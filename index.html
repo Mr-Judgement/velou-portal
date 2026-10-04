@@ -457,6 +457,67 @@ body {
   gap: 12px;
 }
 
+/* Decorative brand panel — replaces the dev team grid in the hero's right
+   column on the "dev team below hero" layout variant. */
+.hero-right-decor {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-decor-mark {
+  width: 300px;
+  height: 300px;
+  fill: var(--red);
+  opacity: 0.07;
+  position: absolute;
+  right: -60px;
+  bottom: -60px;
+  transform: rotate(-6deg);
+}
+.hero-decor-word {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+.hero-decor-word strong {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.hero-decor-word span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* Development Team — standalone section below the hero card */
+.dev-team-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.dev-team-section-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+.dev-team-grid-wide {
+  grid-template-columns: repeat(6, 1fr);
+}
+
 .coach-card {
   display: flex;
   flex-direction: column;
@@ -2619,73 +2680,82 @@ body {
             </div>
           </div>
 
-          <!-- Right: Development Team -->
-          <div class="hero-right">
-            <div class="dev-team-label">Development Team</div>
-            <div class="dev-team-grid">
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Dr.%20Nick%20Serio.avif" alt="Dr. Nick Serio"></div>
-                <div class="coach-name">Dr. Nick Serio</div>
-                <div class="coach-role">Throwing Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Tom%20Jankins.avif" alt="Tom Jankins"></div>
-                <div class="coach-name">Tom Jankins</div>
-                <div class="coach-role">Throwing Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Sam%20Byrns.avif" alt="Sam Byrns"></div>
-                <div class="coach-name">Sam Byrns</div>
-                <div class="coach-role">Throwing Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Jason%20Agresti.avif" alt="Jason Agresti"></div>
-                <div class="coach-name">Jason Agresti</div>
-                <div class="coach-role">Performance Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Paul%20Franzese.avif" alt="Paul Franzese"></div>
-                <div class="coach-name">Paul Franzese</div>
-                <div class="coach-role">Performance Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Ben%20Adams.avif" alt="Ben Adams"></div>
-                <div class="coach-name">Ben Adams</div>
-                <div class="coach-role">Athlete Success Coordinator</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Tim%20Wilson.avif" alt="Tim Wilson"></div>
-                <div class="coach-name">Tim Wilson</div>
-                <div class="coach-role">Nutrition Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Mike%20Michallas.avif" alt="Mike Michallas"></div>
-                <div class="coach-name">Mike Michallas</div>
-                <div class="coach-role">Mental Performance Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Panos%20Sinas.avif" alt="Panos Sinas"></div>
-                <div class="coach-name">Panos Sinas</div>
-                <div class="coach-role">Biomechanics Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Cassie%20Reilly-Boccia.avif" alt="Cassie Reilly-Boccia"></div>
-                <div class="coach-name">Cassie Reilly-Boccia</div>
-                <div class="coach-role">Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Dom%20Pesca.avif" alt="Dom Pesca"></div>
-                <div class="coach-name">Dom Pesca</div>
-                <div class="coach-role">Coach</div>
-              </div>
-              <div class="coach-card">
-                <div class="coach-avatar"><img src="assets/coaches/Kenny%20Hayden.avif" alt="Kenny Hayden"></div>
-                <div class="coach-name">Kenny Hayden</div>
-                <div class="coach-role">Coach</div>
-              </div>
+          <!-- Right: decorative brand mark (Development Team moved below the hero) -->
+          <div class="hero-right hero-right-decor">
+            <svg class="hero-decor-mark" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <div class="hero-decor-word">
+              <strong>Black Label</strong>
+              <span>by VeloU</span>
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- Development Team -->
+      <div class="dev-team-section">
+        <div class="dev-team-section-label">Development Team</div>
+        <div class="dev-team-grid dev-team-grid-wide">
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Dr.%20Nick%20Serio.avif" alt="Dr. Nick Serio"></div>
+            <div class="coach-name">Dr. Nick Serio</div>
+            <div class="coach-role">Throwing Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Tom%20Jankins.avif" alt="Tom Jankins"></div>
+            <div class="coach-name">Tom Jankins</div>
+            <div class="coach-role">Throwing Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Sam%20Byrns.avif" alt="Sam Byrns"></div>
+            <div class="coach-name">Sam Byrns</div>
+            <div class="coach-role">Throwing Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Jason%20Agresti.avif" alt="Jason Agresti"></div>
+            <div class="coach-name">Jason Agresti</div>
+            <div class="coach-role">Performance Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Paul%20Franzese.avif" alt="Paul Franzese"></div>
+            <div class="coach-name">Paul Franzese</div>
+            <div class="coach-role">Performance Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Ben%20Adams.avif" alt="Ben Adams"></div>
+            <div class="coach-name">Ben Adams</div>
+            <div class="coach-role">Athlete Success Coordinator</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Tim%20Wilson.avif" alt="Tim Wilson"></div>
+            <div class="coach-name">Tim Wilson</div>
+            <div class="coach-role">Nutrition Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Mike%20Michallas.avif" alt="Mike Michallas"></div>
+            <div class="coach-name">Mike Michallas</div>
+            <div class="coach-role">Mental Performance Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Panos%20Sinas.avif" alt="Panos Sinas"></div>
+            <div class="coach-name">Panos Sinas</div>
+            <div class="coach-role">Biomechanics Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Cassie%20Reilly-Boccia.avif" alt="Cassie Reilly-Boccia"></div>
+            <div class="coach-name">Cassie Reilly-Boccia</div>
+            <div class="coach-role">Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Dom%20Pesca.avif" alt="Dom Pesca"></div>
+            <div class="coach-name">Dom Pesca</div>
+            <div class="coach-role">Coach</div>
+          </div>
+          <div class="coach-card">
+            <div class="coach-avatar"><img src="assets/coaches/Kenny%20Hayden.avif" alt="Kenny Hayden"></div>
+            <div class="coach-name">Kenny Hayden</div>
+            <div class="coach-role">Coach</div>
+          </div>
         </div>
       </div>
 
