@@ -70,38 +70,25 @@ body {
   gap: 10px;
 }
 
-.logo-icon {
+/* Small square mark, shown only when the sidebar is collapsed to an icon
+   rail — the real logo (assets/BL White.png) is a wide wordmark that can't
+   fit a 56px collapsed sidebar, so this abstract mark stands in for it there. */
+.logo-icon-collapsed {
+  display: none;
   width: 34px;
   height: 34px;
   background: var(--red);
   border-radius: 6px;
-  display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
+.logo-icon-collapsed svg { width: 20px; height: 20px; fill: #fff; }
 
-.logo-icon svg { width: 20px; height: 20px; fill: #fff; }
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.logo-text strong {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-1);
-  line-height: 1;
-}
-.logo-text span {
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-top: 3px;
+.sidebar-logo-img {
+  width: 168px;
+  height: auto;
+  display: block;
 }
 
 .sidebar-nav {
@@ -145,10 +132,11 @@ body {
 /* Collapsed sidebar */
 .sidebar.collapsed { width: 56px; }
 .sidebar.collapsed .nav-label,
-.sidebar.collapsed .logo-text,
+.sidebar.collapsed .sidebar-logo-img,
 .sidebar.collapsed .nav-section-label,
 .sidebar.collapsed .user-info,
 .sidebar.collapsed .sidebar-collapse-label { display: none; }
+.sidebar.collapsed .logo-icon-collapsed { display: flex; }
 .sidebar.collapsed .logo-mark { justify-content: center; }
 .sidebar.collapsed .nav-item { padding: 10px 0; justify-content: center; }
 .sidebar.collapsed .sidebar-logo { padding: 22px 0; display: flex; justify-content: center; }
@@ -465,37 +453,10 @@ body {
   position: relative;
   overflow: hidden;
 }
-.hero-decor-mark {
-  width: 300px;
-  height: 300px;
-  fill: var(--red);
-  opacity: 0.07;
-  position: absolute;
-  right: -60px;
-  bottom: -60px;
-  transform: rotate(-6deg);
-}
-.hero-decor-word {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  text-align: center;
-}
-.hero-decor-word strong {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  color: var(--text-2);
-}
-.hero-decor-word span {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-3);
+.hero-decor-logo {
+  width: 240px;
+  height: auto;
+  opacity: 0.9;
 }
 
 /* Development Team — standalone section below the hero card */
@@ -2527,13 +2488,10 @@ body {
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-mark">
-      <div class="logo-icon">
+      <div class="logo-icon-collapsed">
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
-      <div class="logo-text">
-        <strong>Black Label</strong>
-        <span>by VeloU</span>
-      </div>
+      <img class="sidebar-logo-img" src="assets/BL%20White.png" alt="Black Label by VeloU">
     </div>
   </div>
 
@@ -2682,11 +2640,7 @@ body {
 
           <!-- Right: decorative brand mark (Development Team moved below the hero) -->
           <div class="hero-right hero-right-decor">
-            <svg class="hero-decor-mark" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            <div class="hero-decor-word">
-              <strong>Black Label</strong>
-              <span>by VeloU</span>
-            </div>
+            <img class="hero-decor-logo" src="assets/BL%20White.png" alt="Black Label by VeloU">
           </div>
 
         </div>
