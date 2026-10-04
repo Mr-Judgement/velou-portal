@@ -82,11 +82,14 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
 }
-.logo-icon-collapsed svg { width: 20px; height: 20px; fill: #fff; }
 
 .sidebar-logo-img {
-  width: 168px;
+  width: 76px;
   height: auto;
   display: block;
 }
@@ -454,9 +457,12 @@ body {
   overflow: hidden;
 }
 .hero-decor-logo {
-  width: 240px;
+  width: 420px;
   height: auto;
-  opacity: 0.9;
+  opacity: 0.1;
+  position: absolute;
+  right: -70px;
+  bottom: -30px;
 }
 
 /* Development Team — standalone section below the hero card */
@@ -2308,6 +2314,32 @@ body {
 /* Mobile: 768px and below */
 @media (max-width: 768px) {
 
+  /* Sidebar auto-collapses to a 56px icon rail on mobile (see JS). Expanding
+     it back out used to grow it inline, pushing/squeezing .main (a flex
+     sibling) over. Instead, the sidebar is always fixed-position at this
+     breakpoint (both collapsed and expanded) with .main given a constant
+     56px offset to match the collapsed rail -- so expanding just floats a
+     wider panel on top without .main ever reflowing underneath it. */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 500;
+  }
+  .sidebar:not(.collapsed) {
+    box-shadow: 8px 0 24px rgba(0,0,0,0.5);
+  }
+  .main { flex: none; margin-left: 56px; width: calc(100% - 56px); }
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 499;
+  }
+  .sidebar-backdrop.visible { display: block; }
+
   /* Topbar + page padding */
   .topbar       { padding: 0 16px; }
   .page-content { padding: 20px 16px 72px; }
@@ -2488,9 +2520,7 @@ body {
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-mark">
-      <div class="logo-icon-collapsed">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      </div>
+      <div class="logo-icon-collapsed">BL</div>
       <img class="sidebar-logo-img" src="assets/BL%20White.png" alt="Black Label by VeloU">
     </div>
   </div>
@@ -2561,6 +2591,7 @@ body {
     </div>
   </div>
 </aside>
+<div class="sidebar-backdrop" onclick="toggleSidebar()"></div>
 
 <!-- ════════════════════════════ MAIN AREA ════════════════════════════════ -->
 <div class="main">
@@ -4696,7 +4727,10 @@ function toggleRecap(row) {
 }
 
 function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('collapsed');
+  var sb = document.querySelector('.sidebar');
+  sb.classList.toggle('collapsed');
+  var backdrop = document.querySelector('.sidebar-backdrop');
+  if (backdrop) backdrop.classList.toggle('visible', !sb.classList.contains('collapsed'));
 }
 
 // ── ROM model interactivity ──────────────────────────────────────────
