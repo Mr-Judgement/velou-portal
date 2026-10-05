@@ -1068,6 +1068,16 @@ body {
 
 /* ── Meeting recaps ───────────────────────────────────────────── */
 .recap-list { display: flex; flex-direction: column; gap: 10px; }
+.recap-empty {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 13px;
+}
+.report-dl-btn[disabled] { opacity: 0.4; cursor: default; }
 
 .recap-row {
   background: var(--surface);
@@ -3333,200 +3343,8 @@ body {
         <p>Notes and summaries from your one-on-one and group coaching sessions. Click any recap to expand.</p>
       </div>
 
-      <div class="recap-list">
-
-        <div class="recap-row" onclick="toggleRecap(this)">
-          <div class="recap-row-main">
-            <div class="recap-date-block"><div class="month">Jul</div><div class="day">17</div></div>
-            <div class="recap-avatar"><img src="assets/coaches/Dr.%20Nick%20Serio.avif" alt="Dr. Nick Serio"></div>
-            <div class="recap-info">
-              <div class="recap-title">Throwing Session — Grip &amp; Release Point Adjustments</div>
-              <div class="recap-coach">Coach Nick Serio · Throwing Coach</div>
-            </div>
-            <span class="recap-tag">Throwing</span>
-            <button class="report-dl-btn" onclick="event.stopPropagation()">View Recap</button>
-            <svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="recap-detail">
-            <div>
-              <div class="recap-detail-label">Meeting Objectives</div>
-              <ul class="recap-detail-list">
-                <li>Review TrackMan data from the previous three bullpen sessions</li>
-                <li>Address grip pressure and finger placement on the changeup</li>
-                <li>Work on release point consistency across all pitch types</li>
-              </ul>
-            </div>
-            <div>
-              <div class="recap-detail-label">Action Items</div>
-              <ul class="recap-detail-list">
-                <li>Complete 3 flat-ground sessions focusing on grip before next bullpen</li>
-                <li>Film release point from catcher view and share with Coach Serio</li>
-                <li>Review Module 4 of the throwing development library</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="recap-row" onclick="toggleRecap(this)">
-          <div class="recap-row-main">
-            <div class="recap-date-block"><div class="month">Jul</div><div class="day">14</div></div>
-            <div class="recap-avatar"><img src="assets/coaches/Tim%20Wilson.avif" alt="Tim Wilson"></div>
-            <div class="recap-info">
-              <div class="recap-title">Pre-Season Nutrition Strategy Meeting</div>
-              <div class="recap-coach">Coach Tim Wilson · Nutrition Coach</div>
-            </div>
-            <span class="recap-tag">Nutrition</span>
-            <button class="report-dl-btn" onclick="event.stopPropagation()">View Recap</button>
-            <svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="recap-detail">
-            <div>
-              <div class="recap-detail-label">Meeting Objectives</div>
-              <ul class="recap-detail-list">
-                <li>Review current body composition and weight progression data</li>
-                <li>Build a pre-season fueling strategy around the training schedule</li>
-                <li>Address post-session recovery nutrition timing</li>
-              </ul>
-            </div>
-            <div>
-              <div class="recap-detail-label">Action Items</div>
-              <ul class="recap-detail-list">
-                <li>Log food intake for 5 consecutive days and share with Coach Wilson</li>
-                <li>Increase protein intake to 180g per day during high-volume weeks</li>
-                <li>Watch Nutrition Library Module 3: Post-Session Recovery Nutrition</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="recap-row" onclick="toggleRecap(this)">
-          <div class="recap-row-main">
-            <div class="recap-date-block"><div class="month">Jul</div><div class="day">10</div></div>
-            <div class="recap-avatar"><img src="assets/coaches/Mike%20Michallas.avif" alt="Mike Michallas"></div>
-            <div class="recap-info">
-              <div class="recap-title">Mental Performance: Managing High-Pressure At-Bats</div>
-              <div class="recap-coach">Coach Mike Michallas · Mental Performance Coach</div>
-            </div>
-            <span class="recap-tag">Mental</span>
-            <button class="report-dl-btn" onclick="event.stopPropagation()">View Recap</button>
-            <svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="recap-detail">
-            <div>
-              <div class="recap-detail-label">Meeting Objectives</div>
-              <ul class="recap-detail-list">
-                <li>Identify specific high-pressure scenarios causing performance anxiety</li>
-                <li>Introduce a pre-pitch reset routine for the mound</li>
-                <li>Review breathing protocols from previous session</li>
-              </ul>
-            </div>
-            <div>
-              <div class="recap-detail-label">Action Items</div>
-              <ul class="recap-detail-list">
-                <li>Practice the 4-7-8 breathing reset daily for 2 weeks</li>
-                <li>Journal two pressure situations per week with emotional rating</li>
-                <li>Complete Module 2: Focus Protocols for High-Pressure Situations</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="recap-row" onclick="toggleRecap(this)">
-          <div class="recap-row-main">
-            <div class="recap-date-block"><div class="month">Jul</div><div class="day">3</div></div>
-            <div class="recap-avatar"><img src="assets/coaches/Dr.%20Nick%20Serio.avif" alt="Dr. Nick Serio"></div>
-            <div class="recap-info">
-              <div class="recap-title">Parent Meeting — Summer Development Update</div>
-              <div class="recap-coach">Coach Nick Serio · Throwing Coach · With Family</div>
-            </div>
-            <span class="recap-tag">Parent Meeting</span>
-            <button class="report-dl-btn" onclick="event.stopPropagation()">View Recap</button>
-            <svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="recap-detail">
-            <div>
-              <div class="recap-detail-label">Meeting Objectives</div>
-              <ul class="recap-detail-list">
-                <li>Present summer development progress across all key metrics</li>
-                <li>Align on fall training priorities and competition schedule</li>
-                <li>Address questions on recruiting timeline and exposure events</li>
-              </ul>
-            </div>
-            <div>
-              <div class="recap-detail-label">Action Items</div>
-              <ul class="recap-detail-list">
-                <li>Family to review the development priorities section in the portal</li>
-                <li>Schedule next parent check-in for mid-August</li>
-                <li>Confirm attendance for fall showcase events</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="recap-row" onclick="toggleRecap(this)">
-          <div class="recap-row-main">
-            <div class="recap-date-block"><div class="month">Jun</div><div class="day">28</div></div>
-            <div class="recap-avatar"><img src="assets/coaches/Dr.%20Nick%20Serio.avif" alt="Dr. Nick Serio"></div>
-            <div class="recap-info">
-              <div class="recap-title">Throwing Session — Arm Path &amp; Hip Load Sequencing</div>
-              <div class="recap-coach">Coach Nick Serio · Throwing Coach</div>
-            </div>
-            <span class="recap-tag">Throwing</span>
-            <button class="report-dl-btn" onclick="event.stopPropagation()">View Recap</button>
-            <svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="recap-detail">
-            <div>
-              <div class="recap-detail-label">Meeting Objectives</div>
-              <ul class="recap-detail-list">
-                <li>Analyze hip-to-shoulder separation from recent Rapsodo footage</li>
-                <li>Correct early arm path pattern showing up in high-effort throws</li>
-                <li>Establish drill progression for improving hip load at footstrike</li>
-              </ul>
-            </div>
-            <div>
-              <div class="recap-detail-label">Action Items</div>
-              <ul class="recap-detail-list">
-                <li>10 reps of hip load drill before every bullpen for next 3 weeks</li>
-                <li>Film from the first base line during next live session</li>
-                <li>Compare hip separation measurements at next evaluation</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="recap-row" onclick="toggleRecap(this)">
-          <div class="recap-row-main">
-            <div class="recap-date-block"><div class="month">Jun</div><div class="day">20</div></div>
-            <div class="recap-avatar"><img src="assets/coaches/Jason%20Agresti.avif" alt="Jason Agresti"></div>
-            <div class="recap-info">
-              <div class="recap-title">Strength &amp; Conditioning Mid-Block Check-In</div>
-              <div class="recap-coach">Coach Jason Agresti · Performance Coach</div>
-            </div>
-            <span class="recap-tag">Strength</span>
-            <button class="report-dl-btn" onclick="event.stopPropagation()">View Recap</button>
-            <svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="recap-detail">
-            <div>
-              <div class="recap-detail-label">Meeting Objectives</div>
-              <ul class="recap-detail-list">
-                <li>Review IMTP and CMJ force plate data from mid-block assessment</li>
-                <li>Evaluate fatigue levels and adjust training volume if needed</li>
-                <li>Set targets for end-of-block testing in 3 weeks</li>
-              </ul>
-            </div>
-            <div>
-              <div class="recap-detail-label">Action Items</div>
-              <ul class="recap-detail-list">
-                <li>Reduce squat volume by 20% this week to manage cumulative fatigue</li>
-                <li>Add two additional sprint sessions before the end-of-block test</li>
-                <li>Check in with Coach Agresti before Saturday's session</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
+      <div class="recap-list" id="recap-list">
+        <div class="recap-empty" id="recap-empty" style="display:none">No coach meeting recaps on file yet.</div>
       </div>
     </section>
 
@@ -5091,6 +4909,7 @@ window.populateDashboard = function(data) {
   }
 
   populateRecoveryPage(data);
+  populateCoachRecaps(data);
   populateModals(data);
 };
 
@@ -5138,6 +4957,66 @@ function populateRecoveryPage(data) {
   if (rec.sleepEfficiency != null)  _mset('recpage-sleep-eff', Math.round(rec.sleepEfficiency));
   if (rec.remSleep != null)         _mset('recpage-rem', _fmtMsToHm(rec.remSleep));
   if (rec.slowWave != null)         _mset('recpage-slow-wave', _fmtMsToHm(rec.slowWave));
+}
+
+function _esc(s) {
+  var d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+function _fmtMonthDay(d) {
+  if (!d) return { month: '—', day: '' };
+  var p = d.split('-');
+  if (p.length < 3) return { month: d, day: '' };
+  var mn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return { month: mn[parseInt(p[1], 10) - 1], day: parseInt(p[2], 10).toString() };
+}
+
+function populateCoachRecaps(data) {
+  var list = document.getElementById('recap-list');
+  var empty = document.getElementById('recap-empty');
+  if (!list) return;
+
+  var recaps = data.coachRecaps || [];
+  list.querySelectorAll('.recap-row').forEach(function(el) { el.remove(); });
+
+  if (!recaps.length) {
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  recaps.forEach(function(r) {
+    var md = _fmtMonthDay(r.date);
+    var avatarFile = encodeURIComponent(r.coachName || '') + '.avif';
+    var objectives = (r.objectives || []).map(function(o) { return '<li>' + _esc(o) + '</li>'; }).join('');
+    var actionItems = (r.actionItems || []).map(function(o) { return '<li>' + _esc(o) + '</li>'; }).join('');
+    var viewBtn = r.videoUrl
+      ? '<button class="report-dl-btn" onclick="event.stopPropagation();window.open(' + JSON.stringify(r.videoUrl) + ',\'_blank\')">View Recap</button>'
+      : '<button class="report-dl-btn" disabled onclick="event.stopPropagation()">View Recap</button>';
+
+    var row = document.createElement('div');
+    row.className = 'recap-row';
+    row.setAttribute('onclick', 'toggleRecap(this)');
+    row.innerHTML =
+      '<div class="recap-row-main">' +
+        '<div class="recap-date-block"><div class="month">' + _esc(md.month) + '</div><div class="day">' + _esc(md.day) + '</div></div>' +
+        '<div class="recap-avatar"><img src="assets/coaches/' + avatarFile + '" alt="' + _esc(r.coachName) + '"></div>' +
+        '<div class="recap-info">' +
+          '<div class="recap-title">' + _esc(r.title) + '</div>' +
+          '<div class="recap-coach">Coach ' + _esc(r.coachName) + (r.coachRole ? ' · ' + _esc(r.coachRole) : '') + '</div>' +
+        '</div>' +
+        (r.tag ? '<span class="recap-tag">' + _esc(r.tag) + '</span>' : '') +
+        viewBtn +
+        '<svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>' +
+      '</div>' +
+      '<div class="recap-detail">' +
+        '<div><div class="recap-detail-label">Meeting Objectives</div><ul class="recap-detail-list">' + objectives + '</ul></div>' +
+        '<div><div class="recap-detail-label">Action Items</div><ul class="recap-detail-list">' + actionItems + '</ul></div>' +
+      '</div>';
+    list.appendChild(row);
+  });
 }
 
 /* ── Modal data population ───────────────────────────────────── */

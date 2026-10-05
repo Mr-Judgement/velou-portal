@@ -493,9 +493,194 @@ def build_eval_history():
     print(f"✓  airtable_eval_history.csv  ({len(rows_out)} rows)")
 
 
+# ──────────────────────────────────────────────────────────────────────────
+# Coach Meeting Recaps — synthetic example content, QA/prototype only.
+#
+# No real recap data exists anywhere in Sample Data; per zeb's Sept 24
+# business-requirements call, recaps are recorded by the media team and
+# shared manually via Google Drive links today, with no DB-backed source yet.
+# This block is hand-written illustrative content (same spirit as the
+# prototype disclaimers across every Development Update doc), NOT real
+# meeting notes, so the dashboard has real per-athlete data to test against
+# instead of 6 identical hardcoded rows shown to every athlete.
+# ──────────────────────────────────────────────────────────────────────────
+COACH_RECAPS = {
+    "003": [  # Quinn Miller
+        {
+            "date": "2026-07-17", "coach_name": "Dr. Nick Serio", "coach_role": "Throwing Coach",
+            "title": "Throwing Session — Grip & Release Point Adjustments", "tag": "Throwing",
+            "objectives": "Review TrackMan data from the previous three bullpen sessions||Address grip pressure and finger placement on the changeup||Work on release point consistency across all pitch types",
+            "action_items": "Complete 3 flat-ground sessions focusing on grip before next bullpen||Film release point from catcher view and share with Coach Serio||Review Module 4 of the throwing development library",
+            "video_url": "https://drive.google.com/file/d/example-003-jul17/view",
+        },
+        {
+            "date": "2026-07-14", "coach_name": "Tim Wilson", "coach_role": "Nutrition Coach",
+            "title": "Pre-Season Nutrition Strategy Meeting", "tag": "Nutrition",
+            "objectives": "Review current body composition and weight progression data||Build a pre-season fueling strategy around the training schedule||Address post-session recovery nutrition timing",
+            "action_items": "Log food intake for 5 consecutive days and share with Coach Wilson||Increase protein intake to 180g per day during high-volume weeks||Watch Nutrition Library Module 3: Post-Session Recovery Nutrition",
+            "video_url": "https://drive.google.com/file/d/example-003-jul14/view",
+        },
+        {
+            "date": "2026-07-10", "coach_name": "Mike Michallas", "coach_role": "Mental Performance Coach",
+            "title": "Mental Performance: Managing High-Pressure At-Bats", "tag": "Mental",
+            "objectives": "Identify specific high-pressure scenarios causing performance anxiety||Introduce a pre-pitch reset routine for the mound||Review breathing protocols from previous session",
+            "action_items": "Practice the 4-7-8 breathing reset daily for 2 weeks||Journal two pressure situations per week with emotional rating||Complete Module 2: Focus Protocols for High-Pressure Situations",
+            "video_url": "https://drive.google.com/file/d/example-003-jul10/view",
+        },
+        {
+            "date": "2026-07-03", "coach_name": "Dr. Nick Serio", "coach_role": "Throwing Coach · With Family",
+            "title": "Parent Meeting — Summer Development Update", "tag": "Parent Meeting",
+            "objectives": "Present summer development progress across all key metrics||Align on fall training priorities and competition schedule||Address questions on recruiting timeline and exposure events",
+            "action_items": "Family to review the development priorities section in the portal||Schedule next parent check-in for mid-August||Confirm attendance for fall showcase events",
+            "video_url": "",
+        },
+        {
+            "date": "2026-06-28", "coach_name": "Dr. Nick Serio", "coach_role": "Throwing Coach",
+            "title": "Throwing Session — Arm Path & Hip Load Sequencing", "tag": "Throwing",
+            "objectives": "Analyze hip-to-shoulder separation from recent Rapsodo footage||Correct early arm path pattern showing up in high-effort throws||Establish drill progression for improving hip load at footstrike",
+            "action_items": "10 reps of hip load drill before every bullpen for next 3 weeks||Film from the first base line during next live session||Compare hip separation measurements at next evaluation",
+            "video_url": "https://drive.google.com/file/d/example-003-jun28/view",
+        },
+        {
+            "date": "2026-06-20", "coach_name": "Jason Agresti", "coach_role": "Performance Coach",
+            "title": "Strength & Conditioning Mid-Block Check-In", "tag": "Strength",
+            "objectives": "Review IMTP and CMJ force plate data from mid-block assessment||Evaluate fatigue levels and adjust training volume if needed||Set targets for end-of-block testing in 3 weeks",
+            "action_items": "Reduce squat volume by 20% this week to manage cumulative fatigue||Add two additional sprint sessions before the end-of-block test||Check in with Coach Agresti before Saturday's session",
+            "video_url": "https://drive.google.com/file/d/example-003-jun20/view",
+        },
+    ],
+    "038": [  # Connor Buckley
+        {
+            "date": "2026-07-16", "coach_name": "Tom Jankins", "coach_role": "Throwing Coach",
+            "title": "Bullpen Review — Fastball Command", "tag": "Throwing",
+            "objectives": "Chart strike-zone command across last two bullpens||Identify mechanical cause of arm-side miss under fatigue||Set a weekly command benchmark for the next outing",
+            "action_items": "Add a daily 15-throw command ladder drill||Track zone% for every bullpen going forward||Rewatch last outing's video with Coach Jankins before next session",
+            "video_url": "https://drive.google.com/file/d/example-038-jul16/view",
+        },
+        {
+            "date": "2026-07-09", "coach_name": "Paul Franzese", "coach_role": "Performance Coach",
+            "title": "Strength Block Check-In — Lower Body Power", "tag": "Strength",
+            "objectives": "Review trap bar jump and sprint times from this block||Discuss soreness reported after last two sessions||Plan next block's lower-body emphasis",
+            "action_items": "Add extra mobility work for hips before each lift||Report soreness levels daily in the portal||Retest sprint times at end of block",
+            "video_url": "",
+        },
+        {
+            "date": "2026-06-25", "coach_name": "Panos Sinas", "coach_role": "Biomechanics Coach",
+            "title": "Arm Care Check-In — Post-Outing Recovery", "tag": "Recovery",
+            "objectives": "Review ArmCare exam trends over the last month||Discuss post-outing soreness pattern||Confirm current arm care routine is being followed",
+            "action_items": "Add a second arm care session on the day after outings||Log ArmCare scores weekly without skipping weeks||Flag any sharp pain immediately, not just soreness",
+            "video_url": "https://drive.google.com/file/d/example-038-jun25/view",
+        },
+    ],
+    "083": [  # James Sheerin
+        {
+            "date": "2026-07-15", "coach_name": "Mike Michallas", "coach_role": "Mental Performance Coach",
+            "title": "Mental Performance — Pre-Game Routine Build", "tag": "Mental",
+            "objectives": "Build a consistent pre-game mental routine||Review last month's in-game focus ratings||Discuss managing mistakes mid-inning",
+            "action_items": "Write out a 10-minute pre-game routine and follow it for 2 weeks||Rate in-game focus after every appearance||Practice the mistake-reset cue daily",
+            "video_url": "",
+        },
+        {
+            "date": "2026-07-08", "coach_name": "Tim Wilson", "coach_role": "Nutrition Coach",
+            "title": "Nutrition Check-In — In-Season Fueling", "tag": "Nutrition",
+            "objectives": "Review hydration and fueling on double-header days||Check in on current meal timing around games||Address energy dips in the 4th-5th inning",
+            "action_items": "Add a carb-focused snack between games on double-headers||Move pre-game meal 30 minutes earlier||Track hydration using the portal's log for 1 week",
+            "video_url": "https://drive.google.com/file/d/example-083-jul08/view",
+        },
+        {
+            "date": "2026-06-22", "coach_name": "Sam Byrns", "coach_role": "Throwing Coach",
+            "title": "Throwing Session — Secondary Pitch Development", "tag": "Throwing",
+            "objectives": "Evaluate slider shape consistency from Rapsodo data||Work on tunneling the slider off the fastball||Set a usage plan for the next start",
+            "action_items": "Daily slider spin-axis drill, 20 reps||Chart tunnel point on next 2 bullpens||Review tunneling video with Coach Byrns before next start",
+            "video_url": "https://drive.google.com/file/d/example-083-jun22/view",
+        },
+    ],
+    "141": [  # Andrew Valentino
+        {
+            "date": "2026-07-18", "coach_name": "Jason Agresti", "coach_role": "Performance Coach",
+            "title": "Strength & Conditioning — End-of-Block Testing Review", "tag": "Strength",
+            "objectives": "Review end-of-block IMTP, CMJ, and sprint results||Compare against pre-block baseline||Set priorities for the next training block",
+            "action_items": "Carry current peak force numbers into next block's load targets||Add one additional recovery day per week||Revisit goals with Coach Agresti in 2 weeks",
+            "video_url": "https://drive.google.com/file/d/example-141-jul18/view",
+        },
+        {
+            "date": "2026-07-01", "coach_name": "Dr. Nick Serio", "coach_role": "Throwing Coach · With Family",
+            "title": "Parent Meeting — Recruiting Timeline Discussion", "tag": "Parent Meeting",
+            "objectives": "Walk through current recruiting timeline and target schools||Review summer velocity and development progress||Answer questions on exposure events and showcases",
+            "action_items": "Family to confirm showcase registration by end of month||Update recruiting profile with latest velocity numbers||Schedule follow-up call after August showcase",
+            "video_url": "",
+        },
+        {
+            "date": "2026-06-19", "coach_name": "Tom Jankins", "coach_role": "Throwing Coach",
+            "title": "Throwing Session — Fastball Shape & Spin Efficiency", "tag": "Throwing",
+            "objectives": "Review spin efficiency trends from the last month of bullpens||Discuss grip adjustment to improve carry||Set target metrics for next evaluation",
+            "action_items": "Try adjusted four-seam grip for next 2 weeks of bullpens||Track spin efficiency every outing||Compare carry numbers at next TrackMan session",
+            "video_url": "https://drive.google.com/file/d/example-141-jun19/view",
+        },
+    ],
+    "212": [  # Alec Smythe
+        {
+            "date": "2026-07-12", "coach_name": "Tim Wilson", "coach_role": "Nutrition Coach",
+            "title": "Nutrition Check-In — Off-Season Weight Gain Plan", "tag": "Nutrition",
+            "objectives": "Review current weight trend against off-season target||Discuss meal timing around strength sessions||Address consistency of daily intake logging",
+            "action_items": "Add an evening protein shake on lift days||Log meals daily, not just on training days||Re-check weight trend in 2 weeks",
+            "video_url": "https://drive.google.com/file/d/example-212-jul12/view",
+        },
+        {
+            "date": "2026-07-05", "coach_name": "Mike Michallas", "coach_role": "Mental Performance Coach",
+            "title": "Mental Performance — Confidence After Setback", "tag": "Mental",
+            "objectives": "Address confidence dip following a tough outing||Reframe the outing using process-based review instead of outcome||Rebuild a clear focus routine for the next appearance",
+            "action_items": "Complete the process-review worksheet for the outing||Use the pre-pitch reset cue every pitch next outing||Check in after next appearance regardless of outcome",
+            "video_url": "",
+        },
+        {
+            "date": "2026-06-27", "coach_name": "Panos Sinas", "coach_role": "Biomechanics Coach",
+            "title": "Recovery Check-In — Sleep & Arm Care Consistency", "tag": "Recovery",
+            "objectives": "Review WHOOP sleep and recovery trends from the last 2 weeks||Discuss consistency of the daily arm care routine||Identify what's driving lower recovery scores on back-to-back days",
+            "action_items": "Move bedtime 30 minutes earlier on school nights||Complete arm care routine before, not after, lifts||Flag any recovery score under 50% in the portal",
+            "video_url": "https://drive.google.com/file/d/example-212-jun27/view",
+        },
+    ],
+}
+
+
+def build_coach_recaps():
+    athletes = read_csv("athletes sample data.csv")
+    name_map = {r["athlete_id"]: clean(r["name"]) for r in athletes}
+
+    fields = [
+        "athlete_id", "name", "date", "coach_name", "coach_role",
+        "title", "tag", "objectives", "action_items", "video_url",
+    ]
+    rows_out = []
+    for aid, recaps in COACH_RECAPS.items():
+        for r in recaps:
+            rows_out.append({
+                "athlete_id": aid,
+                "name": name_map.get(aid, ""),
+                "date": r["date"],
+                "coach_name": r["coach_name"],
+                "coach_role": r["coach_role"],
+                "title": r["title"],
+                "tag": r["tag"],
+                "objectives": r["objectives"],
+                "action_items": r["action_items"],
+                "video_url": r["video_url"],
+            })
+    rows_out.sort(key=lambda r: (r["athlete_id"], r["date"]), reverse=True)
+
+    out_path = os.path.join(OUT_DIR, "airtable_coach_recaps.csv")
+    with open(out_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows_out)
+    print(f"✓  airtable_coach_recaps.csv  ({len(rows_out)} rows)")
+
+
 if __name__ == "__main__":
     build_athletes()
     build_energy_history()
     build_velocity_history()
     build_eval_history()
-    print("\nAll 4 Airtable CSVs written to:", OUT_DIR)
+    build_coach_recaps()
+    print("\nAll 5 Airtable CSVs written to:", OUT_DIR)
