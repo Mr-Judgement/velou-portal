@@ -5125,13 +5125,8 @@ function populateCoachRecaps(data) {
     var avatarFile = encodeURIComponent(r.coachName || '') + '.avif';
     var objectives = (r.objectives || []).map(function(o) { return '<li>' + _esc(o) + '</li>'; }).join('');
     var actionItems = (r.actionItems || []).map(function(o) { return '<li>' + _esc(o) + '</li>'; }).join('');
-    var viewBtn = r.videoUrl
-      ? '<button class="report-dl-btn" onclick="event.stopPropagation();window.open(' + JSON.stringify(r.videoUrl) + ',\'_blank\')">View Recap</button>'
-      : '<button class="report-dl-btn" disabled onclick="event.stopPropagation()">View Recap</button>';
-
     var row = document.createElement('div');
     row.className = 'recap-row';
-    row.setAttribute('onclick', 'toggleRecap(this)');
     row.innerHTML =
       '<div class="recap-row-main">' +
         '<div class="recap-date-block"><div class="month">' + _esc(md.month) + '</div><div class="day">' + _esc(md.day) + '</div></div>' +
@@ -5141,13 +5136,31 @@ function populateCoachRecaps(data) {
           '<div class="recap-coach">Coach ' + _esc(r.coachName) + (r.coachRole ? ' · ' + _esc(r.coachRole) : '') + '</div>' +
         '</div>' +
         (r.tag ? '<span class="recap-tag">' + _esc(r.tag) + '</span>' : '') +
-        viewBtn +
+        '<button class="report-dl-btn" type="button"' + (r.videoUrl ? '' : ' disabled') + '>View Recap</button>' +
         '<svg class="recap-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>' +
       '</div>' +
       '<div class="recap-detail">' +
         '<div><div class="recap-detail-label">Meeting Objectives</div><ul class="recap-detail-list">' + objectives + '</ul></div>' +
         '<div><div class="recap-detail-label">Action Items</div><ul class="recap-detail-list">' + actionItems + '</ul></div>' +
       '</div>';
+
+    // Attached as real listeners (not string-built inline handlers) so a
+    // URL containing quotes/special characters can never corrupt the
+    // handler the way embedding it in an onclick="..." attribute string
+    // can -- this is exactly what broke "View Recap" before: the attribute
+    // closed early on the first embedded quote and stopPropagation() never
+    // actually ran, so the row-toggle fired as if the button didn't exist.
+    row.addEventListener('click', function() { toggleRecap(row); });
+    var viewBtnEl = row.querySelector('.report-dl-btn');
+    if (r.videoUrl) {
+      viewBtnEl.addEventListener('click', function(e) {
+        e.stopPropagation();
+        window.open(r.videoUrl, '_blank');
+      });
+    } else {
+      viewBtnEl.addEventListener('click', function(e) { e.stopPropagation(); });
+    }
+
     list.appendChild(row);
   });
 }
