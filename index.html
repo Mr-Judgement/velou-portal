@@ -2366,7 +2366,10 @@ body {
     border-top: 1px solid var(--border);
     padding: 14px 16px;
   }
-  .dev-team-grid  { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 10px; }
+  /* Fixed column counts chosen as divisors of the 12-coach roster (6/4/3/2)
+     instead of auto-fit, which picks "however many fit" and can leave an
+     oddly sparse last row (e.g. 9+3) when the count doesn't divide evenly. */
+  .dev-team-grid  { grid-template-columns: repeat(6, 1fr); gap: 10px; }
   .dev-team-grid .coach-avatar { width: 64px; height: 64px; }
   .hero-name      { font-size: 22px; }
   .hero-stats     { flex-wrap: wrap; gap: 12px; }
@@ -2419,6 +2422,19 @@ body {
   /* KPI compare row — allow wrap */
   .kpi-compare-row { flex-wrap: wrap; gap: 12px; }
   .kpi-compare-divider { display: none; }
+}
+
+/* Dev team roster — step down through divisors of 12 (6/4/3/2) as width
+   shrinks, so every row stays evenly filled instead of auto-fit's
+   "however many fit" leaving a sparse last row. */
+@media (max-width: 570px) {
+  .dev-team-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 420px) {
+  .dev-team-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 350px) {
+  .dev-team-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* Small phone: 480px and below */
