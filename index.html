@@ -539,6 +539,56 @@ body {
   margin-bottom: 20px;
 }
 
+/* Recovery page — WHOOP connectivity status + metrics */
+.whoop-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+}
+.whoop-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.whoop-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+}
+.whoop-status-dot.connected { background: var(--good); box-shadow: 0 0 6px var(--good); }
+.whoop-status-dot.disconnected { background: var(--text-3); }
+.whoop-status-synced {
+  font-size: 11px;
+  color: var(--text-3);
+}
+.recovery-gauge-row {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.recovery-gauge-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.recovery-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
 .kpi-tile {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2422,6 +2472,11 @@ body {
   /* KPI compare row — allow wrap */
   .kpi-compare-row { flex-wrap: wrap; gap: 12px; }
   .kpi-compare-divider { display: none; }
+
+  /* Recovery page — stack gauge above metrics, 2-col metric grid */
+  .recovery-gauge-row     { grid-template-columns: 1fr; }
+  .recovery-metrics-grid  { grid-template-columns: repeat(2, 1fr); }
+  .whoop-status-row       { flex-direction: column; align-items: flex-start; gap: 4px; }
 }
 
 /* Dev team roster — step down through divisors of 12 (6/4/3/2) as width
@@ -3546,33 +3601,65 @@ body {
     <!-- ══════════════════ SECTION: RECOVERY ══════════════════════════ -->
     <section class="section" id="s-recovery">
       <div class="page-heading">
-        <h1>Recovery Library</h1>
-        <p>Arm care, mobility, sleep, and recovery protocols for Black Label athletes.</p>
+        <h1>Recovery</h1>
+        <p>Daily recovery, sleep, and cardiovascular data synced from WHOOP.</p>
       </div>
 
-      <div class="two-col">
-        <div class="lib-section">
-          <div class="sec-header"><div class="sec-title">Video Resources</div></div>
-          <div class="video-grid">
-            <div class="video-card vt-1"><div class="video-thumb"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><div class="video-label">Daily Arm Care Routine</div><div class="video-duration">12:30</div></div>
-            <div class="video-card vt-3"><div class="video-thumb"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><div class="video-label">Post-Game Recovery</div><div class="video-duration">18:15</div></div>
-            <div class="video-card vt-2"><div class="video-thumb"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><div class="video-label">Mobility Flow</div><div class="video-duration">22:00</div></div>
-            <div class="video-card vt-4"><div class="video-thumb"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><div class="video-label">Sleep Optimization</div><div class="video-duration">16:40</div></div>
+      <div class="whoop-status-row">
+        <div class="whoop-status-badge" id="whoop-status-badge">
+          <span class="whoop-status-dot" id="whoop-status-dot"></span>
+          <span id="whoop-status-text">Checking connection…</span>
+        </div>
+        <div class="whoop-status-synced" id="whoop-status-synced"></div>
+      </div>
+
+      <div class="recovery-gauge-row">
+        <div class="recovery-gauge-block">
+          <div class="ptm-semigauge-wrap">
+            <svg viewBox="0 0 260 155" xmlns="http://www.w3.org/2000/svg" class="ptm-semigauge-svg">
+              <path d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="15" stroke-linecap="round"/>
+              <path id="gauge-ring-recpage" d="M 20,130 A 110,110 0 0,1 240,130" fill="none" stroke="#f0a030" stroke-width="15" stroke-linecap="round" stroke-dasharray="0 345.6"/>
+              <text x="20" y="150" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="10">0</text>
+              <text x="240" y="150" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10">100%</text>
+              <text id="gauge-text-recpage" x="130" y="100" text-anchor="middle" fill="white" font-size="30" font-weight="800">—</text>
+              <text x="130" y="120" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="11">Recovery Score</text>
+            </svg>
+            <div class="ptm-semigauge-sub" id="recpage-asof">—</div>
           </div>
         </div>
 
-        <div class="lib-section">
-          <div class="sec-header"><div class="sec-title">Protocol Library</div></div>
-          <div class="pill-grid">
-            <div class="pill-row"><span class="pill-name">Full Recovery Protocol</span><span class="pill-cat red">Recovery</span></div>
-            <div class="pill-row"><span class="pill-name">Arm Care — Daily Routine</span><span class="pill-cat red">Arm Care</span></div>
-            <div class="pill-row"><span class="pill-name">Arm Care — Post-Outing</span><span class="pill-cat red">Arm Care</span></div>
-            <div class="pill-row"><span class="pill-name">Hip & Ankle Mobility</span><span class="pill-cat green">Mobility</span></div>
-            <div class="pill-row"><span class="pill-name">Thoracic Mobility Drill</span><span class="pill-cat green">Mobility</span></div>
-            <div class="pill-row"><span class="pill-name">Sleep Performance Guide</span><span class="pill-cat">Sleep</span></div>
-            <div class="pill-row"><span class="pill-name">Makeup Recovery Protocol</span><span class="pill-cat">Protocol</span></div>
-            <div class="pill-row"><span class="pill-name">WHOOP Education Guide</span><span class="pill-cat">WHOOP</span></div>
-            <div class="pill-row"><span class="pill-name">In-Season Recovery Plan</span><span class="pill-cat green">Protocol</span></div>
+        <div class="recovery-metrics-grid">
+          <div class="kpi-tile">
+            <div class="kpi-label">HRV</div>
+            <div class="kpi-val" id="recpage-hrv">—<span class="unit">ms</span></div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Resting HR</div>
+            <div class="kpi-val" id="recpage-rhr">—<span class="unit">bpm</span></div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">SpO2</div>
+            <div class="kpi-val" id="recpage-spo2">—<span class="unit">%</span></div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Respiratory Rate</div>
+            <div class="kpi-val" id="recpage-resp">—<span class="unit">rpm</span></div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Sleep Performance</div>
+            <div class="kpi-val" id="recpage-sleep-perf">—<span class="unit">%</span></div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Sleep Efficiency</div>
+            <div class="kpi-val" id="recpage-sleep-eff">—<span class="unit">%</span></div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">REM Sleep</div>
+            <div class="kpi-val" id="recpage-rem">—</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Slow Wave Sleep</div>
+            <div class="kpi-val" id="recpage-slow-wave">—</div>
           </div>
         </div>
       </div>
@@ -4730,7 +4817,7 @@ var sectionTitles = {
   'coach-recaps': 'Coach Meeting Recaps',
   'nutrition': 'Nutrition Library',
   'mental': 'Mental Performance',
-  'recovery': 'Recovery Library',
+  'recovery': 'Recovery',
   'media': 'Media',
   'resources': 'Resource Library',
   'partners': 'Partner Benefits'
@@ -5003,8 +5090,55 @@ window.populateDashboard = function(data) {
     });
   }
 
+  populateRecoveryPage(data);
   populateModals(data);
 };
+
+function populateRecoveryPage(data) {
+  var rec = data.recovery || {};
+  var hasAny = rec.score != null || rec.hrv != null || rec.restingHr != null || rec.spo2 != null ||
+    rec.sleepPerformance != null || rec.sleepEfficiency != null || rec.respiratoryRate != null ||
+    rec.remSleep != null || rec.slowWave != null;
+
+  var dot = document.getElementById('whoop-status-dot');
+  var text = document.getElementById('whoop-status-text');
+  var synced = document.getElementById('whoop-status-synced');
+  if (hasAny) {
+    if (dot) { dot.classList.add('connected'); dot.classList.remove('disconnected'); }
+    if (text) text.textContent = 'WHOOP Connected';
+    var parts = [];
+    if (rec.recoveryAsOf) parts.push('Recovery synced ' + _fmtDate(rec.recoveryAsOf));
+    if (rec.sleepAsOf)    parts.push('Sleep synced ' + _fmtDate(rec.sleepAsOf));
+    if (synced) synced.textContent = parts.join(' · ');
+  } else {
+    if (dot) { dot.classList.add('disconnected'); dot.classList.remove('connected'); }
+    if (text) text.textContent = 'WHOOP Not Connected';
+    if (synced) synced.textContent = 'No recovery data on file for this athlete yet.';
+  }
+
+  var ring = document.getElementById('gauge-ring-recpage');
+  if (rec.score != null) {
+    _mset('gauge-text-recpage', Math.round(rec.score));
+    if (ring) {
+      ring.setAttribute('stroke', '#f0a030');
+      ring.setAttribute('stroke-dasharray', (Math.min(rec.score, 100) / 100 * 345.6).toFixed(1) + ' 345.6');
+    }
+  } else if (ring) {
+    // Round linecap on a 0-length arc still paints a small dot -- hide it
+    // entirely by matching the empty-track colour when there's no score yet.
+    ring.setAttribute('stroke', 'rgba(255,255,255,0.08)');
+  }
+  _mset('recpage-asof', rec.recoveryAsOf ? 'As of ' + _fmtDate(rec.recoveryAsOf) : 'Recovery Score');
+
+  if (rec.hrv != null)              _mset('recpage-hrv', Math.round(rec.hrv));
+  if (rec.restingHr != null)        _mset('recpage-rhr', Math.round(rec.restingHr));
+  if (rec.spo2 != null)             _mset('recpage-spo2', parseFloat(rec.spo2).toFixed(1));
+  if (rec.respiratoryRate != null)  _mset('recpage-resp', parseFloat(rec.respiratoryRate).toFixed(1));
+  if (rec.sleepPerformance != null) _mset('recpage-sleep-perf', Math.round(rec.sleepPerformance));
+  if (rec.sleepEfficiency != null)  _mset('recpage-sleep-eff', Math.round(rec.sleepEfficiency));
+  if (rec.remSleep != null)         _mset('recpage-rem', _fmtMsToHm(rec.remSleep));
+  if (rec.slowWave != null)         _mset('recpage-slow-wave', _fmtMsToHm(rec.slowWave));
+}
 
 /* ── Modal data population ───────────────────────────────────── */
 function _fmtDate(d) {
@@ -5013,6 +5147,13 @@ function _fmtDate(d) {
   if (p.length < 2) return d;
   var mn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   return mn[parseInt(p[1], 10) - 1] + ' \'' + p[0].slice(2);
+}
+
+function _fmtMsToHm(ms) {
+  var mins = Math.round(parseFloat(ms) / 60000);
+  var h = Math.floor(mins / 60);
+  var m = mins % 60;
+  return h + 'h ' + m + 'm';
 }
 
 function _mset(id, val) {
