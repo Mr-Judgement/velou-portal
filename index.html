@@ -494,8 +494,8 @@ body {
 }
 
 .coach-avatar {
-  width: 52px;
-  height: 52px;
+  width: 78px;
+  height: 78px;
   border-radius: 50%;
   background: var(--surface-3);
   border: 1.5px solid var(--border-hi);
@@ -511,14 +511,14 @@ body {
 }
 
 .coach-name {
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-1);
   line-height: 1.2;
 }
 
 .coach-role {
-  font-size: 8px;
+  font-size: 9px;
   color: var(--text-3);
   letter-spacing: 0.03em;
 }
@@ -2366,9 +2366,8 @@ body {
     border-top: 1px solid var(--border);
     padding: 14px 16px;
   }
-  .dev-team-grid  { grid-template-columns: repeat(6, 1fr); gap: 8px; }
-  .coach-name     { font-size: 8px; }
-  .coach-role     { font-size: 7px; }
+  .dev-team-grid  { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 10px; }
+  .dev-team-grid .coach-avatar { width: 64px; height: 64px; }
   .hero-name      { font-size: 22px; }
   .hero-stats     { flex-wrap: wrap; gap: 12px; }
   .hero-stat-val  { font-size: 22px; }
@@ -2429,7 +2428,6 @@ body {
   .hero-name          { font-size: 18px; }
   .hero-tags          { flex-wrap: wrap; }
   .kpi-strip          { grid-template-columns: 1fr 1fr; }
-  .dev-team-grid      { grid-template-columns: repeat(3, 1fr); }
   .reports-grid       { grid-template-columns: 1fr; }
   .lib-page-grid      { grid-template-columns: 1fr; }
   .media-photo-grid   { grid-template-columns: repeat(2, 1fr); }
