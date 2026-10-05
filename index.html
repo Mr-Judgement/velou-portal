@@ -1976,6 +1976,26 @@ body {
 
 .ptm-modal-body { padding: 24px; }
 
+.resource-modal-inner { max-width: 640px; }
+.resource-modal-body { font-size: 13px; line-height: 1.65; color: var(--text-2); }
+.resource-modal-body h3 {
+  font-size: 13px; font-weight: 700; color: var(--text-1);
+  margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.resource-modal-body h3:first-child { margin-top: 0; }
+.resource-modal-body p { margin: 0 0 10px; }
+.resource-modal-body ul { margin: 0 0 10px; padding-left: 20px; }
+.resource-modal-body li { margin-bottom: 4px; }
+.resource-draft-notice {
+  background: var(--red-dim);
+  border: 1px solid var(--red-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 11.5px;
+  color: var(--text-2);
+  margin-bottom: 18px;
+}
+
 .ptm-stat-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -3517,7 +3537,7 @@ body {
       </div>
 
       <div class="resource-grid">
-        <div class="resource-card">
+        <div class="resource-card" onclick="openResourceModal('recruiting-timeline')">
           <div class="resource-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
@@ -3527,7 +3547,7 @@ body {
             <div class="resource-desc">Step-by-step guide from freshman year through signing day, with key dates and actions.</div>
           </div>
         </div>
-        <div class="resource-card">
+        <div class="resource-card" onclick="openResourceModal('ncaa-d1')">
           <div class="resource-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
@@ -3537,7 +3557,7 @@ body {
             <div class="resource-desc">Clearinghouse requirements, GPA standards, test scores, and amateurism rules.</div>
           </div>
         </div>
-        <div class="resource-card">
+        <div class="resource-card" onclick="openResourceModal('coach-communication')">
           <div class="resource-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
@@ -3547,7 +3567,7 @@ body {
             <div class="resource-desc">Email and phone scripts for initial outreach, follow-ups, and official visits.</div>
           </div>
         </div>
-        <div class="resource-card">
+        <div class="resource-card" onclick="openResourceModal('parent-guide')">
           <div class="resource-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
@@ -3557,7 +3577,7 @@ body {
             <div class="resource-desc">What parents can and can't do during recruiting, visit etiquette, and financial aid overview.</div>
           </div>
         </div>
-        <div class="resource-card">
+        <div class="resource-card" onclick="openResourceModal('athletic-profile')">
           <div class="resource-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           </div>
@@ -3567,7 +3587,7 @@ body {
             <div class="resource-desc">How to structure your recruiting profile, video, and highlight reel for maximum impact.</div>
           </div>
         </div>
-        <div class="resource-card">
+        <div class="resource-card" onclick="openResourceModal('d2-d3-options')">
           <div class="resource-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
           </div>
@@ -3579,6 +3599,20 @@ body {
         </div>
       </div>
     </section>
+
+    <!-- Resource Library content modal (single reusable shell, see RESOURCE_CONTENT) -->
+    <div class="ptm-overlay" id="resource-modal" onclick="closeResourceModal(event,this)">
+      <div class="ptm-modal resource-modal-inner">
+        <div class="ptm-modal-hdr">
+          <div>
+            <div class="ptm-modal-subtitle" id="resource-modal-cat">Category</div>
+            <div class="ptm-modal-title" id="resource-modal-title">Title</div>
+          </div>
+          <button class="ptm-close-btn" onclick="closeResourceModal(event,document.getElementById('resource-modal'))">✕</button>
+        </div>
+        <div class="ptm-modal-body resource-modal-body" id="resource-modal-body"></div>
+      </div>
+    </div>
 
     <!-- ══════════════════ SECTION: PARTNER BENEFITS ══════════════════ -->
     <section class="section" id="s-partners">
@@ -4643,6 +4677,105 @@ var sectionTitles = {
 
 function toggleRecap(row) {
   row.classList.toggle('expanded');
+}
+
+// Resource Library — per zeb's Sept 24 call, this section is entirely
+// frontend-managed (outside their backend scope). Content below is a
+// first draft for the client to review/replace before this is final.
+var RESOURCE_CONTENT = {
+  'recruiting-timeline': {
+    cat: 'Recruiting',
+    title: 'Recruiting Timeline & Roadmap',
+    body:
+      '<div class="resource-draft-notice">Draft content — for Black Label review before publishing to athletes.</div>' +
+      '<h3>Freshman &amp; Sophomore Year</h3>' +
+      '<p>The focus is development, not recruiting. Build a library of game and practice footage early so you have real material to pull from once outreach starts. Register with the NCAA Eligibility Center, start tracking your core-course GPA, and begin attending camps or showcases that fit your level — these are as much about development reps as exposure.</p>' +
+      '<h3>Junior Year</h3>' +
+      '<p>This is the core recruiting window. Build a shortlist of target schools across a realistic range of levels, not just dream schools. Start direct outreach to coaches with updated video and metrics, and attend college camps for programs you\'re seriously interested in. NCAA contact-period rules determine exactly when coaches can respond — check the current recruiting calendar for your sport, since these dates are set by the NCAA and can change year to year.</p>' +
+      '<h3>Senior Year</h3>' +
+      '<p>Official and unofficial visits typically happen in the fall. The early National Letter of Intent signing period for baseball is in November, with the regular signing period in April — confirm exact dates each year, as the NCAA sets them annually. Keep grades up through senior year; eligibility is checked again before enrollment.</p>',
+  },
+  'ncaa-d1': {
+    cat: 'NCAA',
+    title: 'NCAA Division I Eligibility Guide',
+    body:
+      '<div class="resource-draft-notice">Draft content — for Black Label review before publishing to athletes.</div>' +
+      '<h3>NCAA Eligibility Center</h3>' +
+      '<p>Every Division I prospect must register with the NCAA Eligibility Center (formerly "the Clearinghouse") and have an official transcript sent once core courses are complete. This is separate from applying to any individual school.</p>' +
+      '<h3>Core Courses &amp; GPA</h3>' +
+      '<p>The NCAA requires a minimum number of core courses in specific subjects (English, math, science, social science, etc.) and uses a sliding scale between core-course GPA and standardized test scores. These exact thresholds are set by the NCAA and have changed in recent years — always confirm the current numbers directly at eligibilitycenter.org rather than relying on a fixed figure here.</p>' +
+      '<h3>Test Scores</h3>' +
+      '<p>SAT/ACT policy has shifted in recent years and varies by institution, not just by the NCAA. Check both the NCAA Eligibility Center\'s current policy and each target school\'s own admissions requirements.</p>' +
+      '<h3>Amateurism</h3>' +
+      '<p>Separate from academics, the NCAA also certifies amateurism status as part of Eligibility Center registration. This covers things like prior compensation and contact with professional teams — review this section carefully if you\'ve played in any paid or semi-professional context.</p>',
+  },
+  'coach-communication': {
+    cat: 'Communication',
+    title: 'Coach Communication Templates',
+    body:
+      '<div class="resource-draft-notice">Draft content — for Black Label review before publishing to athletes.</div>' +
+      '<h3>Initial Outreach Email</h3>' +
+      '<p>Keep it short and specific — a coach reading dozens of these a day will skim. Structure:</p>' +
+      '<ul><li>Subject line with your name, grad year, and position (e.g. "2027 RHP — [Name] — [High School]")</li><li>1-2 sentences on why this specific program, not a generic pitch</li><li>Key measurables: velocity, GPA, test scores if available</li><li>A link to recent video, not an attachment</li><li>A clear, low-pressure ask — camp interest, or a call</li></ul>' +
+      '<h3>Follow-Up Cadence</h3>' +
+      '<p>If there\'s no response, one polite follow-up after 2-3 weeks is reasonable, ideally with a meaningful update (new velocity reading, recent game performance) rather than just a repeat of the first email.</p>' +
+      '<h3>Phone Calls</h3>' +
+      '<p>Have a short list of questions ready before any call — about the program\'s recruiting needs at your position, academic fit, and what they\'d want to see from you next. Coaches notice when an athlete has clearly prepared.</p>',
+  },
+  'parent-guide': {
+    cat: 'Parent Resources',
+    title: "Parent's Guide to College Baseball Recruiting",
+    body:
+      '<div class="resource-draft-notice">Draft content — for Black Label review before publishing to athletes.</div>' +
+      '<h3>Role in Communication</h3>' +
+      '<p>NCAA rules generally expect direct recruiting communication (calls, emails) to happen between the athlete and the coaching staff, not the parent. Parents play a bigger role in logistics — travel, scheduling, and helping evaluate offers once they\'re on the table.</p>' +
+      '<h3>Visit Etiquette</h3>' +
+      '<p>On both unofficial and official visits, let your athlete lead conversations with coaches. It\'s reasonable for parents to ask direct questions about academics, cost, and team culture — just be mindful of not speaking over the athlete during conversations clearly directed at them.</p>' +
+      '<h3>Financial Aid &amp; Scholarships</h3>' +
+      '<p>Scholarship structure varies significantly by division (see the Division II &amp; III Options guide) and even by program within Division I, since baseball is not a full-scholarship-per-athlete sport at most schools. Always ask directly what\'s being offered — athletic aid, academic aid, and need-based aid are often combined, and the breakdown matters for comparing offers.</p>',
+  },
+  'athletic-profile': {
+    cat: 'Profile',
+    title: 'Building Your Athletic Profile',
+    body:
+      '<div class="resource-draft-notice">Draft content — for Black Label review before publishing to athletes.</div>' +
+      '<h3>What to Include</h3>' +
+      '<ul><li>Contact info and grad year, up top</li><li>Key measurables (velocity, 60-yard time, exit velocity if applicable) with the date they were recorded</li><li>Academic info — GPA and test scores if available</li><li>Current team, position(s), and throwing/batting hand</li><li>Link to video, not an attachment</li></ul>' +
+      '<h3>Structuring Your Highlight Video</h3>' +
+      '<p>Lead with your strongest, most recent footage — coaches often decide whether to keep watching in the first 30 seconds. For pitchers, full at-bats (not just swing/miss clips) show more than highlight-only cuts. Keep total length to 2-3 minutes; a longer "full game" link can be included separately for coaches who want more.</p>' +
+      '<h3>Keeping It Current</h3>' +
+      '<p>Update your profile whenever you have a meaningful new metric or recent game footage — a profile with stale data from over a year ago undercuts an otherwise strong recruiting pitch.</p>',
+  },
+  'd2-d3-options': {
+    cat: 'NCAA',
+    title: 'Division II & III Options Guide',
+    body:
+      '<div class="resource-draft-notice">Draft content — for Black Label review before publishing to athletes.</div>' +
+      '<h3>Division II</h3>' +
+      '<p>D2 programs can offer athletic scholarships, but baseball is an "equivalency" sport — the total scholarship budget is typically split across the roster as partial awards rather than every player getting a full ride. Competition level varies widely across D2 programs, with some competing close to D1 level.</p>' +
+      '<h3>Division III</h3>' +
+      '<p>D3 schools do not offer athletic scholarships, but many have strong academic aid and need-based financial aid that can make the total cost comparable to or lower than a partial D2/D1 athletic scholarship. D3 is often a strong fit for athletes prioritizing academics alongside competitive baseball.</p>' +
+      '<h3>Choosing the Right Level</h3>' +
+      '<p>Realistic self-assessment matters more than division prestige — a strong role on a D2 or D3 roster often leads to a better overall experience (and more playing time) than a bench spot at a bigger program. Talk through this honestly with your coaches before building your target list.</p>',
+  },
+};
+
+function openResourceModal(key) {
+  var content = RESOURCE_CONTENT[key];
+  if (!content) return;
+  document.getElementById('resource-modal-cat').textContent = content.cat;
+  document.getElementById('resource-modal-title').textContent = content.title;
+  document.getElementById('resource-modal-body').innerHTML = content.body;
+  var overlay = document.getElementById('resource-modal');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeResourceModal(e, overlay) {
+  if (e.target === overlay || e.target.classList.contains('ptm-close-btn')) {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
 }
 
 function toggleSidebar() {
