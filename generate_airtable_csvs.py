@@ -9,6 +9,7 @@ Output files:
 """
 
 import csv
+import datetime
 import io
 import os
 from collections import defaultdict
@@ -677,10 +678,172 @@ def build_coach_recaps():
     print(f"✓  airtable_coach_recaps.csv  ({len(rows_out)} rows)")
 
 
+# ──────────────────────────────────────────────────────────────────────────
+# WHOOP training load (cycles + workouts) — real data for athlete 003 (the
+# only one with any rows in Sample Data), clearly-labeled synthetic data for
+# the other 4 active athletes so the Training Load UI has something to show
+# and test across the whole roster. Same QA-only spirit as
+# SYNTHETIC_ROM_FOR_TESTING above -- formulaic, not random noise dressed up
+# as real, and never touches the real Sample Data files.
+#
+# sport_id -> name mapping confirmed against WHOOP's own developer docs
+# (developer.whoop.com/docs/developing/user-data/workout/); only the 4
+# values actually present in the sample data are mapped.
+WHOOP_SPORT_NAMES = {
+    "-1": "Activity",
+    "16": "Baseball",
+    "17": "Basketball",
+    "64": "Surfing",
+}
+
+SYNTHETIC_CYCLES_START = {"038": "2026-09-21", "083": "2026-09-22", "141": "2026-09-20", "212": "2026-09-23"}
+SYNTHETIC_CYCLE_DAYS = 14
+
+
+def _synthetic_cycles(athlete_id):
+    start = datetime.date.fromisoformat(SYNTHETIC_CYCLES_START[athlete_id])
+    rows = []
+    for i in range(SYNTHETIC_CYCLE_DAYS):
+        d = start + datetime.timedelta(days=i)
+        rows.append({
+            "athlete_id": athlete_id,
+            "date": d.isoformat(),
+            "strain": round(8.0 + (i % 5) * 1.3, 1),
+            "avg_hr": 118 + (i % 4) * 3,
+            "max_hr": 162 + (i % 3) * 5,
+            "kilojoules": 1700 + (i % 6) * 130,
+        })
+    return rows
+
+
+def _synthetic_workouts(athlete_id):
+    start = datetime.date.fromisoformat(SYNTHETIC_CYCLES_START[athlete_id])
+    sports = ["16", "17", "-1"]  # Baseball, Basketball, Activity -- no Surfing for synthetic rows
+    rows = []
+    for i in range(0, SYNTHETIC_CYCLE_DAYS, 2):  # a workout roughly every other day
+        d = start + datetime.timedelta(days=i)
+        rows.append({
+            "athlete_id": athlete_id,
+            "date": d.isoformat(),
+            "sport_id": sports[(i // 2) % len(sports)],
+            "strain": round(9.5 + (i % 4) * 1.1, 1),
+            "avg_hr": 128 + (i % 3) * 4,
+            "max_hr": 171 + (i % 4) * 3,
+            "kilojoules": 950 + (i % 5) * 110,
+            "duration_min": 45 + (i % 3) * 15,
+        })
+    return rows
+
+
+def build_whoop_cycles_history():
+    athletes = read_csv("athletes sample data.csv")
+    name_map = {r["athlete_id"]: clean(r["name"]) for r in athletes}
+    active_ids = set(name_map.keys()) - {"1148"}  # 1148 (John Valentino) is inactive, excluded everywhere else
+
+    real_rows = read_csv("whoop1 sample data.csv")
+    fields = ["athlete_id", "name", "date", "strain", "avg_hr", "max_hr", "kilojoules"]
+    rows_out = []
+
+    for row in real_rows:
+        if row["athlete_id"] not in active_ids:
+            continue
+        rows_out.append({
+            "athlete_id": row["athlete_id"],
+            "name": name_map.get(row["athlete_id"], ""),
+            "date": clean(row.get("date")),
+            "strain": round2(row.get("strain")),
+            "avg_hr": clean(row.get("avg_hr")),
+            "max_hr": clean(row.get("max_hr")),
+            "kilojoules": clean(row.get("kilojoules")),
+        })
+
+    covered = {r["athlete_id"] for r in rows_out}
+    for aid in active_ids - covered:
+        if aid not in SYNTHETIC_CYCLES_START:
+            continue
+        for r in _synthetic_cycles(aid):
+            rows_out.append({
+                "athlete_id": aid,
+                "name": name_map.get(aid, ""),
+                "date": r["date"],
+                "strain": r["strain"],
+                "avg_hr": r["avg_hr"],
+                "max_hr": r["max_hr"],
+                "kilojoules": r["kilojoules"],
+            })
+
+    rows_out.sort(key=lambda r: (r["athlete_id"], r["date"]), reverse=True)
+    out_path = os.path.join(OUT_DIR, "airtable_whoop_cycles_history.csv")
+    with open(out_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows_out)
+    print(f"✓  airtable_whoop_cycles_history.csv  ({len(rows_out)} rows)")
+
+
+def build_whoop_workouts_history():
+    athletes = read_csv("athletes sample data.csv")
+    name_map = {r["athlete_id"]: clean(r["name"]) for r in athletes}
+    active_ids = set(name_map.keys()) - {"1148"}
+
+    real_rows = read_csv("whoop sample data.csv")
+    fields = ["athlete_id", "name", "date", "sport_name", "strain", "avg_hr", "max_hr", "kilojoules", "duration_min"]
+    rows_out = []
+
+    for row in real_rows:
+        if row["athlete_id"] not in active_ids:
+            continue
+        duration_min = ""
+        try:
+            start_t = datetime.datetime.fromisoformat(clean(row.get("start_time")))
+            end_t = datetime.datetime.fromisoformat(clean(row.get("end_time")))
+            duration_min = round((end_t - start_t).total_seconds() / 60)
+        except (ValueError, TypeError):
+            pass
+        rows_out.append({
+            "athlete_id": row["athlete_id"],
+            "name": name_map.get(row["athlete_id"], ""),
+            "date": clean(row.get("date")),
+            "sport_name": WHOOP_SPORT_NAMES.get(clean(row.get("sport_id")), "Activity"),
+            "strain": round2(row.get("strain")),
+            "avg_hr": clean(row.get("avg_hr")),
+            "max_hr": clean(row.get("max_hr")),
+            "kilojoules": clean(row.get("kilojoules")),
+            "duration_min": duration_min,
+        })
+
+    covered = {r["athlete_id"] for r in rows_out}
+    for aid in active_ids - covered:
+        if aid not in SYNTHETIC_CYCLES_START:
+            continue
+        for r in _synthetic_workouts(aid):
+            rows_out.append({
+                "athlete_id": aid,
+                "name": name_map.get(aid, ""),
+                "date": r["date"],
+                "sport_name": WHOOP_SPORT_NAMES.get(r["sport_id"], "Activity"),
+                "strain": r["strain"],
+                "avg_hr": r["avg_hr"],
+                "max_hr": r["max_hr"],
+                "kilojoules": r["kilojoules"],
+                "duration_min": r["duration_min"],
+            })
+
+    rows_out.sort(key=lambda r: (r["athlete_id"], r["date"]), reverse=True)
+    out_path = os.path.join(OUT_DIR, "airtable_whoop_workouts_history.csv")
+    with open(out_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows_out)
+    print(f"✓  airtable_whoop_workouts_history.csv  ({len(rows_out)} rows)")
+
+
 if __name__ == "__main__":
     build_athletes()
     build_energy_history()
     build_velocity_history()
     build_eval_history()
     build_coach_recaps()
-    print("\nAll 5 Airtable CSVs written to:", OUT_DIR)
+    build_whoop_cycles_history()
+    build_whoop_workouts_history()
+    print("\nAll 7 Airtable CSVs written to:", OUT_DIR)
